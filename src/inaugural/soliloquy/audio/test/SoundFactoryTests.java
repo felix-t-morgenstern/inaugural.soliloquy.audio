@@ -7,6 +7,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import soliloquy.audio.specs.ISound;
+import soliloquy.audio.specs.ISoundsPlaying;
 import soliloquy.common.specs.ICollection;
 import soliloquy.common.specs.IEntityUuid;
 import soliloquy.common.specs.IEntityUuidFactory;
@@ -19,6 +20,7 @@ public class SoundFactoryTests extends TestCase {
 	
 	private final IEntityUuidFactory ENTITY_UUID_FACTORY = new EntityUuidFactoryStub();
 	private final IMap<String,String> SOUND_TYPE_FILENAMES = new SoundTypeFilenameMapStub();
+	private final ISoundsPlaying SOUNDS_PLAYING = new SoundsPlayingStub();
 
 	private static String SoundTypeFilenameSearched;
 	private static String SoundTypeFilenameReturned;
@@ -49,7 +51,7 @@ public class SoundFactoryTests extends TestCase {
     {
     	SoundTypeFilenameSearched = "";
     	SoundTypeFilenameReturned = "";
-    	_soundFactory = new SoundFactory(SOUND_TYPE_FILENAMES, ENTITY_UUID_FACTORY);
+    	_soundFactory = new SoundFactory(SOUND_TYPE_FILENAMES, SOUNDS_PLAYING, ENTITY_UUID_FACTORY);
     }
     
     public void testGetInterfaceName()
@@ -272,6 +274,30 @@ public class SoundFactoryTests extends TestCase {
 		}
 
 		public int size() {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+    }
+    
+    private class SoundsPlayingStub implements ISoundsPlaying
+    {
+
+		public String getInterfaceName() {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		public ICollection<ISound> allSoundsPlaying() {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		public boolean isPlayingSound(IEntityUuid soundId) throws IllegalArgumentException {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		public ISound getSound(IEntityUuid soundId) throws IllegalArgumentException {
 			// Stub class; not implemented
 			throw new UnsupportedOperationException();
 		}

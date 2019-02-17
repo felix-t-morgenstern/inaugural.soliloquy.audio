@@ -1,18 +1,23 @@
 package inaugural.soliloquy.audio;
 
 import soliloquy.audio.specs.ISound;
+import soliloquy.audio.specs.ISoundsPlaying;
 import soliloquy.common.specs.IEntityUuid;
 
 public class Sound implements ISound {
 	private final IEntityUuid ID;
 	private final String SOUND_TYPE_ID;
 	
-	public Sound(IEntityUuid id, String soundTypeId, String filename)
+	private final ISoundsPlaying SOUNDS_PLAYING;
+	
+	public Sound(IEntityUuid id, String soundTypeId, String filename, ISoundsPlaying soundsPlaying)
 	{
 		// TODO: Test to make sure that id is non-null
 		ID = id;
 		// TODO: Test to make sure that soundTypeId is non-null and non-empty
 		SOUND_TYPE_ID = soundTypeId;
+		
+		SOUNDS_PLAYING = soundsPlaying;
 	}
 
 	public IEntityUuid id() throws IllegalStateException {
