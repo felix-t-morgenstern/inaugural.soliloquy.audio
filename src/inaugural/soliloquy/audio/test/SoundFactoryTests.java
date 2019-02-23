@@ -1,6 +1,8 @@
 package inaugural.soliloquy.audio.test;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 import inaugural.soliloquy.audio.SoundFactory;
 import junit.framework.Test;
@@ -26,7 +28,7 @@ public class SoundFactoryTests extends TestCase {
 	private static String SoundTypeFilenameReturned;
 	
 	private final static String SOUND_TYPE_1_ID = "SoundType1Id";
-	private final static String SOUND_TYPE_1_FILENAME = "SoundType1Filename";
+	private final static String SOUND_TYPE_1_FILENAME = SoundFactoryTests.class.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
 	
     /**
      * Create the test case
@@ -61,6 +63,8 @@ public class SoundFactoryTests extends TestCase {
     
     public void testMake()
     {
+    	_soundFactory.registerSounds(new SoundTypeFilenamesMapStub());
+    	
     	ISound sound = _soundFactory.make(SOUND_TYPE_1_ID);
 
     	// NB: The filename provided to Sound cannot be exposed by Sound without editing its functionality;
@@ -149,6 +153,7 @@ public class SoundFactoryTests extends TestCase {
     
     public class SoundTypeFilenameMapStub implements IMap<String,String>
     {
+    	private HashMap<String,String> _mappings = new HashMap<String,String>();
 
 		public Iterator<IPair<String, String>> iterator() {
 			// Stub class; not implemented
@@ -186,11 +191,7 @@ public class SoundFactoryTests extends TestCase {
 		}
 
 		public boolean containsKey(String key) {
-			if (key.equals(SoundFactoryTests.SOUND_TYPE_1_ID))
-			{
-				return true;
-			}
-			return false;
+			return _mappings.containsKey(key);
 		}
 
 		public boolean containsValue(String value) {
@@ -214,13 +215,9 @@ public class SoundFactoryTests extends TestCase {
 		}
 
 		public String get(String key) throws IllegalArgumentException, IllegalStateException {
-			if (key.equals(SoundFactoryTests.SOUND_TYPE_1_ID))
-			{
-				SoundFactoryTests.SoundTypeFilenameSearched = SOUND_TYPE_1_ID;
-				SoundFactoryTests.SoundTypeFilenameReturned = SOUND_TYPE_1_FILENAME;
-				return SoundFactoryTests.SOUND_TYPE_1_FILENAME;
-			}
-			return null;
+			SoundTypeFilenameSearched = key;
+			SoundTypeFilenameReturned = _mappings.get(key);
+			return _mappings.get(key);
 		}
 
 		public ICollection<String> getKeys() {
@@ -249,8 +246,7 @@ public class SoundFactoryTests extends TestCase {
 		}
 
 		public void put(String key, String value) throws IllegalArgumentException {
-			// Stub class; not implemented
-			throw new UnsupportedOperationException();
+			_mappings.put(key, value);
 		}
 
 		public void putAll(ICollection<IPair<String, String>> items) throws IllegalArgumentException {
@@ -279,6 +275,241 @@ public class SoundFactoryTests extends TestCase {
 		}
     }
     
+    private class SoundTypeFilenamesMapStub implements IMap<String,String>
+    {
+    	private HashMap<String,String> _mappings;
+    	
+    	SoundTypeFilenamesMapStub()
+    	{
+    		_mappings = new HashMap<String,String>();
+    		
+    		_mappings.put(SOUND_TYPE_1_ID, SOUND_TYPE_1_FILENAME);
+    	}
+    	
+		@Override
+		public Iterator<IPair<String, String>> iterator() {
+			return new SoundTypeFilenamesMapStubIterator(_mappings);
+		}
+
+		@Override
+		public String getFirstArchetype() throws IllegalStateException {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public String getSecondArchetype() throws IllegalStateException {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public String getUnparameterizedInterfaceName() {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public String getInterfaceName() {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public IMap<String, String> makeClone() {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void clear() {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean containsKey(String key) {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean containsValue(String value) {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean contains(IPair<String, String> item) throws IllegalArgumentException {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean equals(ICollection<String> items) throws IllegalArgumentException {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean equals(IMap<String, String> map) throws IllegalArgumentException {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public String get(String key) throws IllegalArgumentException, IllegalStateException {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public ICollection<String> getKeys() {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public ICollection<String> getValues() {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public ICollection<String> indicesOf(String item) {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean isEmpty() {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean itemExists(String key) {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void put(String key, String value) throws IllegalArgumentException {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void putAll(ICollection<IPair<String, String>> items) throws IllegalArgumentException {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public String removeByKey(String key) {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean removeByKeyAndValue(String key, String value) {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void setValidator(IFunction<IPair<String, String>, String> validator) {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public int size() {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+    	
+		private class SoundTypeFilenamesMapStubIterator implements Iterator<IPair<String, String>>
+		{
+			private Iterator<Entry<String,String>> _iterator;
+			
+			SoundTypeFilenamesMapStubIterator(HashMap<String,String> map)
+			{
+				_iterator = map.entrySet().iterator();
+			}
+
+			@Override
+			public boolean hasNext() {
+				return _iterator.hasNext();
+			}
+
+			@Override
+			public IPair<String, String> next() {
+				Entry<String,String> entry = _iterator.next();
+				return new PairStub(entry.getKey(), entry.getValue());
+			}
+			
+			private class PairStub implements IPair<String,String>
+			{
+				private String _item1;
+				private String _item2;
+				
+				PairStub(String item1, String item2)
+				{
+					_item1 = item1;
+					_item2 = item2;
+				}
+
+				@Override
+				public String getFirstArchetype() throws IllegalStateException {
+					// Stub class; not implemented
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
+				public String getSecondArchetype() throws IllegalStateException {
+					// Stub class; not implemented
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
+				public String getUnparameterizedInterfaceName() {
+					// Stub class; not implemented
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
+				public String getInterfaceName() {
+					// Stub class; not implemented
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
+				public String getItem1() {
+					return _item1;
+				}
+
+				@Override
+				public void setItem1(String item) throws IllegalArgumentException {
+					// Stub class; not implemented
+					throw new UnsupportedOperationException();
+				}
+
+				@Override
+				public String getItem2() {
+					return _item2;
+				}
+
+				@Override
+				public void setItem2(String item) throws IllegalArgumentException {
+					// Stub class; not implemented
+					throw new UnsupportedOperationException();
+				}
+				
+			}
+		}
+    }
+    
     private class SoundsPlayingStub implements ISoundsPlaying
     {
 
@@ -298,6 +529,11 @@ public class SoundFactoryTests extends TestCase {
 		}
 
 		public ISound getSound(IEntityUuid soundId) throws IllegalArgumentException {
+			// Stub class; not implemented
+			throw new UnsupportedOperationException();
+		}
+
+		public void removeSound(IEntityUuid soundId) throws IllegalArgumentException {
 			// Stub class; not implemented
 			throw new UnsupportedOperationException();
 		}

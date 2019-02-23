@@ -6,6 +6,7 @@ import soliloquy.audio.specs.ISoundsPlaying;
 import soliloquy.common.specs.IEntityUuid;
 import soliloquy.common.specs.IEntityUuidFactory;
 import soliloquy.common.specs.IMap;
+import soliloquy.common.specs.IPair;
 
 public class SoundFactory implements ISoundFactory {
 	private final IMap<String,String> SOUND_TYPE_FILENAMES;
@@ -35,5 +36,32 @@ public class SoundFactory implements ISoundFactory {
 
 	public String getInterfaceName() {
 		return "soliloquy.audio.specs.ISoundFactory";
+	}
+
+	@Override
+	public void registerSounds(IMap<String, String> soundTypesToFilenamesMap) throws IllegalArgumentException {
+		for(IPair<String,String> mapping : soundTypesToFilenamesMap)
+		{
+			if (mapping.getItem1() == null)
+			{
+				throw new IllegalArgumentException("SoundFactory.registerSounds(): key cannot be null");
+			}
+			if (mapping.getItem1().equals(""))
+			{
+				throw new IllegalArgumentException("SoundFactory.registerSounds(): key cannot be empty");
+			}
+			if (mapping.getItem2() == null)
+			{
+				throw new IllegalArgumentException("SoundFactory.registerSounds(): value cannot be null");
+			}
+			if (mapping.getItem2().equals(""))
+			{
+				throw new IllegalArgumentException("SoundFactory.registerSounds(): value cannot be empty");
+			}
+		}
+		for(IPair<String,String> mapping : soundTypesToFilenamesMap)
+		{
+			SOUND_TYPE_FILENAMES.put(mapping.getItem1(), mapping.getItem2());
+		}
 	}
 }
