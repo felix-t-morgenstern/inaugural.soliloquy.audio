@@ -107,7 +107,7 @@ public class Sound implements ISound {
 		_isStopped = true;
 		_isMuted = true;
 		
-		SOUNDS_PLAYING.removeSound(ID);
+		SOUNDS_PLAYING.removeSound(this);
 	}
 
 	public Runnable stopTask() {

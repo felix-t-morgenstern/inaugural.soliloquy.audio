@@ -31,7 +31,9 @@ public class SoundFactory implements ISoundFactory {
 		}
 		String filename = SOUND_TYPE_FILENAMES.get(soundTypeId);
 		IEntityUuid id = ENTITY_UUID_FACTORY.createRandomEntityUuid();
-		return new Sound(id, soundTypeId, filename, SOUNDS_PLAYING);
+		ISound sound = new Sound(id, soundTypeId, filename, SOUNDS_PLAYING);
+		SOUNDS_PLAYING.registerSound(sound);
+		return sound;
 	}
 
 	public String getInterfaceName() {

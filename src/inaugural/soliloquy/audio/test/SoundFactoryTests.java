@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import inaugural.soliloquy.audio.SoundFactory;
+import inaugural.soliloquy.audio.test.stubs.EntityUuidFactoryStub;
+import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -26,6 +28,7 @@ public class SoundFactoryTests extends TestCase {
 
 	private static String SoundTypeFilenameSearched;
 	private static String SoundTypeFilenameReturned;
+	private static ISound SoundRegistered;
 	
 	private final static String SOUND_TYPE_1_ID = "SoundType1Id";
 	private final static String SOUND_TYPE_1_FILENAME = SoundFactoryTests.class.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
@@ -53,6 +56,7 @@ public class SoundFactoryTests extends TestCase {
     {
     	SoundTypeFilenameSearched = "";
     	SoundTypeFilenameReturned = "";
+    	SoundRegistered = null;
     	_soundFactory = new SoundFactory(SOUND_TYPE_FILENAMES, SOUNDS_PLAYING, ENTITY_UUID_FACTORY);
     }
     
@@ -73,6 +77,7 @@ public class SoundFactoryTests extends TestCase {
     	
     	assertTrue(SoundTypeFilenameSearched.equals(SOUND_TYPE_1_ID));
     	assertTrue(SoundTypeFilenameReturned.equals(SOUND_TYPE_1_FILENAME));
+    	assertTrue(SoundRegistered == sound);
     	assertTrue(sound.id().getMostSignificantBits() == EntityUuidStub.MOST_SIGNIFICANT_BITS);
     	assertTrue(sound.soundTypeId().equals(SOUND_TYPE_1_ID));
     }
@@ -106,49 +111,6 @@ public class SoundFactoryTests extends TestCase {
     	{
     		assertTrue(false);
     	}
-    }
-    
-    public class EntityUuidFactoryStub implements IEntityUuidFactory
-    {
-
-		public String getInterfaceName() {
-			// Stub class; not implemented
-			throw new UnsupportedOperationException();
-		}
-
-		public IEntityUuid createFromLongs(long mostSignificantBits, long leastSignificantBits) {
-			// Stub class; not implemented
-			throw new UnsupportedOperationException();
-		}
-
-		public IEntityUuid createFromString(String uuidString) throws IllegalArgumentException {
-			// Stub class; not implemented
-			throw new UnsupportedOperationException();
-		}
-
-		public IEntityUuid createRandomEntityUuid() {
-			return new EntityUuidStub();
-		}
-    }
-    
-    public class EntityUuidStub implements IEntityUuid
-    {
-    	public final static long MOST_SIGNIFICANT_BITS = 7485613498651L;
-
-		public String getInterfaceName() {
-			// Stub class; not implemented
-			throw new UnsupportedOperationException();
-		}
-
-		public long getMostSignificantBits() {
-			return MOST_SIGNIFICANT_BITS;
-		}
-
-		public long getLeastSignificantBits() {
-			// Stub class; not implemented
-			throw new UnsupportedOperationException();
-			
-		}
     }
     
     public class SoundTypeFilenameMapStub implements IMap<String,String>
@@ -533,9 +495,14 @@ public class SoundFactoryTests extends TestCase {
 			throw new UnsupportedOperationException();
 		}
 
-		public void removeSound(IEntityUuid soundId) throws IllegalArgumentException {
+		public void removeSound(ISound sound) throws IllegalArgumentException {
 			// Stub class; not implemented
 			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void registerSound(ISound sound) throws IllegalArgumentException {
+			SoundRegistered = sound;
 		}
     }
 }

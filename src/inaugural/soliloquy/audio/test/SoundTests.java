@@ -1,6 +1,7 @@
 package inaugural.soliloquy.audio.test;
 
 import inaugural.soliloquy.audio.Sound;
+import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -19,7 +20,7 @@ public class SoundTests extends TestCase {
 	private final IEntityUuid ENTITY_UUID = new EntityUuidStub();
 	private final ISoundsPlaying SOUNDS_PLAYING = new SoundsPlayingStub();
 	
-	private static IEntityUuid _soundIdRemovedWithinSoundsPlaying;
+	private static ISound _soundIdRemovedWithinSoundsPlaying;
 	
     /**
      * Create the test case
@@ -187,7 +188,7 @@ public class SoundTests extends TestCase {
     {
     	_sound.stop();
     	
-    	assertTrue(_soundIdRemovedWithinSoundsPlaying == ENTITY_UUID);
+    	assertTrue(_soundIdRemovedWithinSoundsPlaying == _sound);
     }
     
     public void testOperationsOnStoppedSound()
@@ -321,26 +322,6 @@ public class SoundTests extends TestCase {
     	}
     }
     
-    private class EntityUuidStub implements IEntityUuid
-    {
-
-		public String getInterfaceName() {
-			// stub method
-			throw new UnsupportedOperationException();
-		}
-
-		public long getMostSignificantBits() {
-			// stub method
-			throw new UnsupportedOperationException();
-		}
-
-		public long getLeastSignificantBits() {
-			// stub method
-			throw new UnsupportedOperationException();
-		}
-    	
-    }
-    
     private class SoundsPlayingStub implements ISoundsPlaying
     {
 
@@ -364,8 +345,14 @@ public class SoundTests extends TestCase {
 			throw new UnsupportedOperationException();
 		}
 
-		public void removeSound(IEntityUuid soundId) throws IllegalArgumentException {
-			SoundTests._soundIdRemovedWithinSoundsPlaying = soundId;
+		public void removeSound(ISound sound) throws IllegalArgumentException {
+			SoundTests._soundIdRemovedWithinSoundsPlaying = sound;
+		}
+
+		@Override
+		public void registerSound(ISound sound) throws IllegalArgumentException {
+			// stub method
+			throw new UnsupportedOperationException();
 		}
     	
     }
