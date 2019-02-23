@@ -1,5 +1,9 @@
 package inaugural.soliloquy.audio;
 
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import soliloquy.audio.specs.ISound;
 import soliloquy.audio.specs.ISoundsPlaying;
 import soliloquy.common.specs.IEntityUuid;
@@ -10,6 +14,19 @@ public class Sound implements ISound {
 	
 	private final ISoundsPlaying SOUNDS_PLAYING;
 	
+	private final MediaPlayer MEDIA_PLAYER;
+	
+	private boolean _isPaused;
+	private boolean _isStopped;
+	private boolean _isMuted;
+	private boolean _isLooping;
+	
+	private boolean _isReady;
+	
+	private int _durationMs;
+	
+	private double _volume;
+	
 	public Sound(IEntityUuid id, String soundTypeId, String filename, ISoundsPlaying soundsPlaying)
 	{
 		// TODO: Test to make sure that id is non-null
@@ -18,145 +35,221 @@ public class Sound implements ISound {
 		SOUND_TYPE_ID = soundTypeId;
 		
 		SOUNDS_PLAYING = soundsPlaying;
+		
+		new JFXPanel();
+		Media media = new Media(filename);
+		MEDIA_PLAYER = new MediaPlayer(media);
+		
+		_isPaused = true;
+		_isStopped = false;
+		_isMuted = false;
+		_isLooping = false;
+		_isReady = false;
+		_volume = 1.0;
+		
+		MEDIA_PLAYER.setOnReady(() ->
+		{
+			_durationMs = (int) MEDIA_PLAYER.cycleDurationProperty().get().toMillis();
+			_isReady = true;
+		});
 	}
 
 	public IEntityUuid id() throws IllegalStateException {
-		// TODO Ensure that this is unit-tested
 		return ID;
 	}
 
 	public String getInterfaceName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "soliloquy.audio.specs.ISound";
 	}
 
 	public String soundTypeId() {
 		return SOUND_TYPE_ID;
 	}
 
-	public void play() {
-		// TODO Auto-generated method stub
-		
+	public void play() throws UnsupportedOperationException {
+		if (_isStopped)
+		{
+			throw new UnsupportedOperationException("Sound.play(): Sound has already been stopped");
+		}
+		MEDIA_PLAYER.play();
+		_isPaused = false;
 	}
 
 	public Runnable playTask() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public void playAsClip() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public Runnable playAsClipTask() {
-		// TODO Auto-generated method stub
-		return null;
+		return () -> play();
 	}
 
 	public void pause() {
-		// TODO Auto-generated method stub
-		
+		if (_isStopped)
+		{
+			throw new UnsupportedOperationException("Sound.pause(): Sound has already been stopped");
+		}
+		MEDIA_PLAYER.pause();
+		_isPaused = true;
 	}
 
 	public Runnable pauseTask() {
-		// TODO Auto-generated method stub
-		return null;
+		return () -> pause();
+	}
+
+	public boolean isPaused() {
+		return _isPaused;
 	}
 
 	public boolean isPlaying() {
-		// TODO Auto-generated method stub
-		return false;
+		return !_isPaused && !_isStopped;
 	}
 
 	public void stop() throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
+		MEDIA_PLAYER.stop();
+		MEDIA_PLAYER.dispose();
+		_isPaused = false;
+		_isStopped = true;
+		_isMuted = true;
 		
+		SOUNDS_PLAYING.removeSound(ID);
 	}
 
 	public Runnable stopTask() {
-		// TODO Auto-generated method stub
-		return null;
+		return () -> stop();
 	}
 
 	public void mute() {
-		// TODO Auto-generated method stub
-		
+		if (_isStopped)
+		{
+			throw new UnsupportedOperationException("Sound.mute(): Sound has already been stopped");
+		}
+		MEDIA_PLAYER.setVolume(0.0);
+		_isMuted = true;
 	}
 
 	public Runnable muteTask() {
-		// TODO Auto-generated method stub
-		return null;
+		return () -> mute();
 	}
 
 	public void unmute() throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		
+		if (_isStopped)
+		{
+			throw new UnsupportedOperationException("Sound.unmute(): Sound has already been stopped");
+		}
+		MEDIA_PLAYER.setVolume(_volume);
+		_isMuted = false;
 	}
 
 	public Runnable unmuteTask() {
-		// TODO Auto-generated method stub
-		return null;
+		return () -> unmute();
 	}
 
-	public boolean isMuted() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isMuted() throws UnsupportedOperationException {
+		if (_isStopped)
+		{
+			throw new UnsupportedOperationException("Sound.isMuted(): Sound has already been stopped");
+		}
+		return _isMuted;
 	}
 
 	public boolean isStopped() {
-		// TODO Auto-generated method stub
-		return false;
+		return _isStopped;
 	}
 
-	public double getVolume() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double getVolume() throws UnsupportedOperationException {
+		if (_isStopped)
+		{
+			throw new UnsupportedOperationException("Sound.getVolume(): Sound has already been stopped");
+		}
+		return _volume;
 	}
 
-	public void setVolume(double volume) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+	public void setVolume(double volume) throws IllegalArgumentException, UnsupportedOperationException {
+		if (_isStopped)
+		{
+			throw new UnsupportedOperationException("Sound.getVolume(): Sound has already been stopped");
+		}
+		if (!_isMuted)
+		{
+			MEDIA_PLAYER.setVolume(volume);
+		}
+		_volume = volume;
 	}
 
 	public Runnable setVolumeTask(double volume) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return () -> setVolume(volume);
 	}
 
-	public int getMillisecondLength() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getMillisecondLength() throws InterruptedException {
+		while (!_isReady)
+		{
+			try
+			{
+				Thread.sleep(10);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return _durationMs;
 	}
 
-	public int getMillisecondPosition() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getMillisecondPosition() throws InterruptedException {
+		if (_isStopped)
+		{
+			throw new UnsupportedOperationException("Sound.getMillisecondPosition(): Sound has already been stopped");
+		}
+		while (!_isReady)
+		{
+			try
+			{
+				Thread.sleep(10);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return (int) ((Duration)MEDIA_PLAYER.currentTimeProperty().getValue()).toMillis();
 	}
 
-	public void setMillisecondPosition(int ms) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+	public void setMillisecondPosition(int ms) throws IllegalArgumentException, UnsupportedOperationException {
+		if (_isStopped)
+		{
+			throw new UnsupportedOperationException("Sound.setMillisecondPosition(): Sound has already been stopped");
+		}
+		MEDIA_PLAYER.seek(Duration.millis(ms));
 	}
 
 	public Runnable setMillisecondPositionTask(int ms) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return null;
+		return () -> setMillisecondPosition(ms);
 	}
 
-	public boolean isLooping() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean getIsLooping() throws UnsupportedOperationException {
+		if (_isStopped)
+		{
+			throw new UnsupportedOperationException("Sound.getIsLooping(): Sound has already been stopped");
+		}
+		return _isLooping;
 	}
 
-	public void setIsLooping(boolean isLooping) {
-		// TODO Auto-generated method stub
-		
+	public void setIsLooping(boolean isLooping) throws UnsupportedOperationException {
+		if (_isStopped)
+		{
+			throw new UnsupportedOperationException("Sound.setIsLooping(): Sound has already been stopped");
+		}
+		if (isLooping)
+		{
+			MEDIA_PLAYER.setOnEndOfMedia(() -> setMillisecondPosition(0));
+		}
+		else
+		{
+			MEDIA_PLAYER.setOnEndOfMedia(() -> stop());
+		}
+		_isLooping = isLooping;
 	}
 
 	public Runnable setIsLoopingTask(boolean isLooping) {
-		// TODO Auto-generated method stub
-		return null;
+		return () -> setIsLooping(isLooping);
 	}
 
 }
