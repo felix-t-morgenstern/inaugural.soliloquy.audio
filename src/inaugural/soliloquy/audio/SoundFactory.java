@@ -19,6 +19,13 @@ public class SoundFactory implements ISoundFactory {
 		SOUNDS_PLAYING = soundsPlaying;
 		ENTITY_UUID_FACTORY = entityUuidFactory;
 	}
+	
+	SoundFactory()
+	{
+		SOUND_TYPE_FILENAMES = null;
+		SOUNDS_PLAYING = null;
+		ENTITY_UUID_FACTORY = null;
+	}
 
 	public ISound make(String soundTypeId) throws IllegalArgumentException {
 		if (soundTypeId == null)
@@ -30,6 +37,10 @@ public class SoundFactory implements ISoundFactory {
 			throw new IllegalArgumentException("SoundFactory.make: Invalid soundTypeId provided");
 		}
 		String filename = SOUND_TYPE_FILENAMES.get(soundTypeId);
+		if (filename == null)
+		{
+			throw new IllegalArgumentException("SoundFactory.make: soundTypeId must correspond to a valid (i.e. registered) sound type id");
+		}
 		IEntityUuid id = ENTITY_UUID_FACTORY.createRandomEntityUuid();
 		ISound sound = new Sound(id, soundTypeId, filename, SOUNDS_PLAYING);
 		SOUNDS_PLAYING.registerSound(sound);
@@ -41,7 +52,7 @@ public class SoundFactory implements ISoundFactory {
 	}
 
 	@Override
-	public void registerSounds(IMap<String, String> soundTypesToFilenamesMap) throws IllegalArgumentException {
+	public void registerSoundTypes(IMap<String, String> soundTypesToFilenamesMap) throws IllegalArgumentException {
 		for(IPair<String,String> mapping : soundTypesToFilenamesMap)
 		{
 			if (mapping.getItem1() == null)
@@ -65,5 +76,178 @@ public class SoundFactory implements ISoundFactory {
 		{
 			SOUND_TYPE_FILENAMES.put(mapping.getItem1(), mapping.getItem2());
 		}
+	}
+	
+	static ISound makeSoundArchetype()
+	{
+		SoundFactory nonfunctionalSoundFactory = new SoundFactory();
+		ISound soundArchetype = nonfunctionalSoundFactory.new SoundArchetype();
+		return soundArchetype;
+	}
+	
+	public class SoundArchetype implements ISound
+	{
+
+		@Override
+		public IEntityUuid id() {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public String getInterfaceName() {
+			return Sound.INTERFACE_NAME;
+		}
+
+		@Override
+		public String soundTypeId() {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void play() throws UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Runnable playTask() {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void pause() throws UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Runnable pauseTask() {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean isPaused() {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean isPlaying() {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void stop() throws UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Runnable stopTask() {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void mute() throws UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Runnable muteTask() {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void unmute() throws UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Runnable unmuteTask() {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean isMuted() throws UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean isStopped() {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public double getVolume() throws UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void setVolume(double volume) throws IllegalArgumentException, UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Runnable setVolumeTask(double volume) throws IllegalArgumentException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public int getMillisecondLength() throws InterruptedException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public int getMillisecondPosition() throws InterruptedException, UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void setMillisecondPosition(int ms) throws IllegalArgumentException, UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Runnable setMillisecondPositionTask(int ms) throws IllegalArgumentException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public boolean getIsLooping() throws UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void setIsLooping(boolean isLooping) throws UnsupportedOperationException {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Runnable setIsLoopingTask(boolean isLooping) {
+			// stub method
+			throw new UnsupportedOperationException();
+		}
+		
 	}
 }

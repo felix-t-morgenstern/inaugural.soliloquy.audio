@@ -27,6 +27,8 @@ public class Sound implements ISound {
 	
 	private double _volume;
 	
+	static final String INTERFACE_NAME = "soliloquy.audio.specs.ISound";
+	
 	public Sound(IEntityUuid id, String soundTypeId, String filename, ISoundsPlaying soundsPlaying)
 	{
 		// TODO: Test to make sure that id is non-null
@@ -59,7 +61,7 @@ public class Sound implements ISound {
 	}
 
 	public String getInterfaceName() {
-		return "soliloquy.audio.specs.ISound";
+		return INTERFACE_NAME;
 	}
 
 	public String soundTypeId() {
