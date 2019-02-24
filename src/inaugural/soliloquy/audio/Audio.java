@@ -18,7 +18,7 @@ public class Audio implements IAudio {
 		return SOUNDS_PLAYING;
 	}
 
-	public ISoundFactory soundsLibrary() {
+	public ISoundFactory soundFactory() {
 		return SOUND_FACTORY;
 	}
 }

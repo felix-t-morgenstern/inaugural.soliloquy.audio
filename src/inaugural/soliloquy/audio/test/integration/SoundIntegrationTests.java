@@ -1,33 +1,29 @@
-package inaugural.soliloquy.audio.test;
+package inaugural.soliloquy.audio.test.integration;
 
-import inaugural.soliloquy.audio.Sound;
-import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
+import inaugural.soliloquy.audio.test.unit.SoundFactoryUnitTests;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import soliloquy.audio.specs.ISound;
+import soliloquy.audio.specs.ISoundFactory;
 import soliloquy.audio.specs.ISoundsPlaying;
-import soliloquy.common.specs.ICollection;
-import soliloquy.common.specs.IEntityUuid;
+import soliloquy.common.specs.IMap;
 
-public class SoundTests extends TestCase {
-	private Sound _sound;
+public class SoundIntegrationTests extends TestCase {
+	private ISound _sound;
+	private ISoundsPlaying _soundsPlaying;
 	
-	private String _filename = this.getClass().getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
+	private IMap<String,String> _soundTypeFilenameMappings;
 	
-	private final String SOUND_TYPE_ID = "Kevin_MacLeod_-_Living_Voyage";
-	
-	private final IEntityUuid ENTITY_UUID = new EntityUuidStub();
-	private final ISoundsPlaying SOUNDS_PLAYING = new SoundsPlayingStub();
-	
-	private static ISound _soundIdRemovedWithinSoundsPlaying;
+	private final static String SOUND_TYPE_1_ID = "SoundType1Id";
+	private final static String SOUND_TYPE_1_FILENAME = SoundFactoryUnitTests.class.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
 	
     /**
      * Create the test case
      *
      * @param testName name of the test case
      */
-    public SoundTests( String testName )
+    public SoundIntegrationTests( String testName )
     {
         super( testName );
     }
@@ -37,20 +33,23 @@ public class SoundTests extends TestCase {
      */
     public static Test suite()
     {
-        return new TestSuite( SoundTests.class );
+        return new TestSuite( SoundIntegrationTests.class );
     }
     
     @Override
     protected void setUp() throws Exception
     {
-    	_sound = new Sound(ENTITY_UUID, SOUND_TYPE_ID, _filename, SOUNDS_PLAYING);
+    	IntegrationTestsSetup setup = new IntegrationTestsSetup();
     	
-    	_soundIdRemovedWithinSoundsPlaying = null;
-    }
-    
-    public void testId()
-    {
-    	assertTrue(_sound.id() == ENTITY_UUID);
+    	_soundsPlaying = setup.audio().soundsPlaying();
+    	
+    	_soundTypeFilenameMappings = setup.mapFactory().make("", "");
+    	_soundTypeFilenameMappings.put(SOUND_TYPE_1_ID, SOUND_TYPE_1_FILENAME);
+    	
+    	ISoundFactory soundFactory = setup.audio().soundFactory();
+    	soundFactory.registerSoundTypes(_soundTypeFilenameMappings);
+    	
+    	_sound = soundFactory.make(SOUND_TYPE_1_ID);
     }
     
     public void testGetInterfaceName()
@@ -186,9 +185,11 @@ public class SoundTests extends TestCase {
     
     public void testStopRemovesSoundFromSoundsPlaying()
     {
+    	assertTrue(_soundsPlaying.isPlayingSound(_sound.id()));
+    	
     	_sound.stop();
     	
-    	assertTrue(_soundIdRemovedWithinSoundsPlaying == _sound);
+    	assertTrue(!_soundsPlaying.isPlayingSound(_sound.id()));
     }
     
     public void testOperationsOnStoppedSound()
@@ -320,40 +321,5 @@ public class SoundTests extends TestCase {
     	{
     		assertTrue(false);
     	}
-    }
-    
-    private class SoundsPlayingStub implements ISoundsPlaying
-    {
-
-		public String getInterfaceName() {
-			// stub method
-			throw new UnsupportedOperationException();
-		}
-
-		public ICollection<ISound> allSoundsPlaying() {
-			// stub method
-			throw new UnsupportedOperationException();
-		}
-
-		public boolean isPlayingSound(IEntityUuid soundId) throws IllegalArgumentException {
-			// stub method
-			throw new UnsupportedOperationException();
-		}
-
-		public ISound getSound(IEntityUuid soundId) throws IllegalArgumentException {
-			// stub method
-			throw new UnsupportedOperationException();
-		}
-
-		public void removeSound(ISound sound) throws IllegalArgumentException {
-			SoundTests._soundIdRemovedWithinSoundsPlaying = sound;
-		}
-
-		@Override
-		public void registerSound(ISound sound) throws IllegalArgumentException {
-			// stub method
-			throw new UnsupportedOperationException();
-		}
-    	
     }
 }

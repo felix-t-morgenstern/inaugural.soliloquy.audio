@@ -1,4 +1,4 @@
-package inaugural.soliloquy.audio.test.stubs;
+package inaugural.soliloquy.audio.test.unit.stubs;
 
 import soliloquy.audio.specs.ISound;
 import soliloquy.common.specs.IEntityUuid;

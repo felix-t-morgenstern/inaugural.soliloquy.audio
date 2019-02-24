@@ -1,9 +1,9 @@
-package inaugural.soliloquy.audio.test;
+package inaugural.soliloquy.audio.test.unit;
 
 import inaugural.soliloquy.audio.SoundsPlaying;
-import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
-import inaugural.soliloquy.audio.test.stubs.MapFactoryStub;
-import inaugural.soliloquy.audio.test.stubs.SoundStub;
+import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidStub;
+import inaugural.soliloquy.audio.test.unit.stubs.MapFactoryStub;
+import inaugural.soliloquy.audio.test.unit.stubs.SoundStub;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,7 +12,7 @@ import soliloquy.common.specs.ICollection;
 import soliloquy.common.specs.IEntityUuid;
 import soliloquy.common.specs.IMapFactory;
 
-public class SoundsPlayingTests extends TestCase {
+public class SoundsPlayingUnitTests extends TestCase {
 	private SoundsPlaying _soundsPlaying;
 	
 	private final IMapFactory MAP_FACTORY = new MapFactoryStub();
@@ -24,7 +24,7 @@ public class SoundsPlayingTests extends TestCase {
      *
      * @param testName name of the test case
      */
-    public SoundsPlayingTests( String testName )
+    public SoundsPlayingUnitTests( String testName )
     {
         super( testName );
     }
@@ -34,7 +34,7 @@ public class SoundsPlayingTests extends TestCase {
      */
     public static Test suite()
     {
-        return new TestSuite( SoundsPlayingTests.class );
+        return new TestSuite( SoundsPlayingUnitTests.class );
     }
     
     @Override
@@ -50,8 +50,6 @@ public class SoundsPlayingTests extends TestCase {
     
     public void testRegisterAndRemoveSound()
     {
-    	assertTrue(!_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.id()));
-    	
     	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
     	
     	assertTrue(_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.id()));

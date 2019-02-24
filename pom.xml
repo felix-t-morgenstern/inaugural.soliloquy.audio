@@ -32,6 +32,16 @@
     	<version>0.0.1</version>
     </dependency>
     <dependency>
+    	<groupId>disorg.soliloquy</groupId>
+    	<artifactId>inaugural.soliloquy.common</artifactId>
+    	<version>0.0.1</version>
+    </dependency>
+  	<dependency>
+  		<groupId>com.google.inject</groupId>
+  		<artifactId>guice</artifactId>
+  		<version>4.0</version>
+  	</dependency>
+    <dependency>
     	<groupId>org.openjfx</groupId>
     	<artifactId>javafx-media</artifactId>
     	<version>11.0.2</version>
@@ -42,4 +52,5 @@
     	<version>11.0.2</version>
     </dependency>
   </dependencies>
+  <inceptionYear>2019</inceptionYear>
 </project>

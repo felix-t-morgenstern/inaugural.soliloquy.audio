@@ -1,4 +1,4 @@
-package inaugural.soliloquy.audio.test.stubs;
+package inaugural.soliloquy.audio.test.unit.stubs;
 
 import soliloquy.common.specs.IMap;
 import soliloquy.common.specs.IMapFactory;
