@@ -1,22 +1,14 @@
 package inaugural.soliloquy.audio.test.integration;
 
-import inaugural.soliloquy.audio.test.unit.SoundFactoryUnitTests;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import soliloquy.audio.specs.ISound;
-import soliloquy.audio.specs.ISoundFactory;
 import soliloquy.audio.specs.ISoundsPlaying;
-import soliloquy.common.specs.IMap;
 
 public class SoundIntegrationTests extends TestCase {
 	private ISound _sound;
 	private ISoundsPlaying _soundsPlaying;
-	
-	private IMap<String,String> _soundTypeFilenameMappings;
-	
-	private final static String SOUND_TYPE_1_ID = "SoundType1Id";
-	private final static String SOUND_TYPE_1_FILENAME = SoundFactoryUnitTests.class.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
 	
     /**
      * Create the test case
@@ -43,13 +35,7 @@ public class SoundIntegrationTests extends TestCase {
     	
     	_soundsPlaying = setup.audio().soundsPlaying();
     	
-    	_soundTypeFilenameMappings = setup.mapFactory().make("", "");
-    	_soundTypeFilenameMappings.put(SOUND_TYPE_1_ID, SOUND_TYPE_1_FILENAME);
-    	
-    	ISoundFactory soundFactory = setup.audio().soundFactory();
-    	soundFactory.registerSoundTypes(_soundTypeFilenameMappings);
-    	
-    	_sound = soundFactory.make(SOUND_TYPE_1_ID);
+    	_sound = setup.sampleSound();
     }
     
     public void testGetInterfaceName()

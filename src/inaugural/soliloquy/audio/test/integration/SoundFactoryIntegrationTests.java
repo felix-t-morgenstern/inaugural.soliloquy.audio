@@ -1,6 +1,5 @@
 package inaugural.soliloquy.audio.test.integration;
 
-import inaugural.soliloquy.audio.test.unit.SoundFactoryUnitTests;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,9 +11,6 @@ public class SoundFactoryIntegrationTests extends TestCase {
 	private ISoundFactory _soundFactory;
 	
 	private IMap<String,String> _soundTypeFilenameMappings;
-	
-	private final static String SOUND_TYPE_1_ID = "SoundType1Id";
-	private final static String SOUND_TYPE_1_FILENAME = SoundFactoryUnitTests.class.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
 	
     /**
      * Create the test case
@@ -38,10 +34,10 @@ public class SoundFactoryIntegrationTests extends TestCase {
     protected void setUp() throws Exception
     {
     	IntegrationTestsSetup setup = new IntegrationTestsSetup();
+    	
     	_soundFactory = setup.audio().soundFactory();
     	
-    	_soundTypeFilenameMappings = setup.mapFactory().make("", "");
-    	_soundTypeFilenameMappings.put(SOUND_TYPE_1_ID, SOUND_TYPE_1_FILENAME);
+    	_soundTypeFilenameMappings = setup.sampleSoundTypeFilenameMappings();
     }
     
     public void testGetInterfaceName()
@@ -53,9 +49,9 @@ public class SoundFactoryIntegrationTests extends TestCase {
     {
     	_soundFactory.registerSoundTypes(_soundTypeFilenameMappings);
     	
-    	ISound sound = _soundFactory.make(SOUND_TYPE_1_ID);
+    	ISound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
     	
-    	assertTrue(sound.soundTypeId().equals(SOUND_TYPE_1_ID));
+    	assertTrue(sound.soundTypeId().equals(IntegrationTestsSetup.SOUND_TYPE_1_ID));
     }
     
     public void testMakeWithInvalidSoundTypeId()
