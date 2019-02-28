@@ -1,36 +1,20 @@
 package inaugural.soliloquy.audio.test.integration;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import soliloquy.audio.specs.ISound;
 import soliloquy.audio.specs.ISoundFactory;
 import soliloquy.common.specs.IMap;
 
-public class SoundFactoryIntegrationTests extends TestCase {
+public class SoundFactoryIntegrationTests {
 	private ISoundFactory _soundFactory;
 	
 	private IMap<String,String> _soundTypeFilenameMappings;
 	
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public SoundFactoryIntegrationTests( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( SoundFactoryIntegrationTests.class );
-    }
-    
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception
     {
     	IntegrationTestsSetup setup = new IntegrationTestsSetup();
@@ -40,11 +24,13 @@ public class SoundFactoryIntegrationTests extends TestCase {
     	_soundTypeFilenameMappings = setup.sampleSoundTypeFilenameMappings();
     }
     
+    @Test
     public void testGetInterfaceName()
     {
     	assertTrue("soliloquy.audio.specs.ISoundFactory".equals(_soundFactory.getInterfaceName()));
     }
-    
+
+    @Test
     public void testMake()
     {
     	_soundFactory.registerSoundTypes(_soundTypeFilenameMappings);
@@ -53,7 +39,8 @@ public class SoundFactoryIntegrationTests extends TestCase {
     	
     	assertTrue(sound.soundTypeId().equals(IntegrationTestsSetup.SOUND_TYPE_1_ID));
     }
-    
+
+    @Test
     public void testMakeWithInvalidSoundTypeId()
     {
     	try

@@ -1,20 +1,20 @@
 package inaugural.soliloquy.audio.test.unit;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import inaugural.soliloquy.audio.SoundFactory;
 import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidFactoryStub;
 import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidStub;
 import inaugural.soliloquy.audio.test.unit.stubs.SoundTypeFilenameMapStub;
 import inaugural.soliloquy.audio.test.unit.stubs.SoundTypeFilenamesMapStub;
 import inaugural.soliloquy.audio.test.unit.stubs.SoundsPlayingStub;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import soliloquy.audio.specs.ISound;
 import soliloquy.audio.specs.ISoundsPlaying;
 import soliloquy.common.specs.IEntityUuidFactory;
 import soliloquy.common.specs.IMap;
 
-public abstract class SoundFactoryUnitTests extends TestCase {
+public abstract class SoundFactoryUnitTests {
 	private SoundFactory _soundFactory;
 	
 	private final IEntityUuidFactory ENTITY_UUID_FACTORY = new EntityUuidFactoryStub();
@@ -28,25 +28,7 @@ public abstract class SoundFactoryUnitTests extends TestCase {
 	private final static String SOUND_TYPE_1_ID = "SoundType1Id";
 	private final static String SOUND_TYPE_1_FILENAME = SoundFactoryUnitTests.class.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
 	
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    protected SoundFactoryUnitTests( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    static Test suite()
-    {
-        return new TestSuite( SoundFactoryUnitTests.class );
-    }
-    
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception
     {
     	SoundTypeFilenameSearched = "";
@@ -55,11 +37,13 @@ public abstract class SoundFactoryUnitTests extends TestCase {
     	_soundFactory = new SoundFactory(SOUND_TYPE_FILENAMES, SOUNDS_PLAYING, ENTITY_UUID_FACTORY);
     }
     
+    @Test
     public void testGetInterfaceName()
     {
     	assertTrue("soliloquy.audio.specs.ISoundFactory".equals(_soundFactory.getInterfaceName()));
     }
-    
+
+    @Test
     public void testMake()
     {
     	_soundFactory.registerSoundTypes(new SoundTypeFilenamesMapStub(SOUND_TYPE_1_ID, SOUND_TYPE_1_FILENAME));
@@ -76,7 +60,8 @@ public abstract class SoundFactoryUnitTests extends TestCase {
     	assertTrue(sound.id().getMostSignificantBits() == EntityUuidStub.MOST_SIGNIFICANT_BITS);
     	assertTrue(sound.soundTypeId().equals(SOUND_TYPE_1_ID));
     }
-    
+
+    @Test
     public void testMakeWithInvalidSoundTypeId()
     {
     	try

@@ -1,34 +1,18 @@
 package inaugural.soliloquy.audio.test.integration;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import soliloquy.audio.specs.ISound;
 import soliloquy.audio.specs.ISoundsPlaying;
 
-public class SoundIntegrationTests extends TestCase {
+public class SoundIntegrationTests {
 	private ISound _sound;
 	private ISoundsPlaying _soundsPlaying;
 	
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public SoundIntegrationTests( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( SoundIntegrationTests.class );
-    }
-    
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception
     {
     	IntegrationTestsSetup setup = new IntegrationTestsSetup();
@@ -38,11 +22,13 @@ public class SoundIntegrationTests extends TestCase {
     	_sound = setup.sampleSound();
     }
     
+    @Test
     public void testGetInterfaceName()
     {
     	assertTrue(_sound.getInterfaceName().equals("soliloquy.audio.specs.ISound"));
     }
-    
+
+    @Test
     public void testIsPaused()
     {
     	assertTrue(_sound.isPaused());
@@ -59,7 +45,8 @@ public class SoundIntegrationTests extends TestCase {
     	
     	assertTrue(!_sound.isPaused());
     }
-    
+
+    @Test
     public void testIsPlaying()
     {
     	assertTrue(!_sound.isPlaying());
@@ -80,7 +67,8 @@ public class SoundIntegrationTests extends TestCase {
     	
     	assertTrue(!_sound.isPlaying());
     }
-    
+
+    @Test
     public void testIsMuted()
     {
     	assertTrue(!_sound.isMuted());
@@ -93,7 +81,8 @@ public class SoundIntegrationTests extends TestCase {
     	
     	assertTrue(!_sound.isMuted());
     }
-    
+
+    @Test
     public void testIsStopped()
     {
     	assertTrue(!_sound.isStopped());
@@ -110,7 +99,8 @@ public class SoundIntegrationTests extends TestCase {
 
     	assertTrue(_sound.isStopped());
     }
-    
+
+    @Test
     public void testGetVolume()
     {
     	assertTrue(_sound.getVolume() == 1.0);
@@ -123,7 +113,8 @@ public class SoundIntegrationTests extends TestCase {
 
     	assertTrue(_sound.getVolume() == 0.5);
     }
-    
+
+    @Test
     public void testGetMillisecondLength()
     {    	
     	int millisecondLength = -1;
@@ -138,7 +129,8 @@ public class SoundIntegrationTests extends TestCase {
     	
     	assertTrue(millisecondLength == 208174);
     }
-    
+
+    @Test
     public void testGetMillisecondPosition() throws InterruptedException
     {
     	final int timeToWait = 500;
@@ -157,7 +149,8 @@ public class SoundIntegrationTests extends TestCase {
     	assertTrue(Math.abs(timeToWait-msPosition) <= 250);
     	assertTrue(msPosition == msPosition2);
     }
-    
+
+    @Test
     public void testIsLooping()
     {
     	_sound.setVolume(0.0);
@@ -168,7 +161,8 @@ public class SoundIntegrationTests extends TestCase {
     	
     	assertTrue(_sound.getIsLooping());
     }
-    
+
+    @Test
     public void testStopRemovesSoundFromSoundsPlaying()
     {
     	assertTrue(_soundsPlaying.isPlayingSound(_sound.id()));
@@ -177,7 +171,8 @@ public class SoundIntegrationTests extends TestCase {
     	
     	assertTrue(!_soundsPlaying.isPlayingSound(_sound.id()));
     }
-    
+
+    @Test
     public void testOperationsOnStoppedSound()
     {
     	_sound.stop();

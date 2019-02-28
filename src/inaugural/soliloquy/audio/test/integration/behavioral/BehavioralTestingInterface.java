@@ -277,6 +277,7 @@ public class BehavioralTestingInterface implements ActionListener {
 		try
 		{
 			SOUND.setVolume(0.5);
+			updateLabels();
 		}
 		catch(Exception e)
 		{
@@ -289,6 +290,7 @@ public class BehavioralTestingInterface implements ActionListener {
 		try
 		{
 			SOUND.setVolume(1.0);
+			updateLabels();
 		}
 		catch(Exception e)
 		{

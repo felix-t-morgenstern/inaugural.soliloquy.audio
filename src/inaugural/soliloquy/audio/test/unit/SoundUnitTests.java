@@ -1,16 +1,18 @@
 package inaugural.soliloquy.audio.test.unit;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import inaugural.soliloquy.audio.Sound;
 import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidStub;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import soliloquy.audio.specs.ISound;
 import soliloquy.audio.specs.ISoundsPlaying;
 import soliloquy.common.specs.ICollection;
 import soliloquy.common.specs.IEntityUuid;
 
-public class SoundUnitTests extends TestCase {
+public class SoundUnitTests {
 	private Sound _sound;
 	
 	private String _filename = this.getClass().getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
@@ -22,25 +24,7 @@ public class SoundUnitTests extends TestCase {
 	
 	private static ISound _soundIdRemovedWithinSoundsPlaying;
 	
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public SoundUnitTests( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( SoundUnitTests.class );
-    }
-    
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception
     {
     	_sound = new Sound(ENTITY_UUID, SOUND_TYPE_ID, _filename, SOUNDS_PLAYING);
@@ -48,16 +32,19 @@ public class SoundUnitTests extends TestCase {
     	_soundIdRemovedWithinSoundsPlaying = null;
     }
     
+    @Test
     public void testId()
     {
     	assertTrue(_sound.id() == ENTITY_UUID);
     }
-    
+
+    @Test
     public void testGetInterfaceName()
     {
     	assertTrue(_sound.getInterfaceName().equals("soliloquy.audio.specs.ISound"));
     }
-    
+
+    @Test
     public void testIsPaused()
     {
     	assertTrue(_sound.isPaused());
@@ -74,7 +61,8 @@ public class SoundUnitTests extends TestCase {
     	
     	assertTrue(!_sound.isPaused());
     }
-    
+
+    @Test
     public void testIsPlaying()
     {
     	assertTrue(!_sound.isPlaying());
@@ -95,7 +83,8 @@ public class SoundUnitTests extends TestCase {
     	
     	assertTrue(!_sound.isPlaying());
     }
-    
+
+    @Test
     public void testIsMuted()
     {
     	assertTrue(!_sound.isMuted());
@@ -108,7 +97,8 @@ public class SoundUnitTests extends TestCase {
     	
     	assertTrue(!_sound.isMuted());
     }
-    
+
+    @Test
     public void testIsStopped()
     {
     	assertTrue(!_sound.isStopped());
@@ -125,7 +115,8 @@ public class SoundUnitTests extends TestCase {
 
     	assertTrue(_sound.isStopped());
     }
-    
+
+    @Test
     public void testGetVolume()
     {
     	assertTrue(_sound.getVolume() == 1.0);
@@ -138,7 +129,8 @@ public class SoundUnitTests extends TestCase {
 
     	assertTrue(_sound.getVolume() == 0.5);
     }
-    
+
+    @Test
     public void testGetMillisecondLength()
     {    	
     	int millisecondLength = -1;
@@ -153,7 +145,8 @@ public class SoundUnitTests extends TestCase {
     	
     	assertTrue(millisecondLength == 208174);
     }
-    
+
+    @Test
     public void testGetMillisecondPosition() throws InterruptedException
     {
     	final int timeToWait = 500;
@@ -172,7 +165,8 @@ public class SoundUnitTests extends TestCase {
     	assertTrue(Math.abs(timeToWait-msPosition) <= 250);
     	assertTrue(msPosition == msPosition2);
     }
-    
+
+    @Test
     public void testIsLooping()
     {
     	_sound.setVolume(0.0);
@@ -183,14 +177,16 @@ public class SoundUnitTests extends TestCase {
     	
     	assertTrue(_sound.getIsLooping());
     }
-    
+
+    @Test
     public void testStopRemovesSoundFromSoundsPlaying()
     {
     	_sound.stop();
     	
     	assertTrue(_soundIdRemovedWithinSoundsPlaying == _sound);
     }
-    
+
+    @Test
     public void testOperationsOnStoppedSound()
     {
     	_sound.stop();

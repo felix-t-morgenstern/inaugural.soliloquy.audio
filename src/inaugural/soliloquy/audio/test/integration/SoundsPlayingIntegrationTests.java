@@ -1,36 +1,18 @@
 package inaugural.soliloquy.audio.test.integration;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import soliloquy.audio.specs.ISound;
 import soliloquy.audio.specs.ISoundFactory;
 import soliloquy.audio.specs.ISoundsPlaying;
 import soliloquy.common.specs.ICollection;
 
-public class SoundsPlayingIntegrationTests extends TestCase {
+public class SoundsPlayingIntegrationTests {
 	private ISoundsPlaying _soundsPlaying;
 	private ISoundFactory _soundFactory;
 	
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public SoundsPlayingIntegrationTests( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( SoundsPlayingIntegrationTests.class );
-    }
-    
-    @Override
+    @BeforeEach
     protected void setUp() throws Exception
     {
     	IntegrationTestsSetup setup = new IntegrationTestsSetup();
@@ -40,11 +22,13 @@ public class SoundsPlayingIntegrationTests extends TestCase {
     	_soundFactory.registerSoundTypes(setup.sampleSoundTypeFilenameMappings());
     }
     
+    @Test
     public void testGetInterfaceName()
     {
     	assertTrue(_soundsPlaying.getInterfaceName().equals("soliloquy.audio.specs.ISoundsPlaying"));
     }
-    
+
+    @Test
     public void testRegisterAndRemoveSound()
     {
     	ISound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
@@ -57,7 +41,8 @@ public class SoundsPlayingIntegrationTests extends TestCase {
 
     	assertTrue(!_soundsPlaying.isPlayingSound(sound.id()));
     }
-    
+
+    @Test
     public void testAllSoundsPlaying()
     {
     	ISound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
@@ -69,7 +54,8 @@ public class SoundsPlayingIntegrationTests extends TestCase {
     	assertTrue(allSoundsPlaying1.size() == 1);
     	assertTrue(allSoundsPlaying1.contains(sound));
     }
-    
+
+    @Test
     public void testGetSoundWithNullId()
     {
     	try
@@ -86,7 +72,8 @@ public class SoundsPlayingIntegrationTests extends TestCase {
     		assertTrue(false);
     	}
     }
-    
+
+    @Test
     public void testIsPlayingSoundWithNullId()
     {
     	try
@@ -103,7 +90,8 @@ public class SoundsPlayingIntegrationTests extends TestCase {
     		assertTrue(false);
     	}
     }
-    
+
+    @Test
     public void testGetSound()
     {
     	ISound soundMade = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
