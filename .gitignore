@@ -3,3 +3,10 @@
 *.prefs
 target/classes/inaugural/soliloquy/audio/test/Kevin_MacLeod_-_Living_Voyage.mp3
 target/classes/inaugural/soliloquy/audio/test/unit/Kevin_MacLeod_-_Living_Voyage.mp3
+*.jar
+*.lst
+*.md5
+*.sha1
+*.pom
+target/maven-archiver/pom.properties
+target/mvn-repo/disorg/soliloquy/inaugural.soliloquy.audio/maven-metadata.xml
