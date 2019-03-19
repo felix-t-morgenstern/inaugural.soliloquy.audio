@@ -29,8 +29,7 @@ public abstract class SoundFactoryUnitTests {
 	private final static String SOUND_TYPE_1_FILENAME = SoundFactoryUnitTests.class.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
 	
     @BeforeEach
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
     	SoundTypeFilenameSearched = "";
     	SoundTypeFilenameReturned = "";
     	SoundRegistered = null;
@@ -38,14 +37,12 @@ public abstract class SoundFactoryUnitTests {
     }
     
     @Test
-    public void testGetInterfaceName()
-    {
+    public void testGetInterfaceName()     {
     	assertTrue("soliloquy.audio.specs.ISoundFactory".equals(_soundFactory.getInterfaceName()));
     }
 
     @Test
-    public void testMake()
-    {
+    public void testMake() {
     	_soundFactory.registerSoundTypes(new SoundTypeFilenamesMapStub(SOUND_TYPE_1_ID, SOUND_TYPE_1_FILENAME));
     	
     	ISound sound = _soundFactory.make(SOUND_TYPE_1_ID);
@@ -62,33 +59,26 @@ public abstract class SoundFactoryUnitTests {
     }
 
     @Test
-    public void testMakeWithInvalidSoundTypeId()
-    {
-    	try
-    	{
+    public void testMakeWithInvalidSoundTypeId() {
+    	try {
     		_soundFactory.make(null);
     		assertTrue(false);
     	}
-    	catch(IllegalArgumentException e)
-    	{
+    	catch(IllegalArgumentException e) {
     		assertTrue(true);
     	}
-    	catch(Exception e)
-    	{
+    	catch(Exception e) {
     		assertTrue(false);
     	}
     	
-    	try
-    	{
+    	try {
     		_soundFactory.make("InvalidSoundTypeId!");
     		assertTrue(false);
     	}
-    	catch(IllegalArgumentException e)
-    	{
+    	catch(IllegalArgumentException e) {
     		assertTrue(true);
     	}
-    	catch(Exception e)
-    	{
+    	catch(Exception e) {
     		assertTrue(false);
     	}
     }
