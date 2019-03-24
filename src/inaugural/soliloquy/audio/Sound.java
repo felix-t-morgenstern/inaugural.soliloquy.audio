@@ -220,8 +220,7 @@ public class Sound implements ISound {
 		}
 		if (isLooping) {
 			MEDIA_PLAYER.setOnEndOfMedia(() -> setMillisecondPosition(0));
-		}
-		else {
+		} else {
 			MEDIA_PLAYER.setOnEndOfMedia(() -> stop());
 		}
 		_isLooping = isLooping;
