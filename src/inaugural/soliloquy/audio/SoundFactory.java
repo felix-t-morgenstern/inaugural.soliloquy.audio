@@ -50,16 +50,16 @@ public class SoundFactory implements ISoundFactory {
 	public void registerSoundTypes(IMap<String, String> soundTypesToFilenamesMap) throws IllegalArgumentException {
 		for(IPair<String,String> mapping : soundTypesToFilenamesMap) {
 			if (mapping.getItem1() == null) {
-				throw new IllegalArgumentException("SoundFactory.registerSounds(): key cannot be null");
+				throw new IllegalArgumentException("SoundFactory.registerSounds: key cannot be null");
 			}
 			if (mapping.getItem1().equals("")) {
-				throw new IllegalArgumentException("SoundFactory.registerSounds(): key cannot be empty");
+				throw new IllegalArgumentException("SoundFactory.registerSounds: key cannot be empty");
 			}
 			if (mapping.getItem2() == null) {
-				throw new IllegalArgumentException("SoundFactory.registerSounds(): value cannot be null");
+				throw new IllegalArgumentException("SoundFactory.registerSounds: value cannot be null");
 			}
 			if (mapping.getItem2().equals("")) {
-				throw new IllegalArgumentException("SoundFactory.registerSounds(): value cannot be empty");
+				throw new IllegalArgumentException("SoundFactory.registerSounds: value cannot be empty");
 			}
 		}
 		for(IPair<String,String> mapping : soundTypesToFilenamesMap) {
