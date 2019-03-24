@@ -18,10 +18,10 @@ public class IntegrationTestsSetup {
 	private final IAudio AUDIO;
 	
 	public final static String SOUND_TYPE_1_ID = "SoundType1Id";
-	public final static String SOUND_TYPE_1_FILENAME = SoundFactoryUnitTests.class.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
+	public final static String SOUND_TYPE_1_FILENAME = SoundFactoryUnitTests.class
+			.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
 	
-	public IntegrationTestsSetup()
-	{
+	public IntegrationTestsSetup() {
 		Injector commonInjector = Guice.createInjector(new CommonModule());
 		
 		IEntityUuidFactory entityUuidFactory = commonInjector.getInstance(IEntityUuidFactory.class);
@@ -33,25 +33,21 @@ public class IntegrationTestsSetup {
 		AUDIO = audioInjector.getInstance(IAudio.class);
 	}
 	
-	public IAudio audio()
-	{
+	public IAudio audio() {
 		return AUDIO;
 	}
 	
-	IMapFactory mapFactory()
-	{
+	IMapFactory mapFactory() {
 		return MAP_FACTORY;
 	}
 	
-	public IMap<String,String> sampleSoundTypeFilenameMappings()
-	{
+	public IMap<String,String> sampleSoundTypeFilenameMappings() {
 		IMap<String,String> soundTypeFilenameMappings = mapFactory().make("", "");
 		soundTypeFilenameMappings.put(SOUND_TYPE_1_ID, SOUND_TYPE_1_FILENAME);
 		return soundTypeFilenameMappings;
 	}
 	
-	public ISound sampleSound()
-	{
+	public ISound sampleSound() {
     	AUDIO.soundFactory().registerSoundTypes(sampleSoundTypeFilenameMappings());
     	
     	return AUDIO.soundFactory().make(SOUND_TYPE_1_ID);

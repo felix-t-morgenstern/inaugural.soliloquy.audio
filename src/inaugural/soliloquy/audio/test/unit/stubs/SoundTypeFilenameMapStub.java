@@ -9,8 +9,7 @@ import soliloquy.common.specs.IFunction;
 import soliloquy.common.specs.IMap;
 import soliloquy.common.specs.IPair;
 
-public class SoundTypeFilenameMapStub implements IMap<String,String>
-{
+public class SoundTypeFilenameMapStub implements IMap<String,String> {
 	private HashMap<String,String> _mappings = new HashMap<String,String>();
 
 	public Iterator<IPair<String, String>> iterator() {

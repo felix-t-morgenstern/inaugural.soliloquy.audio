@@ -8,8 +8,7 @@ public class Audio implements IAudio {
 	private final ISoundsPlaying SOUNDS_PLAYING;
 	private final ISoundFactory SOUND_FACTORY;
 	
-	public Audio(ISoundsPlaying soundsPlaying, ISoundFactory soundFactory)
-	{
+	public Audio(ISoundsPlaying soundsPlaying, ISoundFactory soundFactory) {
 		SOUNDS_PLAYING = soundsPlaying;
 		SOUND_FACTORY = soundFactory;
 	}

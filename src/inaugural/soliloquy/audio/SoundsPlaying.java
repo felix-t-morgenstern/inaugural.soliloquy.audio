@@ -14,8 +14,7 @@ public class SoundsPlaying implements ISoundsPlaying {
 	
 	private IMap<IEntityUuid,ISound> _soundsPlaying;
 	
-	public SoundsPlaying(IMapFactory mapFactory, IEntityUuid entityUuidArchetype, ISound soundArchetype)
-	{
+	public SoundsPlaying(IMapFactory mapFactory, IEntityUuid entityUuidArchetype, ISound soundArchetype) {
 		MAP_FACTORY = mapFactory;
 		ENTITY_UUID_ARCHETYPE = entityUuidArchetype;
 		SOUND_ARCHETYPE = soundArchetype;
@@ -35,8 +34,7 @@ public class SoundsPlaying implements ISoundsPlaying {
 
 	@Override
 	public boolean isPlayingSound(IEntityUuid soundId) throws IllegalArgumentException {
-		if (soundId == null)
-		{
+		if (soundId == null) {
 			throw new IllegalArgumentException("SoundsPlaying.isPlayingSound: soundId cannot be null");
 		}
 		return _soundsPlaying.containsKey(soundId);
@@ -44,8 +42,7 @@ public class SoundsPlaying implements ISoundsPlaying {
 
 	@Override
 	public ISound getSound(IEntityUuid soundId) throws IllegalArgumentException {
-		if (soundId == null)
-		{
+		if (soundId == null) {
 			throw new IllegalArgumentException("SoundsPlaying.getSound: soundId cannot be null");
 		}
 		return _soundsPlaying.get(soundId);

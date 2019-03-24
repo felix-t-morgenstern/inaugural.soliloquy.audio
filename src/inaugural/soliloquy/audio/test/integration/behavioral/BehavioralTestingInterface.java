@@ -36,8 +36,7 @@ public class BehavioralTestingInterface implements ActionListener {
 	private static JLabel LABEL_DURATION;
 	private static JLabel LABEL_POSITION;
 	
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		log("Starting BehavioralTestingInterface...");
 		
 		JFrame frame = new JFrame();
@@ -113,13 +112,11 @@ public class BehavioralTestingInterface implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	private static void log(String msg)
-	{
+	private static void log(String msg) {
 		System.out.println(msg);
 	}
 	
-	private static void updateLabels() throws InterruptedException
-	{
+	private static void updateLabels() throws InterruptedException {
 		LABEL_ID.setText("Sound Id: " + (SOUND == null ? "" : "" + SOUND.id()));
 		LABEL_TYPE_ID.setText("Sound Type Id: " + (SOUND == null ? "" : "" + SOUND.soundTypeId()));
 		LABEL_VOLUME.setText("Volume: " + (SOUND == null || SOUND.isStopped() ? "" : "" + SOUND.getVolume()));
@@ -127,17 +124,12 @@ public class BehavioralTestingInterface implements ActionListener {
 		LABEL_POSITION.setText("Position, ms: " + (SOUND == null || SOUND.isStopped() ? "" : "" + SOUND.getMillisecondPosition()));
 	}
 	
-	private void recurringPositionCheck()
-	{
-		while(RUN_RECURRING_POSITION_CHECK)
-		{
-			try
-			{
+	private void recurringPositionCheck() {
+		while(RUN_RECURRING_POSITION_CHECK) {
+			try {
 				LABEL_POSITION.setText("Position, ms: " + (SOUND == null || SOUND.isStopped() ? "" : "" + SOUND.getMillisecondPosition()));
 				Thread.sleep(RECURRING_POSITION_CHECK_INTERVAL);
-			}
-			catch (InterruptedException e)
-			{
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
@@ -145,63 +137,57 @@ public class BehavioralTestingInterface implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		switch(e.getActionCommand())
-		{
-		case BUTTON_INITIALIZE:
-			log("Clicked " + BUTTON_INITIALIZE);
-			new Thread(() -> initialize()).start();
-			break;
-		case BUTTON_PLAY:
-			log("Clicked " + BUTTON_PLAY);
-			new Thread(() -> play()).start();
-			break;
-		case BUTTON_PAUSE:
-			log("Clicked " + BUTTON_PAUSE);
-			new Thread(() -> pause()).start();
-			break;
-		case BUTTON_STOP:
-			log("Clicked " + BUTTON_STOP);
-			new Thread(() -> stop()).start();
-			break;
-		case BUTTON_MUTE:
-			log("Clicked " + BUTTON_MUTE);
-			new Thread(() -> mute()).start();
-			break;
-		case BUTTON_UNMUTE:
-			log("Clicked " + BUTTON_UNMUTE);
-			new Thread(() -> unmute()).start();
-			break;
-		case BUTTON_HALF_VOLUME:
-			log("Clicked " + BUTTON_HALF_VOLUME);
-			new Thread(() -> halfVolume()).start();
-			break;
-		case BUTTON_FULL_VOLUME:
-			log("Clicked " + BUTTON_FULL_VOLUME);
-			new Thread(() -> fullVolume()).start();
-			break;
-		case BUTTON_CUSTOM_TASK:
-			log("Clicked " + BUTTON_CUSTOM_TASK);
-			new Thread(() -> customTask()).start();
-			break;
-		default:
-			log("Unrecognized command.");
-			break;
+		switch(e.getActionCommand()) {
+			case BUTTON_INITIALIZE:
+				log("Clicked " + BUTTON_INITIALIZE);
+				new Thread(() -> initialize()).start();
+				break;
+			case BUTTON_PLAY:
+				log("Clicked " + BUTTON_PLAY);
+				new Thread(() -> play()).start();
+				break;
+			case BUTTON_PAUSE:
+				log("Clicked " + BUTTON_PAUSE);
+				new Thread(() -> pause()).start();
+				break;
+			case BUTTON_STOP:
+				log("Clicked " + BUTTON_STOP);
+				new Thread(() -> stop()).start();
+				break;
+			case BUTTON_MUTE:
+				log("Clicked " + BUTTON_MUTE);
+				new Thread(() -> mute()).start();
+				break;
+			case BUTTON_UNMUTE:
+				log("Clicked " + BUTTON_UNMUTE);
+				new Thread(() -> unmute()).start();
+				break;
+			case BUTTON_HALF_VOLUME:
+				log("Clicked " + BUTTON_HALF_VOLUME);
+				new Thread(() -> halfVolume()).start();
+				break;
+			case BUTTON_FULL_VOLUME:
+				log("Clicked " + BUTTON_FULL_VOLUME);
+				new Thread(() -> fullVolume()).start();
+				break;
+			case BUTTON_CUSTOM_TASK:
+				log("Clicked " + BUTTON_CUSTOM_TASK);
+				new Thread(() -> customTask()).start();
+				break;
+			default:
+				log("Unrecognized command.");
+				break;
 		}
-		try
-		{
+		try {
 			updateLabels();
-		}
-		catch (InterruptedException e1)
-		{
+		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
 	}
 	
-	private void initialize()
-	{
+	private void initialize() {
 		AUDIO.soundFactory().registerSoundTypes(SETUP.sampleSoundTypeFilenameMappings());
-		for(ISound sound : AUDIO.soundsPlaying().allSoundsPlaying())
-		{
+		for(ISound sound : AUDIO.soundsPlaying().allSoundsPlaying()) {
 			sound.stop();
 		}
 		SOUND = AUDIO.soundFactory().make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
@@ -212,96 +198,66 @@ public class BehavioralTestingInterface implements ActionListener {
 		log("Initialized successfully.");
 	}
 	
-	private void play()
-	{
-		try
-		{
+	private void play() {
+		try {
 			SOUND.play();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			log(e.getClass().getName() + " caught");
 		}
 	}
 	
-	private void pause()
-	{
-		try
-		{
+	private void pause() {
+		try {
 			SOUND.pause();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			log(e.getClass().getName() + " caught");
 		}
 	}
 	
-	private void stop()
-	{
-		try
-		{
+	private void stop() {
+		try {
 			SOUND.stop();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			log(e.getClass().getName() + " caught");
 		}
 	}
 	
-	private void mute()
-	{
-		try
-		{
+	private void mute() {
+		try {
 			SOUND.mute();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			log(e.getClass().getName() + " caught");
 		}
 	}
 	
-	private void unmute()
-	{
-		try
-		{
+	private void unmute() {
+		try {
 			SOUND.unmute();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			log(e.getClass().getName() + " caught");
 		}
 	}
 	
-	private void halfVolume()
-	{
-		try
-		{
+	private void halfVolume() {
+		try {
 			SOUND.setVolume(0.5);
 			updateLabels();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			log(e.getClass().getName() + " caught");
 		}
 	}
 	
-	private void fullVolume()
-	{
-		try
-		{
+	private void fullVolume() {
+		try {
 			SOUND.setVolume(1.0);
 			updateLabels();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			log(e.getClass().getName() + " caught");
 		}
 	}
 	
-	private void customTask()
-	{
-		try
-		{
+	private void customTask() {
+		try {
 			Thread volumeTask = new Thread(() -> SOUND.setVolume(0.75));
 			Thread positionTask = new Thread(() -> SOUND.setMillisecondPosition(3000));
 			Thread.sleep(2000);
@@ -309,18 +265,13 @@ public class BehavioralTestingInterface implements ActionListener {
 			positionTask.start();
 			Thread.sleep(250);
 			new Thread(() -> {
-				try
-				{
+				try {
 					updateLabels();
-				}
-				catch (InterruptedException e)
-				{
+				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}).start();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			log(e.getClass().getName() + " caught");
 		}
 	}

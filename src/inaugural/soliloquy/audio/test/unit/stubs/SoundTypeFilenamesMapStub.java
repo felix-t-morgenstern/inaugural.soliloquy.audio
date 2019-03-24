@@ -8,14 +8,11 @@ import soliloquy.common.specs.IFunction;
 import soliloquy.common.specs.IMap;
 import soliloquy.common.specs.IPair;
 
-public class SoundTypeFilenamesMapStub implements IMap<String,String>
-{
+public class SoundTypeFilenamesMapStub implements IMap<String,String> {
 	private HashMap<String,String> _mappings;
 	
-	public SoundTypeFilenamesMapStub(String soundType1Id, String soundType1Filename)
-	{
+	public SoundTypeFilenamesMapStub(String soundType1Id, String soundType1Filename) {
 		_mappings = new HashMap<String,String>();
-		
 		_mappings.put(soundType1Id, soundType1Filename);
 	}
 	
@@ -162,12 +159,10 @@ public class SoundTypeFilenamesMapStub implements IMap<String,String>
 		throw new UnsupportedOperationException();
 	}
 	
-	private class SoundTypeFilenamesMapStubIterator implements Iterator<IPair<String, String>>
-	{
+	private class SoundTypeFilenamesMapStubIterator implements Iterator<IPair<String, String>> {
 		private Iterator<Entry<String,String>> _iterator;
 		
-		SoundTypeFilenamesMapStubIterator(HashMap<String,String> map)
-		{
+		SoundTypeFilenamesMapStubIterator(HashMap<String,String> map) {
 			_iterator = map.entrySet().iterator();
 		}
 
@@ -182,13 +177,11 @@ public class SoundTypeFilenamesMapStub implements IMap<String,String>
 			return new PairStub(entry.getKey(), entry.getValue());
 		}
 		
-		private class PairStub implements IPair<String,String>
-		{
+		private class PairStub implements IPair<String,String> {
 			private String _item1;
 			private String _item2;
 			
-			PairStub(String item1, String item2)
-			{
+			PairStub(String item1, String item2) {
 				_item1 = item1;
 				_item2 = item2;
 			}

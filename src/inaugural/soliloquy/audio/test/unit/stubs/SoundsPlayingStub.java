@@ -6,8 +6,7 @@ import soliloquy.audio.specs.ISoundsPlaying;
 import soliloquy.common.specs.ICollection;
 import soliloquy.common.specs.IEntityUuid;
 
-public class SoundsPlayingStub implements ISoundsPlaying
-{
+public class SoundsPlayingStub implements ISoundsPlaying {
 
 	public String getInterfaceName() {
 		// Stub class; not implemented
@@ -39,4 +38,3 @@ public class SoundsPlayingStub implements ISoundsPlaying
 		SoundFactoryUnitTests.SoundRegistered = sound;
 	}
 }
-

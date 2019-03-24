@@ -20,20 +20,17 @@ public class SoundsPlayingUnitTests {
 	private final ISound SOUND_ARCHETYPE = new SoundStub(ENTITY_UUID);
 	
     @BeforeEach
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
     	_soundsPlaying = new SoundsPlaying(MAP_FACTORY, ENTITY_UUID, SOUND_ARCHETYPE);
     }
     
     @Test
-    public void testGetInterfaceName()
-    {
+    public void testGetInterfaceName() {
     	assertTrue(_soundsPlaying.getInterfaceName().equals("soliloquy.audio.specs.ISoundsPlaying"));
     }
 
     @Test
-    public void testRegisterAndRemoveSound()
-    {
+    public void testRegisterAndRemoveSound() {
     	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
     	
     	assertTrue(_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.id()));
@@ -44,8 +41,7 @@ public class SoundsPlayingUnitTests {
     }
 
     @Test
-    public void testAllSoundsPlaying()
-    {
+    public void testAllSoundsPlaying() {
     	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
     	
     	ICollection<ISound> allSoundsPlaying1 = _soundsPlaying.allSoundsPlaying();
@@ -57,44 +53,31 @@ public class SoundsPlayingUnitTests {
     }
 
     @Test
-    public void testGetSoundWithNullId()
-    {
-    	try
-    	{
+    public void testGetSoundWithNullId() {
+    	try {
     		_soundsPlaying.getSound(null);
     		assertTrue(false);
-    	}
-    	catch(IllegalArgumentException e)
-    	{
+    	} catch(IllegalArgumentException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     }
 
     @Test
-    public void testIsPlayingSoundWithNullId()
-    {
-    	try
-    	{
+    public void testIsPlayingSoundWithNullId() {
+    	try {
     		_soundsPlaying.isPlayingSound(null);
     		assertTrue(false);
-    	}
-    	catch(IllegalArgumentException e)
-    	{
+    	} catch(IllegalArgumentException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     }
 
     @Test
-    public void testGetSound()
-    {
+    public void testGetSound() {
     	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
     	
     	ISound sound = _soundsPlaying.getSound(SOUND_ARCHETYPE.id());

@@ -25,28 +25,24 @@ public class SoundUnitTests {
 	private static ISound _soundIdRemovedWithinSoundsPlaying;
 	
     @BeforeEach
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
     	_sound = new Sound(ENTITY_UUID, SOUND_TYPE_ID, _filename, SOUNDS_PLAYING);
     	
     	_soundIdRemovedWithinSoundsPlaying = null;
     }
     
     @Test
-    public void testId()
-    {
+    public void testId() {
     	assertTrue(_sound.id() == ENTITY_UUID);
     }
 
     @Test
-    public void testGetInterfaceName()
-    {
+    public void testGetInterfaceName() {
     	assertTrue(_sound.getInterfaceName().equals("soliloquy.audio.specs.ISound"));
     }
 
     @Test
-    public void testIsPaused()
-    {
+    public void testIsPaused() {
     	assertTrue(_sound.isPaused());
     	
     	_sound.play();
@@ -63,8 +59,7 @@ public class SoundUnitTests {
     }
 
     @Test
-    public void testIsPlaying()
-    {
+    public void testIsPlaying() {
     	assertTrue(!_sound.isPlaying());
     	
     	_sound.play();
@@ -85,8 +80,7 @@ public class SoundUnitTests {
     }
 
     @Test
-    public void testIsMuted()
-    {
+    public void testIsMuted() {
     	assertTrue(!_sound.isMuted());
     	
     	_sound.mute();
@@ -99,8 +93,7 @@ public class SoundUnitTests {
     }
 
     @Test
-    public void testIsStopped()
-    {
+    public void testIsStopped() {
     	assertTrue(!_sound.isStopped());
     	
     	_sound.play();
@@ -117,8 +110,7 @@ public class SoundUnitTests {
     }
 
     @Test
-    public void testGetVolume()
-    {
+    public void testGetVolume() {
     	assertTrue(_sound.getVolume() == 1.0);
     	
     	_sound.setVolume(0.5);
@@ -131,24 +123,20 @@ public class SoundUnitTests {
     }
 
     @Test
-    public void testGetMillisecondLength()
-    {    	
+    public void testGetMillisecondLength() {
     	int millisecondLength = -1;
-		try
-		{
+		try {
 			millisecondLength = _sound.getMillisecondLength();
-		}
-		catch (InterruptedException e)
-		{
+		} catch (InterruptedException e) {
 			assertTrue(false);
 		}
     	
+		// TODO: Determine whether an intermittent test failure occurs here
     	assertTrue(millisecondLength == 208174);
     }
 
     @Test
-    public void testGetMillisecondPosition() throws InterruptedException
-    {
+    public void testGetMillisecondPosition() throws InterruptedException {
     	final int timeToWait = 500;
     	
     	assertTrue(_sound.getMillisecondPosition() == 0);
@@ -167,8 +155,7 @@ public class SoundUnitTests {
     }
 
     @Test
-    public void testIsLooping()
-    {
+    public void testIsLooping() {
     	_sound.setVolume(0.0);
     	
     	assertTrue(!_sound.getIsLooping());
@@ -179,147 +166,99 @@ public class SoundUnitTests {
     }
 
     @Test
-    public void testStopRemovesSoundFromSoundsPlaying()
-    {
+    public void testStopRemovesSoundFromSoundsPlaying() {
     	_sound.stop();
     	
     	assertTrue(_soundIdRemovedWithinSoundsPlaying == _sound);
     }
 
     @Test
-    public void testOperationsOnStoppedSound()
-    {
+    public void testOperationsOnStoppedSound() {
     	_sound.stop();
     	
-    	try
-    	{
+    	try {
     		_sound.play();
     		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
+    	} catch(UnsupportedOperationException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     	
-    	try
-    	{
+    	try {
     		_sound.pause();
     		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
+    	} catch(UnsupportedOperationException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     	
-    	try
-    	{
+    	try {
     		_sound.mute();
     		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
+    	} catch(UnsupportedOperationException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     	
-    	try
-    	{
+    	try {
     		_sound.unmute();
     		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
+    	} catch(UnsupportedOperationException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     	
-    	try
-    	{
+    	try {
     		_sound.setIsLooping(true);
     		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
+    	} catch(UnsupportedOperationException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     	
-    	try
-    	{
+    	try {
     		_sound.getMillisecondPosition();
     		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
+    	} catch(UnsupportedOperationException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     	
-    	try
-    	{
+    	try {
     		_sound.getVolume();
     		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
+    	} catch(UnsupportedOperationException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     	
-    	try
-    	{
+    	try {
     		_sound.setVolume(0.0);
     		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
+    	} catch(UnsupportedOperationException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     	
-    	try
-    	{
+    	try {
     		_sound.getIsLooping();
     		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
+    	} catch(UnsupportedOperationException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     }
     
-    private class SoundsPlayingStub implements ISoundsPlaying
-    {
+    private class SoundsPlayingStub implements ISoundsPlaying {
 
 		public String getInterfaceName() {
 			// stub method

@@ -7,8 +7,7 @@ public class SoundStub implements ISound
 {
 	private final IEntityUuid ENTITY_UUID;
 	
-	public SoundStub(IEntityUuid entityUuid)
-	{
+	public SoundStub(IEntityUuid entityUuid) {
 		ENTITY_UUID = entityUuid;
 	}
 

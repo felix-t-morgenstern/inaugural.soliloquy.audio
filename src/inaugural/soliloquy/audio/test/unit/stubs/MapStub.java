@@ -8,8 +8,7 @@ import soliloquy.common.specs.IFunction;
 import soliloquy.common.specs.IMap;
 import soliloquy.common.specs.IPair;
 
-public class MapStub<K,V> implements IMap<K,V>
-{
+public class MapStub<K,V> implements IMap<K,V> {
 	private HashMap<K,V> _map = new HashMap<K,V>();
 
 	@Override
@@ -85,8 +84,7 @@ public class MapStub<K,V> implements IMap<K,V>
 	@Override
 	public ICollection<K> getKeys() {
 		ICollection<K> keys = new CollectionStub<K>();
-		for (K key : _map.keySet())
-		{
+		for (K key : _map.keySet()) {
 			keys.add(key);
 		}
 		return keys;
@@ -95,8 +93,7 @@ public class MapStub<K,V> implements IMap<K,V>
 	@Override
 	public ICollection<V> getValues() {
 		ICollection<V> values = new CollectionStub<V>();
-		for (V value : _map.values())
-		{
+		for (V value : _map.values()) {
 			values.add(value);
 		}
 		return values;

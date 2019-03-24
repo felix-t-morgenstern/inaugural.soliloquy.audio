@@ -3,8 +3,7 @@ package inaugural.soliloquy.audio.test.unit.stubs;
 import soliloquy.common.specs.IMap;
 import soliloquy.common.specs.IMapFactory;
 
-public class MapFactoryStub implements IMapFactory
-{
+public class MapFactoryStub implements IMapFactory {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override

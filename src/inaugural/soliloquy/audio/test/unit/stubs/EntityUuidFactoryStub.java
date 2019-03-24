@@ -3,8 +3,7 @@ package inaugural.soliloquy.audio.test.unit.stubs;
 import soliloquy.common.specs.IEntityUuid;
 import soliloquy.common.specs.IEntityUuidFactory;
 
-public class EntityUuidFactoryStub implements IEntityUuidFactory
-{
+public class EntityUuidFactoryStub implements IEntityUuidFactory {
 	public String getInterfaceName() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();

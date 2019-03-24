@@ -2,8 +2,7 @@ package inaugural.soliloquy.audio.test.unit.stubs;
 
 import soliloquy.common.specs.IEntityUuid;
 
-public class EntityUuidStub implements IEntityUuid
-{
+public class EntityUuidStub implements IEntityUuid {
 	public final static long MOST_SIGNIFICANT_BITS = 7485613498651L;
 
 	public String getInterfaceName() {
@@ -18,6 +17,5 @@ public class EntityUuidStub implements IEntityUuid
 	public long getLeastSignificantBits() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
-		
 	}
 }

@@ -37,7 +37,7 @@ public abstract class SoundFactoryUnitTests {
     }
     
     @Test
-    public void testGetInterfaceName()     {
+    public void testGetInterfaceName() {
     	assertTrue("soliloquy.audio.specs.ISoundFactory".equals(_soundFactory.getInterfaceName()));
     }
 
@@ -63,22 +63,18 @@ public abstract class SoundFactoryUnitTests {
     	try {
     		_soundFactory.make(null);
     		assertTrue(false);
-    	}
-    	catch(IllegalArgumentException e) {
+    	} catch(IllegalArgumentException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e) {
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     	
     	try {
     		_soundFactory.make("InvalidSoundTypeId!");
     		assertTrue(false);
-    	}
-    	catch(IllegalArgumentException e) {
+    	} catch(IllegalArgumentException e) {
     		assertTrue(true);
-    	}
-    	catch(Exception e) {
+    	} catch(Exception e) {
     		assertTrue(false);
     	}
     }

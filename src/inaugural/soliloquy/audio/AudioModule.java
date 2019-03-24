@@ -16,8 +16,7 @@ public class AudioModule extends AbstractModule {
 	private ISoundFactory _soundFactory;
 	private ISoundsPlaying _soundsPlaying;
 	
-	public AudioModule(IEntityUuidFactory entityUuidFactory, IMapFactory mapFactory)
-	{
+	public AudioModule(IEntityUuidFactory entityUuidFactory, IMapFactory mapFactory) {
 		
 		IEntityUuid entityUuidArchetype = entityUuidFactory.createRandomEntityUuid();
 		
