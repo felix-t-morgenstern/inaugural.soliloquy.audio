@@ -8,6 +8,8 @@ import soliloquy.audio.specs.ISound;
 import soliloquy.audio.specs.ISoundsPlaying;
 import soliloquy.common.specs.IEntityUuid;
 
+import java.io.File;
+
 public class Sound implements ISound {
 	private final IEntityUuid ID;
 	private final String SOUND_TYPE_ID;
@@ -38,7 +40,7 @@ public class Sound implements ISound {
 		SOUNDS_PLAYING = soundsPlaying;
 		
 		new JFXPanel();
-		Media media = new Media(filename);
+		Media media = new Media(new File(filename).toURI().toString());
 		MEDIA_PLAYER = new MediaPlayer(media);
 		
 		_isPaused = true;

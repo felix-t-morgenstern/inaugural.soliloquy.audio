@@ -10,3 +10,9 @@ target/classes/inaugural/soliloquy/audio/test/unit/Kevin_MacLeod_-_Living_Voyage
 *.pom
 target/maven-archiver/pom.properties
 target/mvn-repo/disorg/soliloquy/inaugural.soliloquy.audio/maven-metadata.xml
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/vcs.xml
+.idea/workspace.xml
+target/classes/Kevin_MacLeod_-_Living_Voyage.mp3

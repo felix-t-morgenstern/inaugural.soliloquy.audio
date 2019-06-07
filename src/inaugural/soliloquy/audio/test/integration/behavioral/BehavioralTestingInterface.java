@@ -2,6 +2,7 @@ package inaugural.soliloquy.audio.test.integration.behavioral;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,7 +24,16 @@ public class BehavioralTestingInterface implements ActionListener {
 	private final static String BUTTON_CUSTOM_TASK = "Custom Task";
 	
 	private static BehavioralTestingInterface INTERFACE = new BehavioralTestingInterface();
-	private static IntegrationTestsSetup SETUP = new IntegrationTestsSetup();
+	private static IntegrationTestsSetup SETUP;
+
+	static {
+		try {
+			SETUP = new IntegrationTestsSetup();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private static IAudio AUDIO = SETUP.audio();
 	private static ISound SOUND;
 	

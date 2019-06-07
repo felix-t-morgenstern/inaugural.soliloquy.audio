@@ -12,10 +12,14 @@ import soliloquy.audio.specs.ISoundsPlaying;
 import soliloquy.common.specs.ICollection;
 import soliloquy.common.specs.IEntityUuid;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+
 public class SoundUnitTests {
 	private Sound _sound;
 	
-	private String _filename = this.getClass().getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toString();
+	private String _filename;
 	
 	private final String SOUND_TYPE_ID = "Kevin_MacLeod_-_Living_Voyage";
 	
@@ -23,9 +27,17 @@ public class SoundUnitTests {
 	private final ISoundsPlaying SOUNDS_PLAYING = new SoundsPlayingStub();
 	
 	private static ISound _soundIdRemovedWithinSoundsPlaying;
-	
-    @BeforeEach
+
+	public SoundUnitTests() throws URISyntaxException {
+	}
+
+	@BeforeEach
     protected void setUp() throws Exception {
+		_filename = new File(String.valueOf(Paths.get(
+				getClass().getClassLoader()
+						.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toURI())
+				.toFile())).getAbsolutePath();
+
     	_sound = new Sound(ENTITY_UUID, SOUND_TYPE_ID, _filename, SOUNDS_PLAYING);
     	
     	_soundIdRemovedWithinSoundsPlaying = null;
