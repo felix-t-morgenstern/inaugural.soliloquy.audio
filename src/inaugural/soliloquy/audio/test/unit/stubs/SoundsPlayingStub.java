@@ -6,7 +6,11 @@ import soliloquy.audio.specs.ISoundsPlaying;
 import soliloquy.common.specs.ICollection;
 import soliloquy.common.specs.IEntityUuid;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SoundsPlayingStub implements ISoundsPlaying {
+	public List<ISound> SoundsRemoved = new ArrayList<>();
 
 	public String getInterfaceName() {
 		// Stub class; not implemented
@@ -29,8 +33,7 @@ public class SoundsPlayingStub implements ISoundsPlaying {
 	}
 
 	public void removeSound(ISound sound) throws IllegalArgumentException {
-		// Stub class; not implemented
-		throw new UnsupportedOperationException();
+		SoundsRemoved.add(sound);
 	}
 
 	@Override

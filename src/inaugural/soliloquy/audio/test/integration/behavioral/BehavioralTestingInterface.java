@@ -150,39 +150,39 @@ public class BehavioralTestingInterface implements ActionListener {
 		switch(e.getActionCommand()) {
 			case BUTTON_INITIALIZE:
 				log("Clicked " + BUTTON_INITIALIZE);
-				new Thread(() -> initialize()).start();
+				new Thread(this::initialize).start();
 				break;
 			case BUTTON_PLAY:
 				log("Clicked " + BUTTON_PLAY);
-				new Thread(() -> play()).start();
+				new Thread(this::play).start();
 				break;
 			case BUTTON_PAUSE:
 				log("Clicked " + BUTTON_PAUSE);
-				new Thread(() -> pause()).start();
+				new Thread(this::pause).start();
 				break;
 			case BUTTON_STOP:
 				log("Clicked " + BUTTON_STOP);
-				new Thread(() -> stop()).start();
+				new Thread(this::stop).start();
 				break;
 			case BUTTON_MUTE:
 				log("Clicked " + BUTTON_MUTE);
-				new Thread(() -> mute()).start();
+				new Thread(this::mute).start();
 				break;
 			case BUTTON_UNMUTE:
 				log("Clicked " + BUTTON_UNMUTE);
-				new Thread(() -> unmute()).start();
+				new Thread(this::unmute).start();
 				break;
 			case BUTTON_HALF_VOLUME:
 				log("Clicked " + BUTTON_HALF_VOLUME);
-				new Thread(() -> halfVolume()).start();
+				new Thread(this::halfVolume).start();
 				break;
 			case BUTTON_FULL_VOLUME:
 				log("Clicked " + BUTTON_FULL_VOLUME);
-				new Thread(() -> fullVolume()).start();
+				new Thread(this::fullVolume).start();
 				break;
 			case BUTTON_CUSTOM_TASK:
 				log("Clicked " + BUTTON_CUSTOM_TASK);
-				new Thread(() -> customTask()).start();
+				new Thread(this::customTask).start();
 				break;
 			default:
 				log("Unrecognized command.");
@@ -202,7 +202,7 @@ public class BehavioralTestingInterface implements ActionListener {
 		}
 		SOUND = AUDIO.soundFactory().make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
 		RUN_RECURRING_POSITION_CHECK = true;
-		Thread runRecurringPositionCheckThread = new Thread(() -> recurringPositionCheck());
+		Thread runRecurringPositionCheckThread = new Thread(this::recurringPositionCheck);
 		runRecurringPositionCheckThread.start();
 
 		log("Initialized successfully.");

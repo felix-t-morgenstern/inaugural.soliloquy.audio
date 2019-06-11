@@ -52,8 +52,9 @@ public class Sound implements ISound {
 		
 		MEDIA_PLAYER.setOnReady(() ->
 		{
-			_durationMs = (int) MEDIA_PLAYER.cycleDurationProperty().get().toMillis();
+			_durationMs = (int) MEDIA_PLAYER.getTotalDuration().toMillis();
 			_isReady = true;
+			MEDIA_PLAYER.setOnEndOfMedia(this::stop);
 		});
 	}
 
@@ -78,7 +79,7 @@ public class Sound implements ISound {
 	}
 
 	public Runnable playTask() {
-		return () -> play();
+		return this::play;
 	}
 
 	public void pause() {
@@ -90,7 +91,7 @@ public class Sound implements ISound {
 	}
 
 	public Runnable pauseTask() {
-		return () -> pause();
+		return this::pause;
 	}
 
 	public boolean isPaused() {
@@ -112,7 +113,7 @@ public class Sound implements ISound {
 	}
 
 	public Runnable stopTask() {
-		return () -> stop();
+		return this::stop;
 	}
 
 	public void mute() {
@@ -124,24 +125,26 @@ public class Sound implements ISound {
 	}
 
 	public Runnable muteTask() {
-		return () -> mute();
+		return this::mute;
 	}
 
 	public void unmute() throws UnsupportedOperationException {
 		if (_isStopped) {
-			throw new UnsupportedOperationException("Sound.unmute: Sound has already been stopped");
+			throw new UnsupportedOperationException(
+					"Sound.unmute: Sound has already been stopped");
 		}
 		MEDIA_PLAYER.setVolume(_volume);
 		_isMuted = false;
 	}
 
 	public Runnable unmuteTask() {
-		return () -> unmute();
+		return this::unmute;
 	}
 
 	public boolean isMuted() throws UnsupportedOperationException {
 		if (_isStopped) {
-			throw new UnsupportedOperationException("Sound.isMuted: Sound has already been stopped");
+			throw new UnsupportedOperationException(
+					"Sound.isMuted: Sound has already been stopped");
 		}
 		return _isMuted;
 	}
@@ -152,14 +155,17 @@ public class Sound implements ISound {
 
 	public double getVolume() throws UnsupportedOperationException {
 		if (_isStopped) {
-			throw new UnsupportedOperationException("Sound.getVolume: Sound has already been stopped");
+			throw new UnsupportedOperationException(
+					"Sound.getVolume: Sound has already been stopped");
 		}
 		return _volume;
 	}
 
-	public void setVolume(double volume) throws IllegalArgumentException, UnsupportedOperationException {
+	public void setVolume(double volume)
+			throws IllegalArgumentException, UnsupportedOperationException {
 		if (_isStopped) {
-			throw new UnsupportedOperationException("Sound.getVolume: Sound has already been stopped");
+			throw new UnsupportedOperationException(
+					"Sound.getVolume: Sound has already been stopped");
 		}
 		if (!_isMuted) {
 			MEDIA_PLAYER.setVolume(volume);
@@ -173,19 +179,15 @@ public class Sound implements ISound {
 
 	public int getMillisecondLength() throws InterruptedException {
 		while (!_isReady) {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				throw e;
-			}
+			Thread.sleep(10);
 		}
 		return _durationMs;
 	}
 
 	public int getMillisecondPosition() throws InterruptedException {
 		if (_isStopped) {
-			throw new UnsupportedOperationException("Sound.getMillisecondPosition: Sound has already been stopped");
+			throw new UnsupportedOperationException(
+					"Sound.getMillisecondPosition: Sound has already been stopped");
 		}
 		while (!_isReady) {
 			try {
@@ -195,7 +197,7 @@ public class Sound implements ISound {
 				throw e;
 			}
 		}
-		return (int) ((Duration)MEDIA_PLAYER.currentTimeProperty().getValue()).toMillis();
+		return (int) MEDIA_PLAYER.getCurrentTime().toMillis();
 	}
 
 	public void setMillisecondPosition(int ms) throws IllegalArgumentException, UnsupportedOperationException {
@@ -223,7 +225,7 @@ public class Sound implements ISound {
 		if (isLooping) {
 			MEDIA_PLAYER.setOnEndOfMedia(() -> setMillisecondPosition(0));
 		} else {
-			MEDIA_PLAYER.setOnEndOfMedia(() -> stop());
+			MEDIA_PLAYER.setOnEndOfMedia(this::stop);
 		}
 		_isLooping = isLooping;
 	}

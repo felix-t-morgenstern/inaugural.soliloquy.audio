@@ -1,19 +1,19 @@
 package inaugural.soliloquy.audio.test.integration;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import soliloquy.audio.specs.ISound;
 import soliloquy.audio.specs.ISoundsPlaying;
 
-public class SoundIntegrationTests {
+import static org.junit.jupiter.api.Assertions.*;
+
+class SoundIntegrationTests {
 	private ISound _sound;
 	private ISoundsPlaying _soundsPlaying;
 	
     @BeforeEach
-    protected void setUp() throws Exception
+	void setUp() throws Exception
     {
     	IntegrationTestsSetup setup = new IntegrationTestsSetup();
     	
@@ -23,13 +23,13 @@ public class SoundIntegrationTests {
     }
     
     @Test
-    public void testGetInterfaceName()
+	void testGetInterfaceName()
     {
-    	assertTrue(_sound.getInterfaceName().equals("soliloquy.audio.specs.ISound"));
+		assertEquals("soliloquy.audio.specs.ISound", _sound.getInterfaceName());
     }
 
     @Test
-    public void testIsPaused()
+	void testIsPaused()
     {
     	assertTrue(_sound.isPaused());
     	
@@ -47,7 +47,7 @@ public class SoundIntegrationTests {
     }
 
     @Test
-    public void testIsPlaying()
+	void testIsPlaying()
     {
     	assertTrue(!_sound.isPlaying());
     	
@@ -69,7 +69,7 @@ public class SoundIntegrationTests {
     }
 
     @Test
-    public void testIsMuted()
+	void testIsMuted()
     {
     	assertTrue(!_sound.isMuted());
     	
@@ -83,7 +83,7 @@ public class SoundIntegrationTests {
     }
 
     @Test
-    public void testIsStopped()
+	void testIsStopped()
     {
     	assertTrue(!_sound.isStopped());
     	
@@ -101,21 +101,21 @@ public class SoundIntegrationTests {
     }
 
     @Test
-    public void testGetVolume()
+	void testGetVolume()
     {
-    	assertTrue(_sound.getVolume() == 1.0);
+		assertEquals(1.0, _sound.getVolume());
     	
     	_sound.setVolume(0.5);
 
-    	assertTrue(_sound.getVolume() == 0.5);
+		assertEquals(0.5, _sound.getVolume());
     	
     	_sound.mute();
 
-    	assertTrue(_sound.getVolume() == 0.5);
+		assertEquals(0.5, _sound.getVolume());
     }
 
     @Test
-    public void testGetMillisecondLength()
+	void testGetMillisecondLength()
     {    	
     	int millisecondLength = -1;
 		try
@@ -124,18 +124,18 @@ public class SoundIntegrationTests {
 		}
 		catch (InterruptedException e)
 		{
-			assertTrue(false);
+			fail("");
 		}
-    	
-    	assertTrue(millisecondLength == 208174);
+
+		assertTrue(millisecondLength == 208219 || millisecondLength == 208174);
     }
 
     @Test
-    public void testGetMillisecondPosition() throws InterruptedException
+	void testGetMillisecondPosition() throws InterruptedException
     {
     	final int timeToWait = 500;
-    	
-    	assertTrue(_sound.getMillisecondPosition() == 0);
+
+		assertEquals(0, _sound.getMillisecondPosition());
     	
     	_sound.setVolume(0.0);
     	_sound.play();
@@ -147,11 +147,11 @@ public class SoundIntegrationTests {
     	
     	// NB: At present, there is some delay between when _sound.pause() is called, and when the Sound actually successfully pauses
     	assertTrue(Math.abs(timeToWait-msPosition) <= 250);
-    	assertTrue(msPosition == msPosition2);
+		assertEquals(msPosition, msPosition2);
     }
 
     @Test
-    public void testIsLooping()
+	void testIsLooping()
     {
     	_sound.setVolume(0.0);
     	
@@ -163,7 +163,7 @@ public class SoundIntegrationTests {
     }
 
     @Test
-    public void testStopRemovesSoundFromSoundsPlaying()
+	void testStopRemovesSoundFromSoundsPlaying()
     {
     	assertTrue(_soundsPlaying.isPlayingSound(_sound.id()));
     	
@@ -173,134 +173,18 @@ public class SoundIntegrationTests {
     }
 
     @Test
-    public void testOperationsOnStoppedSound()
+	void testOperationsOnStoppedSound()
     {
     	_sound.stop();
-    	
-    	try
-    	{
-    		_sound.play();
-    		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
-    		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
-    		assertTrue(false);
-    	}
-    	
-    	try
-    	{
-    		_sound.pause();
-    		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
-    		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
-    		assertTrue(false);
-    	}
-    	
-    	try
-    	{
-    		_sound.mute();
-    		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
-    		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
-    		assertTrue(false);
-    	}
-    	
-    	try
-    	{
-    		_sound.unmute();
-    		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
-    		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
-    		assertTrue(false);
-    	}
-    	
-    	try
-    	{
-    		_sound.setIsLooping(true);
-    		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
-    		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
-    		assertTrue(false);
-    	}
-    	
-    	try
-    	{
-    		_sound.getMillisecondPosition();
-    		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
-    		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
-    		assertTrue(false);
-    	}
-    	
-    	try
-    	{
-    		_sound.getVolume();
-    		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
-    		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
-    		assertTrue(false);
-    	}
-    	
-    	try
-    	{
-    		_sound.setVolume(0.0);
-    		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
-    		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
-    		assertTrue(false);
-    	}
-    	
-    	try
-    	{
-    		_sound.getIsLooping();
-    		assertTrue(false);
-    	}
-    	catch(UnsupportedOperationException e)
-    	{
-    		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
-    		assertTrue(false);
-    	}
+
+		assertThrows(UnsupportedOperationException.class, () -> _sound.play());
+		assertThrows(UnsupportedOperationException.class, () -> _sound.pause());
+		assertThrows(UnsupportedOperationException.class, () -> _sound.mute());
+		assertThrows(UnsupportedOperationException.class, () -> _sound.unmute());
+		assertThrows(UnsupportedOperationException.class, () -> _sound.getIsLooping());
+		assertThrows(UnsupportedOperationException.class, () -> _sound.setIsLooping(true));
+		assertThrows(UnsupportedOperationException.class, () -> _sound.getVolume());
+		assertThrows(UnsupportedOperationException.class, () -> _sound.setVolume(0));
+		assertThrows(UnsupportedOperationException.class, () -> _sound.getMillisecondPosition());
     }
 }
