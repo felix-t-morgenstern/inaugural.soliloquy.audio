@@ -2,9 +2,8 @@ package inaugural.soliloquy.audio.test.integration;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import soliloquy.audio.specs.ISound;
-import soliloquy.audio.specs.ISoundsPlaying;
+import soliloquy.specs.audio.entities.ISound;
+import soliloquy.specs.audio.entities.ISoundsPlaying;
 
 import static org.junit.jupiter.api.Assertions.*;
 

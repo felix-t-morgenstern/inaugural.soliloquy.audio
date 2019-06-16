@@ -5,9 +5,8 @@ import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidStub;
 import inaugural.soliloquy.audio.test.unit.stubs.SoundsPlayingStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import soliloquy.audio.specs.ISound;
-import soliloquy.audio.specs.ISoundsPlaying;
-import soliloquy.common.specs.IEntityUuid;
+import soliloquy.specs.audio.entities.ISoundsPlaying;
+import soliloquy.specs.common.valueobjects.IEntityUuid;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -179,7 +178,7 @@ class SoundUnitTests {
 		int msLength = _sound.getMillisecondLength();
 		_sound.setMillisecondPosition(msLength - 10);
 		_sound.play();
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 
 		assertTrue(_sound.isStopped());
 		assertSame(((SoundsPlayingStub) SOUNDS_PLAYING).SoundsRemoved.get(0), _sound);

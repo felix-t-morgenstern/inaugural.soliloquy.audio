@@ -1,7 +1,7 @@
 package inaugural.soliloquy.audio.test.unit.stubs;
 
-import soliloquy.audio.specs.ISound;
-import soliloquy.common.specs.IEntityUuid;
+import soliloquy.specs.audio.entities.ISound;
+import soliloquy.specs.common.valueobjects.IEntityUuid;
 
 public class SoundStub implements ISound
 {
@@ -131,13 +131,13 @@ public class SoundStub implements ISound
 	}
 
 	@Override
-	public int getMillisecondLength() throws InterruptedException {
+	public int getMillisecondLength() {
 		// stub method
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public int getMillisecondPosition() throws InterruptedException, UnsupportedOperationException {
+	public int getMillisecondPosition() throws UnsupportedOperationException {
 		// stub method
 		throw new UnsupportedOperationException();
 	}

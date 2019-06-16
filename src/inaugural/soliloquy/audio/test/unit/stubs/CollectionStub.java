@@ -3,7 +3,8 @@ package inaugural.soliloquy.audio.test.unit.stubs;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import soliloquy.common.specs.ICollection;
+import soliloquy.specs.common.entities.IFunction;
+import soliloquy.specs.common.valueobjects.ICollection;
 
 public class CollectionStub<V> implements ICollection<V> {
 	private ArrayList<V> _collection = new ArrayList<V>();
@@ -100,6 +101,12 @@ public class CollectionStub<V> implements ICollection<V> {
 	@Override
 	public boolean removeItem(V item) throws UnsupportedOperationException {
 		return _collection.remove(item);
+	}
+
+	@Override
+	public ICollection<IFunction<V, String>> validators() {
+		// Stub method; unimplemented
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

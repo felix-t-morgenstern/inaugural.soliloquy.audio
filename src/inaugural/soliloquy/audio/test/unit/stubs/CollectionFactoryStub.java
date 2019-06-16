@@ -1,12 +1,12 @@
 package inaugural.soliloquy.audio.test.unit.stubs;
 
-import soliloquy.common.specs.ICollection;
-import soliloquy.common.specs.ICollectionFactory;
+import soliloquy.specs.common.factories.ICollectionFactory;
+import soliloquy.specs.common.valueobjects.ICollection;
 
 public class CollectionFactoryStub implements ICollectionFactory {
 	@Override
 	public <T> ICollection<T> make(T archetype) throws IllegalArgumentException {
-		return new CollectionStub<T>(archetype);
+		return new CollectionStub<>(archetype);
 	}
 
 	@Override

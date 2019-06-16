@@ -1,8 +1,8 @@
 package inaugural.soliloquy.audio;
 
-import soliloquy.audio.specs.IAudio;
-import soliloquy.audio.specs.ISoundFactory;
-import soliloquy.audio.specs.ISoundsPlaying;
+import soliloquy.specs.audio.entities.IAudio;
+import soliloquy.specs.audio.entities.ISoundsPlaying;
+import soliloquy.specs.audio.factories.ISoundFactory;
 
 public class Audio implements IAudio {
 	private final ISoundsPlaying SOUNDS_PLAYING;

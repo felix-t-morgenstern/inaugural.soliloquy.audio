@@ -5,11 +5,11 @@ import com.google.inject.Injector;
 
 import inaugural.soliloquy.audio.AudioModule;
 import inaugural.soliloquy.common.CommonModule;
-import soliloquy.audio.specs.IAudio;
-import soliloquy.audio.specs.ISound;
-import soliloquy.common.specs.IEntityUuidFactory;
-import soliloquy.common.specs.IMap;
-import soliloquy.common.specs.IMapFactory;
+import soliloquy.specs.audio.entities.IAudio;
+import soliloquy.specs.audio.entities.ISound;
+import soliloquy.specs.common.factories.IEntityUuidFactory;
+import soliloquy.specs.common.factories.IMapFactory;
+import soliloquy.specs.common.valueobjects.IMap;
 
 import java.io.File;
 import java.net.URISyntaxException;

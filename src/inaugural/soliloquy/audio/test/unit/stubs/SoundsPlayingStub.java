@@ -1,13 +1,12 @@
 package inaugural.soliloquy.audio.test.unit.stubs;
 
 import inaugural.soliloquy.audio.test.unit.SoundFactoryUnitTests;
-import soliloquy.audio.specs.ISound;
-import soliloquy.audio.specs.ISoundsPlaying;
-import soliloquy.common.specs.ICollection;
-import soliloquy.common.specs.IEntityUuid;
-
 import java.util.ArrayList;
 import java.util.List;
+import soliloquy.specs.audio.entities.ISound;
+import soliloquy.specs.audio.entities.ISoundsPlaying;
+import soliloquy.specs.common.valueobjects.ICollection;
+import soliloquy.specs.common.valueobjects.IEntityUuid;
 
 public class SoundsPlayingStub implements ISoundsPlaying {
 	public List<ISound> SoundsRemoved = new ArrayList<>();

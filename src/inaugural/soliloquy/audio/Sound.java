@@ -4,9 +4,9 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import soliloquy.audio.specs.ISound;
-import soliloquy.audio.specs.ISoundsPlaying;
-import soliloquy.common.specs.IEntityUuid;
+import soliloquy.specs.audio.entities.ISound;
+import soliloquy.specs.audio.entities.ISoundsPlaying;
+import soliloquy.specs.common.valueobjects.IEntityUuid;
 
 import java.io.File;
 

@@ -1,6 +1,6 @@
 package inaugural.soliloquy.audio.test.unit.stubs;
 
-import soliloquy.common.specs.IEntityUuid;
+import soliloquy.specs.common.valueobjects.IEntityUuid;
 
 public class EntityUuidStub implements IEntityUuid {
 	public final static long MOST_SIGNIFICANT_BITS = 7485613498651L;

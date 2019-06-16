@@ -3,16 +3,17 @@ package inaugural.soliloquy.audio.test.unit.stubs;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import soliloquy.common.specs.ICollection;
-import soliloquy.common.specs.IFunction;
-import soliloquy.common.specs.IMap;
-import soliloquy.common.specs.IPair;
+
+import soliloquy.specs.common.entities.IFunction;
+import soliloquy.specs.common.valueobjects.ICollection;
+import soliloquy.specs.common.valueobjects.IMap;
+import soliloquy.specs.common.valueobjects.IPair;
 
 public class SoundTypeFilenamesMapStub implements IMap<String,String> {
 	private HashMap<String,String> _mappings;
 	
 	public SoundTypeFilenamesMapStub(String soundType1Id, String soundType1Filename) {
-		_mappings = new HashMap<String,String>();
+		_mappings = new HashMap<>();
 		_mappings.put(soundType1Id, soundType1Filename);
 	}
 	
@@ -148,7 +149,7 @@ public class SoundTypeFilenamesMapStub implements IMap<String,String> {
 	}
 
 	@Override
-	public void setValidator(IFunction<IPair<String, String>, String> validator) {
+	public ICollection<IFunction<IPair<String, String>, String>> validators() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}

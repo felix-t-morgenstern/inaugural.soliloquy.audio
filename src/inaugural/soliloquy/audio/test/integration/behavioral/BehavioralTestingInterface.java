@@ -3,14 +3,12 @@ package inaugural.soliloquy.audio.test.integration.behavioral;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import inaugural.soliloquy.audio.test.integration.IntegrationTestsSetup;
-import soliloquy.audio.specs.IAudio;
-import soliloquy.audio.specs.ISound;
+import soliloquy.specs.audio.entities.IAudio;
+import soliloquy.specs.audio.entities.ISound;
 
 public class BehavioralTestingInterface implements ActionListener {
 	private final static String BUTTON_INITIALIZE = "Initialize";
@@ -38,7 +36,6 @@ public class BehavioralTestingInterface implements ActionListener {
 	private static ISound SOUND;
 	
 	private static boolean RUN_RECURRING_POSITION_CHECK = true;
-	private static long RECURRING_POSITION_CHECK_INTERVAL = 100;
 
 	private static JLabel LABEL_ID;
 	private static JLabel LABEL_TYPE_ID;
@@ -138,7 +135,7 @@ public class BehavioralTestingInterface implements ActionListener {
 		while(RUN_RECURRING_POSITION_CHECK) {
 			try {
 				LABEL_POSITION.setText("Position, ms: " + (SOUND == null || SOUND.isStopped() ? "" : "" + SOUND.getMillisecondPosition()));
-				Thread.sleep(RECURRING_POSITION_CHECK_INTERVAL);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

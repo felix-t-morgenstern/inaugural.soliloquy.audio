@@ -1,12 +1,12 @@
 package inaugural.soliloquy.audio;
 
-import soliloquy.audio.specs.ISound;
-import soliloquy.audio.specs.ISoundFactory;
-import soliloquy.audio.specs.ISoundsPlaying;
-import soliloquy.common.specs.IEntityUuid;
-import soliloquy.common.specs.IEntityUuidFactory;
-import soliloquy.common.specs.IMap;
-import soliloquy.common.specs.IPair;
+import soliloquy.specs.audio.entities.ISound;
+import soliloquy.specs.audio.entities.ISoundsPlaying;
+import soliloquy.specs.audio.factories.ISoundFactory;
+import soliloquy.specs.common.factories.IEntityUuidFactory;
+import soliloquy.specs.common.valueobjects.IEntityUuid;
+import soliloquy.specs.common.valueobjects.IMap;
+import soliloquy.specs.common.valueobjects.IPair;
 
 public class SoundFactory implements ISoundFactory {
 	private final IMap<String,String> SOUND_TYPE_FILENAMES;
@@ -19,12 +19,13 @@ public class SoundFactory implements ISoundFactory {
 		ENTITY_UUID_FACTORY = entityUuidFactory;
 	}
 	
-	SoundFactory() {
+	private SoundFactory() {
 		SOUND_TYPE_FILENAMES = null;
 		SOUNDS_PLAYING = null;
 		ENTITY_UUID_FACTORY = null;
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	public ISound make(String soundTypeId) throws IllegalArgumentException {
 		if (soundTypeId == null) {
 			throw new IllegalArgumentException("SoundFactory.make: soundTypeId cannot be null");
@@ -43,9 +44,10 @@ public class SoundFactory implements ISoundFactory {
 	}
 
 	public String getInterfaceName() {
-		return "soliloquy.audio.specs.ISoundFactory";
+		return ISoundFactory.class.getCanonicalName();
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void registerSoundTypes(IMap<String, String> soundTypesToFilenamesMap) throws IllegalArgumentException {
 		for(IPair<String,String> mapping : soundTypesToFilenamesMap) {
@@ -69,8 +71,7 @@ public class SoundFactory implements ISoundFactory {
 	
 	static ISound makeSoundArchetype() {
 		SoundFactory nonfunctionalSoundFactory = new SoundFactory();
-		ISound soundArchetype = nonfunctionalSoundFactory.new SoundArchetype();
-		return soundArchetype;
+		return nonfunctionalSoundFactory.new SoundArchetype();
 	}
 	
 	public class SoundArchetype implements ISound {
@@ -195,13 +196,13 @@ public class SoundFactory implements ISoundFactory {
 		}
 
 		@Override
-		public int getMillisecondLength() throws InterruptedException {
+		public int getMillisecondLength() {
 			// stub method
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public int getMillisecondPosition() throws InterruptedException, UnsupportedOperationException {
+		public int getMillisecondPosition() throws UnsupportedOperationException {
 			// stub method
 			throw new UnsupportedOperationException();
 		}

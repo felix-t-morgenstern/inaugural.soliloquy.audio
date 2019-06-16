@@ -1,21 +1,20 @@
 package inaugural.soliloquy.audio.test.integration;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import soliloquy.specs.audio.entities.ISound;
+import soliloquy.specs.audio.factories.ISoundFactory;
+import soliloquy.specs.common.valueobjects.IMap;
 
-import soliloquy.audio.specs.ISound;
-import soliloquy.audio.specs.ISoundFactory;
-import soliloquy.common.specs.IMap;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SoundFactoryIntegrationTests {
+class SoundFactoryIntegrationTests {
 	private ISoundFactory _soundFactory;
 	
 	private IMap<String,String> _soundTypeFilenameMappings;
 	
     @BeforeEach
-    protected void setUp() throws Exception
+	void setUp() throws Exception
     {
     	IntegrationTestsSetup setup = new IntegrationTestsSetup();
     	
@@ -25,50 +24,26 @@ public class SoundFactoryIntegrationTests {
     }
     
     @Test
-    public void testGetInterfaceName()
+	void testGetInterfaceName()
     {
-    	assertTrue("soliloquy.audio.specs.ISoundFactory".equals(_soundFactory.getInterfaceName()));
+		assertEquals(ISoundFactory.class.getCanonicalName(), _soundFactory.getInterfaceName());
     }
 
     @Test
-    public void testMake()
+	void testMake()
     {
     	_soundFactory.registerSoundTypes(_soundTypeFilenameMappings);
     	
     	ISound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
-    	
-    	assertTrue(sound.soundTypeId().equals(IntegrationTestsSetup.SOUND_TYPE_1_ID));
+
+		assertEquals(sound.soundTypeId(), IntegrationTestsSetup.SOUND_TYPE_1_ID);
     }
 
     @Test
-    public void testMakeWithInvalidSoundTypeId()
+	void testMakeWithInvalidSoundTypeId()
     {
-    	try
-    	{
-    		_soundFactory.make(null);
-    		assertTrue(false);
-    	}
-    	catch(IllegalArgumentException e)
-    	{
-    		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
-    		assertTrue(false);
-    	}
-    	
-    	try
-    	{
-    		_soundFactory.make("InvalidSoundTypeId!");
-    		assertTrue(false);
-    	}
-    	catch(IllegalArgumentException e)
-    	{
-    		assertTrue(true);
-    	}
-    	catch(Exception e)
-    	{
-    		assertTrue(false);
-    	}
+		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null));
+		assertThrows(IllegalArgumentException.class,
+				() -> _soundFactory.make("InvalidSoundTypeId!"));
     }
 }

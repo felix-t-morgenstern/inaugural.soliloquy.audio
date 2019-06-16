@@ -1,15 +1,15 @@
 package inaugural.soliloquy.audio;
 
-import soliloquy.audio.specs.ISound;
-import soliloquy.audio.specs.ISoundsPlaying;
-import soliloquy.common.specs.ICollection;
-import soliloquy.common.specs.IEntityUuid;
-import soliloquy.common.specs.IMap;
-import soliloquy.common.specs.IMapFactory;
+import soliloquy.specs.audio.entities.ISound;
+import soliloquy.specs.audio.entities.ISoundsPlaying;
+import soliloquy.specs.common.factories.IMapFactory;
+import soliloquy.specs.common.valueobjects.ICollection;
+import soliloquy.specs.common.valueobjects.IEntityUuid;
+import soliloquy.specs.common.valueobjects.IMap;
 
 public class SoundsPlaying implements ISoundsPlaying {
 	
-	private IMap<IEntityUuid,ISound> _soundsPlaying;
+	private IMap<IEntityUuid, ISound> _soundsPlaying;
 	
 	public SoundsPlaying(IMapFactory mapFactory, IEntityUuid entityUuidArchetype,
 						 ISound soundArchetype) {

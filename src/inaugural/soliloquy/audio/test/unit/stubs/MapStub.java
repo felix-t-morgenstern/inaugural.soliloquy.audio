@@ -3,13 +3,13 @@ package inaugural.soliloquy.audio.test.unit.stubs;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import soliloquy.common.specs.ICollection;
-import soliloquy.common.specs.IFunction;
-import soliloquy.common.specs.IMap;
-import soliloquy.common.specs.IPair;
+import soliloquy.specs.common.entities.IFunction;
+import soliloquy.specs.common.valueobjects.ICollection;
+import soliloquy.specs.common.valueobjects.IMap;
+import soliloquy.specs.common.valueobjects.IPair;
 
 public class MapStub<K,V> implements IMap<K,V> {
-	private HashMap<K,V> _map = new HashMap<K,V>();
+	private HashMap<K,V> _map = new HashMap<>();
 
 	@Override
 	public Iterator<IPair<K, V>> iterator() {
@@ -83,7 +83,7 @@ public class MapStub<K,V> implements IMap<K,V> {
 
 	@Override
 	public ICollection<K> getKeys() {
-		ICollection<K> keys = new CollectionStub<K>();
+		ICollection<K> keys = new CollectionStub<>();
 		for (K key : _map.keySet()) {
 			keys.add(key);
 		}
@@ -92,7 +92,7 @@ public class MapStub<K,V> implements IMap<K,V> {
 
 	@Override
 	public ICollection<V> getValues() {
-		ICollection<V> values = new CollectionStub<V>();
+		ICollection<V> values = new CollectionStub<>();
 		for (V value : _map.values()) {
 			values.add(value);
 		}
@@ -139,7 +139,7 @@ public class MapStub<K,V> implements IMap<K,V> {
 	}
 
 	@Override
-	public void setValidator(IFunction<IPair<K, V>, String> validator) {
+	public ICollection<IFunction<IPair<K, V>, String>> validators() {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
