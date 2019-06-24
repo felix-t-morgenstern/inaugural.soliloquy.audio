@@ -234,4 +234,16 @@ public class Sound implements ISound {
 		return () -> setIsLooping(isLooping);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) {
+			return false;
+		}
+		if (!(o instanceof ISound)) {
+			return false;
+		}
+		ISound sound = (ISound) o;
+		return sound.id().equals(ID);
+	}
+
 }

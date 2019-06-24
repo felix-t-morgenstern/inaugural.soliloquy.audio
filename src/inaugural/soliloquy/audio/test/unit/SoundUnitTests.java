@@ -5,6 +5,7 @@ import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidStub;
 import inaugural.soliloquy.audio.test.unit.stubs.SoundsPlayingStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import soliloquy.specs.audio.entities.ISound;
 import soliloquy.specs.audio.entities.ISoundsPlaying;
 import soliloquy.specs.common.valueobjects.IEntityUuid;
 
@@ -15,26 +16,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SoundUnitTests {
 	private Sound _sound;
+	private String _filename;
 
 	private final IEntityUuid ENTITY_UUID = new EntityUuidStub();
 	private final ISoundsPlaying SOUNDS_PLAYING = new SoundsPlayingStub();
+	private final String SOUND_TYPE_ID = "Kevin_MacLeod_-_Living_Voyage";
 
-	@SuppressWarnings("ConstantConditions")
+	@SuppressWarnings({"ConstantConditions", "SpellCheckingInspection"})
 	@BeforeEach
 	void setUp() throws Exception {
-		String filename = new File(String.valueOf(Paths.get(
+		_filename = new File(String.valueOf(Paths.get(
 				getClass().getClassLoader()
 						.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toURI())
 				.toFile())).getAbsolutePath();
-
-		String soundTypeId = "Kevin_MacLeod_-_Living_Voyage";
-		_sound = new Sound(ENTITY_UUID, soundTypeId, filename, SOUNDS_PLAYING);
+		_sound = new Sound(ENTITY_UUID, SOUND_TYPE_ID, _filename, SOUNDS_PLAYING);
     }
     
     @Test
 	void testId() {
 		assertSame(_sound.id(), ENTITY_UUID);
     }
+
+    @Test
+	void testEquals() {
+		ISound sound2 = new Sound(ENTITY_UUID, SOUND_TYPE_ID, _filename, SOUNDS_PLAYING);
+		assertEquals(_sound, sound2);
+	}
 
     @Test
 	void testGetInterfaceName() {
