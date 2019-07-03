@@ -9,7 +9,7 @@ import soliloquy.specs.audio.entities.IAudio;
 import soliloquy.specs.audio.entities.ISound;
 import soliloquy.specs.common.factories.IEntityUuidFactory;
 import soliloquy.specs.common.factories.IMapFactory;
-import soliloquy.specs.common.valueobjects.IMap;
+import soliloquy.specs.common.infrastructure.IMap;
 
 import java.io.File;
 import java.net.URISyntaxException;

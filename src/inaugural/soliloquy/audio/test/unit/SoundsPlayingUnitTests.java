@@ -8,7 +8,7 @@ import inaugural.soliloquy.audio.test.unit.stubs.MapFactoryStub;
 import inaugural.soliloquy.audio.test.unit.stubs.SoundStub;
 import soliloquy.specs.audio.entities.ISound;
 import soliloquy.specs.common.factories.IMapFactory;
-import soliloquy.specs.common.valueobjects.ICollection;
+import soliloquy.specs.common.infrastructure.ICollection;
 import soliloquy.specs.common.valueobjects.IEntityUuid;
 
 import static org.junit.jupiter.api.Assertions.*;

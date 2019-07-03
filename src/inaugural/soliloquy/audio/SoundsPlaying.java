@@ -3,9 +3,9 @@ package inaugural.soliloquy.audio;
 import soliloquy.specs.audio.entities.ISound;
 import soliloquy.specs.audio.entities.ISoundsPlaying;
 import soliloquy.specs.common.factories.IMapFactory;
-import soliloquy.specs.common.valueobjects.ICollection;
+import soliloquy.specs.common.infrastructure.ICollection;
+import soliloquy.specs.common.infrastructure.IMap;
 import soliloquy.specs.common.valueobjects.IEntityUuid;
-import soliloquy.specs.common.valueobjects.IMap;
 
 public class SoundsPlaying implements ISoundsPlaying {
 	

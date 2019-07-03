@@ -5,9 +5,10 @@ import java.util.Iterator;
 
 import inaugural.soliloquy.audio.test.unit.SoundFactoryUnitTests;
 import soliloquy.specs.common.entities.IFunction;
-import soliloquy.specs.common.valueobjects.ICollection;
-import soliloquy.specs.common.valueobjects.IMap;
-import soliloquy.specs.common.valueobjects.IPair;
+import soliloquy.specs.common.infrastructure.ICollection;
+import soliloquy.specs.common.infrastructure.IMap;
+import soliloquy.specs.common.infrastructure.IPair;
+import soliloquy.specs.common.infrastructure.IReadOnlyMap;
 
 public class SoundTypeFilenameMapStub implements IMap<String,String> {
 	private HashMap<String,String> _mappings = new HashMap<>();
@@ -78,7 +79,7 @@ public class SoundTypeFilenameMapStub implements IMap<String,String> {
 	}
 
 	@Override
-	public boolean equals(IMap<String, String> map) throws IllegalArgumentException {
+	public boolean equals(IReadOnlyMap<String, String> map) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
@@ -147,6 +148,11 @@ public class SoundTypeFilenameMapStub implements IMap<String,String> {
 	public ICollection<IFunction<IPair<String, String>, String>> validators() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IReadOnlyMap<String, String> readOnlyRepresentation() {
+		return null;
 	}
 
 	@Override

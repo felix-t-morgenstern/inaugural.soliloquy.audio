@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import soliloquy.specs.audio.entities.ISound;
 import soliloquy.specs.audio.entities.ISoundsPlaying;
-import soliloquy.specs.common.valueobjects.ICollection;
+import soliloquy.specs.common.infrastructure.ICollection;
 import soliloquy.specs.common.valueobjects.IEntityUuid;
 
 public class SoundsPlayingStub implements ISoundsPlaying {

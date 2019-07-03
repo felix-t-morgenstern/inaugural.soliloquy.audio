@@ -4,9 +4,10 @@ import soliloquy.specs.audio.entities.ISound;
 import soliloquy.specs.audio.entities.ISoundsPlaying;
 import soliloquy.specs.audio.factories.ISoundFactory;
 import soliloquy.specs.common.factories.IEntityUuidFactory;
+import soliloquy.specs.common.infrastructure.IMap;
+import soliloquy.specs.common.infrastructure.IPair;
+import soliloquy.specs.common.infrastructure.IReadOnlyMap;
 import soliloquy.specs.common.valueobjects.IEntityUuid;
-import soliloquy.specs.common.valueobjects.IMap;
-import soliloquy.specs.common.valueobjects.IPair;
 
 public class SoundFactory implements ISoundFactory {
 	private final IMap<String,String> SOUND_TYPE_FILENAMES;
@@ -35,7 +36,8 @@ public class SoundFactory implements ISoundFactory {
 		}
 		String filename = SOUND_TYPE_FILENAMES.get(soundTypeId);
 		if (filename == null) {
-			throw new IllegalArgumentException("SoundFactory.make: soundTypeId must correspond to a valid (i.e. registered) sound type id");
+			throw new IllegalArgumentException(
+					"SoundFactory.make: soundTypeId must correspond to a valid (i.e. registered) sound type id");
 		}
 		IEntityUuid id = ENTITY_UUID_FACTORY.createRandomEntityUuid();
 		ISound sound = new Sound(id, soundTypeId, filename, SOUNDS_PLAYING);
@@ -49,19 +51,24 @@ public class SoundFactory implements ISoundFactory {
 
 	@SuppressWarnings("ConstantConditions")
 	@Override
-	public void registerSoundTypes(IMap<String, String> soundTypesToFilenamesMap) throws IllegalArgumentException {
+	public void registerSoundTypes(IReadOnlyMap<String, String> soundTypesToFilenamesMap)
+			throws IllegalArgumentException {
 		for(IPair<String,String> mapping : soundTypesToFilenamesMap) {
 			if (mapping.getItem1() == null) {
-				throw new IllegalArgumentException("SoundFactory.registerSounds: key cannot be null");
+				throw new IllegalArgumentException(
+						"SoundFactory.registerSounds: key cannot be null");
 			}
 			if (mapping.getItem1().equals("")) {
-				throw new IllegalArgumentException("SoundFactory.registerSounds: key cannot be empty");
+				throw new IllegalArgumentException(
+						"SoundFactory.registerSounds: key cannot be empty");
 			}
 			if (mapping.getItem2() == null) {
-				throw new IllegalArgumentException("SoundFactory.registerSounds: value cannot be null");
+				throw new IllegalArgumentException(
+						"SoundFactory.registerSounds: value cannot be null");
 			}
 			if (mapping.getItem2().equals("")) {
-				throw new IllegalArgumentException("SoundFactory.registerSounds: value cannot be empty");
+				throw new IllegalArgumentException(
+						"SoundFactory.registerSounds: value cannot be empty");
 			}
 		}
 		for(IPair<String,String> mapping : soundTypesToFilenamesMap) {

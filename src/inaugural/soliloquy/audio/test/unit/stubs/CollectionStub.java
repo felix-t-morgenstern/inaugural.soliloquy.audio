@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import soliloquy.specs.common.entities.IFunction;
-import soliloquy.specs.common.valueobjects.ICollection;
+import soliloquy.specs.common.infrastructure.ICollection;
+import soliloquy.specs.common.infrastructure.IReadOnlyCollection;
 
 public class CollectionStub<V> implements ICollection<V> {
 	private ArrayList<V> _collection = new ArrayList<V>();
@@ -71,9 +72,8 @@ public class CollectionStub<V> implements ICollection<V> {
 	}
 
 	@Override
-	public boolean equals(ICollection<V> items) {
-		// Stub method; unimplemented
-		throw new UnsupportedOperationException();
+	public boolean equals(IReadOnlyCollection<V> iReadOnlyCollection) {
+		return false;
 	}
 
 	@Override
@@ -107,6 +107,11 @@ public class CollectionStub<V> implements ICollection<V> {
 	public ICollection<IFunction<V, String>> validators() {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IReadOnlyCollection<V> readOnlyRepresentation() {
+		return null;
 	}
 
 	@Override

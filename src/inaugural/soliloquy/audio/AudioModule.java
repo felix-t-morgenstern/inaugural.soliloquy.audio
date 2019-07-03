@@ -8,8 +8,8 @@ import soliloquy.specs.audio.entities.ISoundsPlaying;
 import soliloquy.specs.audio.factories.ISoundFactory;
 import soliloquy.specs.common.factories.IEntityUuidFactory;
 import soliloquy.specs.common.factories.IMapFactory;
+import soliloquy.specs.common.infrastructure.IMap;
 import soliloquy.specs.common.valueobjects.IEntityUuid;
-import soliloquy.specs.common.valueobjects.IMap;
 
 public class AudioModule extends AbstractModule {
 	private IAudio _audio;

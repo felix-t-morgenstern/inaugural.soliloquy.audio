@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.ISound;
 import soliloquy.specs.audio.factories.ISoundFactory;
-import soliloquy.specs.common.valueobjects.IMap;
+import soliloquy.specs.common.infrastructure.IMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
