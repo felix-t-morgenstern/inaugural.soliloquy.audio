@@ -80,7 +80,8 @@ public class SoundFactory implements ISoundFactory {
 		SoundFactory nonfunctionalSoundFactory = new SoundFactory();
 		return nonfunctionalSoundFactory.new SoundArchetype();
 	}
-	
+
+	// TODO: Move this class out to an archetypes namespace
 	public class SoundArchetype implements ISound {
 
 		@Override
