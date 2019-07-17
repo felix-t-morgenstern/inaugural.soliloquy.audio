@@ -1,18 +1,18 @@
 package inaugural.soliloquy.audio.test.unit.stubs;
 
-import soliloquy.specs.audio.entities.ISound;
-import soliloquy.specs.common.valueobjects.IEntityUuid;
+import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.common.valueobjects.EntityUuid;
 
-public class SoundStub implements ISound
+public class SoundStub implements Sound
 {
-	private final IEntityUuid ENTITY_UUID;
+	private final EntityUuid ENTITY_UUID;
 	
-	public SoundStub(IEntityUuid entityUuid) {
+	public SoundStub(EntityUuid entityUuid) {
 		ENTITY_UUID = entityUuid;
 	}
 
 	@Override
-	public IEntityUuid id() {
+	public EntityUuid id() {
 		return ENTITY_UUID;
 	}
 

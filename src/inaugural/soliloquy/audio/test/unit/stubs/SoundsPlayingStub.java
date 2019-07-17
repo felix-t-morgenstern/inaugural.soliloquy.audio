@@ -1,42 +1,42 @@
 package inaugural.soliloquy.audio.test.unit.stubs;
 
-import inaugural.soliloquy.audio.test.unit.SoundFactoryUnitTests;
+import inaugural.soliloquy.audio.test.unit.SoundFactoryImplUnitTests;
 import java.util.ArrayList;
 import java.util.List;
-import soliloquy.specs.audio.entities.ISound;
-import soliloquy.specs.audio.entities.ISoundsPlaying;
-import soliloquy.specs.common.infrastructure.ICollection;
-import soliloquy.specs.common.valueobjects.IEntityUuid;
+import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.audio.entities.SoundsPlaying;
+import soliloquy.specs.common.infrastructure.Collection;
+import soliloquy.specs.common.valueobjects.EntityUuid;
 
-public class SoundsPlayingStub implements ISoundsPlaying {
-	public List<ISound> SoundsRemoved = new ArrayList<>();
+public class SoundsPlayingStub implements SoundsPlaying {
+	public List<Sound> SoundsRemoved = new ArrayList<>();
 
 	public String getInterfaceName() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
-	public ICollection<ISound> allSoundsPlaying() {
+	public Collection<Sound> allSoundsPlaying() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean isPlayingSound(IEntityUuid soundId) throws IllegalArgumentException {
+	public boolean isPlayingSound(EntityUuid soundId) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
-	public ISound getSound(IEntityUuid soundId) throws IllegalArgumentException {
+	public Sound getSound(EntityUuid soundId) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
-	public void removeSound(ISound sound) throws IllegalArgumentException {
+	public void removeSound(Sound sound) throws IllegalArgumentException {
 		SoundsRemoved.add(sound);
 	}
 
 	@Override
-	public void registerSound(ISound sound) throws IllegalArgumentException {
-		SoundFactoryUnitTests.SoundRegistered = sound;
+	public void registerSound(Sound sound) throws IllegalArgumentException {
+		SoundFactoryImplUnitTests.SoundRegistered = sound;
 	}
 }

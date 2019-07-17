@@ -1,36 +1,35 @@
 package inaugural.soliloquy.audio;
 
 import com.google.inject.AbstractModule;
-
-import soliloquy.specs.audio.entities.IAudio;
-import soliloquy.specs.audio.entities.ISound;
-import soliloquy.specs.audio.entities.ISoundsPlaying;
-import soliloquy.specs.audio.factories.ISoundFactory;
-import soliloquy.specs.common.factories.IEntityUuidFactory;
-import soliloquy.specs.common.factories.IMapFactory;
-import soliloquy.specs.common.infrastructure.IMap;
-import soliloquy.specs.common.valueobjects.IEntityUuid;
+import soliloquy.specs.audio.entities.Audio;
+import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.audio.entities.SoundsPlaying;
+import soliloquy.specs.audio.factories.SoundFactory;
+import soliloquy.specs.common.factories.EntityUuidFactory;
+import soliloquy.specs.common.factories.MapFactory;
+import soliloquy.specs.common.infrastructure.Map;
+import soliloquy.specs.common.valueobjects.EntityUuid;
 
 public class AudioModule extends AbstractModule {
-	private IAudio _audio;
+	private Audio _audio;
 
-	public AudioModule(IEntityUuidFactory entityUuidFactory, IMapFactory mapFactory) {
+	public AudioModule(EntityUuidFactory entityUuidFactory, MapFactory mapFactory) {
 		
-		IEntityUuid entityUuidArchetype = entityUuidFactory.createRandomEntityUuid();
+		EntityUuid entityUuidArchetype = entityUuidFactory.createRandomEntityUuid();
 		
-		ISound soundArchetype = SoundFactory.makeSoundArchetype();
+		Sound soundArchetype = SoundFactoryImpl.makeSoundArchetype();
 
-		ISoundsPlaying soundsPlaying = new SoundsPlaying(mapFactory, entityUuidArchetype, soundArchetype);
+		SoundsPlaying soundsPlaying = new SoundsPlayingImpl(mapFactory, entityUuidArchetype, soundArchetype);
 		
-		IMap<String,String> soundTypeFilenameMappings = mapFactory.make("", "");
+		Map<String,String> soundTypeFilenameMappings = mapFactory.make("", "");
 
-		ISoundFactory soundFactory = new SoundFactory(soundTypeFilenameMappings, soundsPlaying, entityUuidFactory);
+		SoundFactory soundFactory = new SoundFactoryImpl(soundTypeFilenameMappings, soundsPlaying, entityUuidFactory);
 		
-		_audio = new Audio(soundsPlaying, soundFactory);
+		_audio = new AudioImpl(soundsPlaying, soundFactory);
 	}
 	
 	@Override
 	protected void configure() {
-		bind(IAudio.class).toInstance(_audio);
+		bind(Audio.class).toInstance(_audio);
 	}
 }

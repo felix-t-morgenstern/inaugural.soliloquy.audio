@@ -2,16 +2,16 @@ package inaugural.soliloquy.audio.test.integration;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import soliloquy.specs.audio.entities.ISound;
-import soliloquy.specs.audio.entities.ISoundsPlaying;
-import soliloquy.specs.audio.factories.ISoundFactory;
-import soliloquy.specs.common.infrastructure.ICollection;
+import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.audio.entities.SoundsPlaying;
+import soliloquy.specs.audio.factories.SoundFactory;
+import soliloquy.specs.common.infrastructure.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SoundsPlayingIntegrationTests {
-	private ISoundsPlaying _soundsPlaying;
-	private ISoundFactory _soundFactory;
+class SoundsPlayingImplIntegrationTests {
+	private SoundsPlaying _soundsPlaying;
+	private SoundFactory _soundFactory;
 	
     @BeforeEach
 	void setUp() throws Exception
@@ -32,7 +32,7 @@ class SoundsPlayingIntegrationTests {
     @Test
 	void testRegisterAndRemoveSound()
     {
-    	ISound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
+    	Sound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
     	
     	_soundsPlaying.registerSound(sound);
     	
@@ -46,10 +46,10 @@ class SoundsPlayingIntegrationTests {
     @Test
 	void testAllSoundsPlaying()
     {
-    	ISound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
+    	Sound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
     	
-    	ICollection<ISound> allSoundsPlaying1 = _soundsPlaying.allSoundsPlaying();
-    	ICollection<ISound> allSoundsPlaying2 = _soundsPlaying.allSoundsPlaying();
+    	Collection<Sound> allSoundsPlaying1 = _soundsPlaying.allSoundsPlaying();
+    	Collection<Sound> allSoundsPlaying2 = _soundsPlaying.allSoundsPlaying();
 
 		assertNotSame(allSoundsPlaying1, allSoundsPlaying2);
 		assertEquals(1, allSoundsPlaying1.size());
@@ -71,9 +71,9 @@ class SoundsPlayingIntegrationTests {
     @Test
 	void testGetSound()
     {
-    	ISound soundMade = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
+    	Sound soundMade = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
     	
-    	ISound soundPlaying = _soundsPlaying.getSound(soundMade.id());
+    	Sound soundPlaying = _soundsPlaying.getSound(soundMade.id());
 
 		assertSame(soundMade, soundPlaying);
     }

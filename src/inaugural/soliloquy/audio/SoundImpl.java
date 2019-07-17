@@ -4,17 +4,17 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
-import soliloquy.specs.audio.entities.ISound;
-import soliloquy.specs.audio.entities.ISoundsPlaying;
-import soliloquy.specs.common.valueobjects.IEntityUuid;
+import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.audio.entities.SoundsPlaying;
+import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.io.File;
 
-public class Sound implements ISound {
-	private final IEntityUuid ID;
+public class SoundImpl implements Sound {
+	private final EntityUuid ID;
 	private final String SOUND_TYPE_ID;
 	
-	private final ISoundsPlaying SOUNDS_PLAYING;
+	private final SoundsPlaying SOUNDS_PLAYING;
 	
 	private final MediaPlayer MEDIA_PLAYER;
 	
@@ -31,7 +31,8 @@ public class Sound implements ISound {
 	
 	static final String INTERFACE_NAME = "soliloquy.audio.specs.ISound";
 	
-	public Sound(IEntityUuid id, String soundTypeId, String filename, ISoundsPlaying soundsPlaying) {
+	public SoundImpl(EntityUuid id, String soundTypeId, String filename,
+					 SoundsPlaying soundsPlaying) {
 		// TODO: Test to make sure that id is non-null
 		ID = id;
 		// TODO: Test to make sure that soundTypeId is non-null and non-empty
@@ -58,7 +59,7 @@ public class Sound implements ISound {
 		});
 	}
 
-	public IEntityUuid id() throws IllegalStateException {
+	public EntityUuid id() throws IllegalStateException {
 		return ID;
 	}
 
@@ -239,10 +240,10 @@ public class Sound implements ISound {
 		if (o == null) {
 			return false;
 		}
-		if (!(o instanceof ISound)) {
+		if (!(o instanceof Sound)) {
 			return false;
 		}
-		ISound sound = (ISound) o;
+		Sound sound = (Sound) o;
 		return sound.id().equals(ID);
 	}
 

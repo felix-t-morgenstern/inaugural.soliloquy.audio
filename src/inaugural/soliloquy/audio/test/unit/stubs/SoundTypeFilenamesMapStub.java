@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import soliloquy.specs.common.entities.IFunction;
-import soliloquy.specs.common.infrastructure.ICollection;
-import soliloquy.specs.common.infrastructure.IMap;
-import soliloquy.specs.common.infrastructure.IPair;
-import soliloquy.specs.common.infrastructure.IReadOnlyMap;
+import soliloquy.specs.common.entities.Function;
+import soliloquy.specs.common.infrastructure.Collection;
+import soliloquy.specs.common.infrastructure.Map;
+import soliloquy.specs.common.infrastructure.Pair;
+import soliloquy.specs.common.infrastructure.ReadOnlyMap;
 
-public class SoundTypeFilenamesMapStub implements IMap<String,String> {
+public class SoundTypeFilenamesMapStub implements Map<String,String> {
 	private HashMap<String,String> _mappings;
 	
 	public SoundTypeFilenamesMapStub(String soundType1Id, String soundType1Filename) {
@@ -19,7 +19,7 @@ public class SoundTypeFilenamesMapStub implements IMap<String,String> {
 	}
 	
 	@Override
-	public Iterator<IPair<String, String>> iterator() {
+	public Iterator<Pair<String, String>> iterator() {
 		return new SoundTypeFilenamesMapStubIterator(_mappings);
 	}
 
@@ -48,7 +48,7 @@ public class SoundTypeFilenamesMapStub implements IMap<String,String> {
 	}
 
 	@Override
-	public IMap<String, String> makeClone() {
+	public Map<String, String> makeClone() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
@@ -72,19 +72,19 @@ public class SoundTypeFilenamesMapStub implements IMap<String,String> {
 	}
 
 	@Override
-	public boolean contains(IPair<String, String> item) throws IllegalArgumentException {
+	public boolean contains(Pair<String, String> item) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean equals(ICollection<String> items) throws IllegalArgumentException {
+	public boolean equals(Collection<String> items) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean equals(IReadOnlyMap<String, String> map) throws IllegalArgumentException {
+	public boolean equals(ReadOnlyMap<String, String> map) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
@@ -96,19 +96,19 @@ public class SoundTypeFilenamesMapStub implements IMap<String,String> {
 	}
 
 	@Override
-	public ICollection<String> getKeys() {
+	public Collection<String> getKeys() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ICollection<String> getValues() {
+	public Collection<String> getValues() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ICollection<String> indicesOf(String item) {
+	public Collection<String> indicesOf(String item) {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
@@ -132,7 +132,7 @@ public class SoundTypeFilenamesMapStub implements IMap<String,String> {
 	}
 
 	@Override
-	public void putAll(ICollection<IPair<String, String>> items) throws IllegalArgumentException {
+	public void putAll(Collection<Pair<String, String>> items) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
@@ -150,13 +150,13 @@ public class SoundTypeFilenamesMapStub implements IMap<String,String> {
 	}
 
 	@Override
-	public ICollection<IFunction<IPair<String, String>, String>> validators() {
+	public Collection<Function<Pair<String, String>, String>> validators() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public IReadOnlyMap<String, String> readOnlyRepresentation() {
+	public ReadOnlyMap<String, String> readOnlyRepresentation() {
 		return null;
 	}
 
@@ -166,7 +166,7 @@ public class SoundTypeFilenamesMapStub implements IMap<String,String> {
 		throw new UnsupportedOperationException();
 	}
 	
-	private class SoundTypeFilenamesMapStubIterator implements Iterator<IPair<String, String>> {
+	private class SoundTypeFilenamesMapStubIterator implements Iterator<Pair<String, String>> {
 		private Iterator<Entry<String,String>> _iterator;
 		
 		SoundTypeFilenamesMapStubIterator(HashMap<String,String> map) {
@@ -179,12 +179,12 @@ public class SoundTypeFilenamesMapStub implements IMap<String,String> {
 		}
 
 		@Override
-		public IPair<String, String> next() {
+		public Pair<String, String> next() {
 			Entry<String,String> entry = _iterator.next();
 			return new PairStub(entry.getKey(), entry.getValue());
 		}
 		
-		private class PairStub implements IPair<String,String> {
+		private class PairStub implements Pair<String,String> {
 			private String _item1;
 			private String _item2;
 			

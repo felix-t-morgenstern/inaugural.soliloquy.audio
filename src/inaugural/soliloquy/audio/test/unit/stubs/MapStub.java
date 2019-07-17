@@ -3,17 +3,17 @@ package inaugural.soliloquy.audio.test.unit.stubs;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import soliloquy.specs.common.entities.IFunction;
-import soliloquy.specs.common.infrastructure.ICollection;
-import soliloquy.specs.common.infrastructure.IMap;
-import soliloquy.specs.common.infrastructure.IPair;
-import soliloquy.specs.common.infrastructure.IReadOnlyMap;
+import soliloquy.specs.common.entities.Function;
+import soliloquy.specs.common.infrastructure.Collection;
+import soliloquy.specs.common.infrastructure.Map;
+import soliloquy.specs.common.infrastructure.Pair;
+import soliloquy.specs.common.infrastructure.ReadOnlyMap;
 
-public class MapStub<K,V> implements IMap<K,V> {
+public class MapStub<K,V> implements Map<K,V> {
 	private HashMap<K,V> _map = new HashMap<>();
 
 	@Override
-	public Iterator<IPair<K, V>> iterator() {
+	public Iterator<Pair<K, V>> iterator() {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
@@ -37,7 +37,7 @@ public class MapStub<K,V> implements IMap<K,V> {
 	}
 
 	@Override
-	public IMap<K, V> makeClone() {
+	public Map<K, V> makeClone() {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
@@ -60,19 +60,19 @@ public class MapStub<K,V> implements IMap<K,V> {
 	}
 
 	@Override
-	public boolean contains(IPair<K, V> item) throws IllegalArgumentException {
+	public boolean contains(Pair<K, V> item) throws IllegalArgumentException {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean equals(ICollection<V> items) throws IllegalArgumentException {
+	public boolean equals(Collection<V> items) throws IllegalArgumentException {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean equals(IReadOnlyMap<K, V> map) throws IllegalArgumentException {
+	public boolean equals(ReadOnlyMap<K, V> map) throws IllegalArgumentException {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
@@ -83,8 +83,8 @@ public class MapStub<K,V> implements IMap<K,V> {
 	}
 
 	@Override
-	public ICollection<K> getKeys() {
-		ICollection<K> keys = new CollectionStub<>();
+	public Collection<K> getKeys() {
+		Collection<K> keys = new CollectionStub<>();
 		for (K key : _map.keySet()) {
 			keys.add(key);
 		}
@@ -92,8 +92,8 @@ public class MapStub<K,V> implements IMap<K,V> {
 	}
 
 	@Override
-	public ICollection<V> getValues() {
-		ICollection<V> values = new CollectionStub<>();
+	public Collection<V> getValues() {
+		Collection<V> values = new CollectionStub<>();
 		for (V value : _map.values()) {
 			values.add(value);
 		}
@@ -101,7 +101,7 @@ public class MapStub<K,V> implements IMap<K,V> {
 	}
 
 	@Override
-	public ICollection<K> indicesOf(V item) {
+	public Collection<K> indicesOf(V item) {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
@@ -124,7 +124,7 @@ public class MapStub<K,V> implements IMap<K,V> {
 	}
 
 	@Override
-	public void putAll(ICollection<IPair<K, V>> items) throws IllegalArgumentException {
+	public void putAll(Collection<Pair<K, V>> items) throws IllegalArgumentException {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
@@ -140,13 +140,13 @@ public class MapStub<K,V> implements IMap<K,V> {
 	}
 
 	@Override
-	public ICollection<IFunction<IPair<K, V>, String>> validators() {
+	public Collection<Function<Pair<K, V>, String>> validators() {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public IReadOnlyMap<K, V> readOnlyRepresentation() {
+	public ReadOnlyMap<K, V> readOnlyRepresentation() {
 		return null;
 	}
 

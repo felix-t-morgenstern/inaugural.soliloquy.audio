@@ -3,18 +3,18 @@ package inaugural.soliloquy.audio.test.unit.stubs;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import inaugural.soliloquy.audio.test.unit.SoundFactoryUnitTests;
-import soliloquy.specs.common.entities.IFunction;
-import soliloquy.specs.common.infrastructure.ICollection;
-import soliloquy.specs.common.infrastructure.IMap;
-import soliloquy.specs.common.infrastructure.IPair;
-import soliloquy.specs.common.infrastructure.IReadOnlyMap;
+import inaugural.soliloquy.audio.test.unit.SoundFactoryImplUnitTests;
+import soliloquy.specs.common.entities.Function;
+import soliloquy.specs.common.infrastructure.Collection;
+import soliloquy.specs.common.infrastructure.Map;
+import soliloquy.specs.common.infrastructure.Pair;
+import soliloquy.specs.common.infrastructure.ReadOnlyMap;
 
-public class SoundTypeFilenameMapStub implements IMap<String,String> {
+public class SoundTypeFilenameMapStub implements Map<String,String> {
 	private HashMap<String,String> _mappings = new HashMap<>();
 
 	@Override
-	public Iterator<IPair<String, String>> iterator() {
+	public Iterator<Pair<String, String>> iterator() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
@@ -44,7 +44,7 @@ public class SoundTypeFilenameMapStub implements IMap<String,String> {
 	}
 
 	@Override
-	public IMap<String, String> makeClone() {
+	public Map<String, String> makeClone() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
@@ -67,44 +67,44 @@ public class SoundTypeFilenameMapStub implements IMap<String,String> {
 	}
 
 	@Override
-	public boolean contains(IPair<String, String> item) throws IllegalArgumentException {
+	public boolean contains(Pair<String, String> item) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean equals(ICollection<String> items) throws IllegalArgumentException {
+	public boolean equals(Collection<String> items) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean equals(IReadOnlyMap<String, String> map) throws IllegalArgumentException {
+	public boolean equals(ReadOnlyMap<String, String> map) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String get(String key) throws IllegalArgumentException, IllegalStateException {
-		SoundFactoryUnitTests.SoundTypeFilenameSearched = key;
-		SoundFactoryUnitTests.SoundTypeFilenameReturned = _mappings.get(key);
+		SoundFactoryImplUnitTests.SoundTypeFilenameSearched = key;
+		SoundFactoryImplUnitTests.SoundTypeFilenameReturned = _mappings.get(key);
 		return _mappings.get(key);
 	}
 
 	@Override
-	public ICollection<String> getKeys() {
+	public Collection<String> getKeys() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ICollection<String> getValues() {
+	public Collection<String> getValues() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ICollection<String> indicesOf(String item) {
+	public Collection<String> indicesOf(String item) {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
@@ -127,7 +127,7 @@ public class SoundTypeFilenameMapStub implements IMap<String,String> {
 	}
 
 	@Override
-	public void putAll(ICollection<IPair<String, String>> items) throws IllegalArgumentException {
+	public void putAll(Collection<Pair<String, String>> items) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
@@ -145,13 +145,13 @@ public class SoundTypeFilenameMapStub implements IMap<String,String> {
 	}
 
 	@Override
-	public ICollection<IFunction<IPair<String, String>, String>> validators() {
+	public Collection<Function<Pair<String, String>, String>> validators() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public IReadOnlyMap<String, String> readOnlyRepresentation() {
+	public ReadOnlyMap<String, String> readOnlyRepresentation() {
 		return null;
 	}
 

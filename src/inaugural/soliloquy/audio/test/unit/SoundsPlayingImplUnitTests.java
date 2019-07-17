@@ -2,27 +2,27 @@ package inaugural.soliloquy.audio.test.unit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import inaugural.soliloquy.audio.SoundsPlaying;
+import inaugural.soliloquy.audio.SoundsPlayingImpl;
 import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidStub;
 import inaugural.soliloquy.audio.test.unit.stubs.MapFactoryStub;
 import inaugural.soliloquy.audio.test.unit.stubs.SoundStub;
-import soliloquy.specs.audio.entities.ISound;
-import soliloquy.specs.common.factories.IMapFactory;
-import soliloquy.specs.common.infrastructure.ICollection;
-import soliloquy.specs.common.valueobjects.IEntityUuid;
+import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.common.factories.MapFactory;
+import soliloquy.specs.common.infrastructure.Collection;
+import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SoundsPlayingUnitTests {
-	private SoundsPlaying _soundsPlaying;
+class SoundsPlayingImplUnitTests {
+	private SoundsPlayingImpl _soundsPlaying;
 	
-	private final IMapFactory MAP_FACTORY = new MapFactoryStub();
-	private final IEntityUuid ENTITY_UUID = new EntityUuidStub();
-	private final ISound SOUND_ARCHETYPE = new SoundStub(ENTITY_UUID);
+	private final MapFactory MAP_FACTORY = new MapFactoryStub();
+	private final EntityUuid ENTITY_UUID = new EntityUuidStub();
+	private final Sound SOUND_ARCHETYPE = new SoundStub(ENTITY_UUID);
 	
     @BeforeEach
 	void setUp() {
-    	_soundsPlaying = new SoundsPlaying(MAP_FACTORY, ENTITY_UUID, SOUND_ARCHETYPE);
+    	_soundsPlaying = new SoundsPlayingImpl(MAP_FACTORY, ENTITY_UUID, SOUND_ARCHETYPE);
     }
     
     @Test
@@ -45,8 +45,8 @@ class SoundsPlayingUnitTests {
 	void testAllSoundsPlaying() {
     	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
     	
-    	ICollection<ISound> allSoundsPlaying1 = _soundsPlaying.allSoundsPlaying();
-    	ICollection<ISound> allSoundsPlaying2 = _soundsPlaying.allSoundsPlaying();
+    	Collection<Sound> allSoundsPlaying1 = _soundsPlaying.allSoundsPlaying();
+    	Collection<Sound> allSoundsPlaying2 = _soundsPlaying.allSoundsPlaying();
 
 		assertNotSame(allSoundsPlaying1, allSoundsPlaying2);
 		assertEquals(1, allSoundsPlaying1.size());
@@ -67,7 +67,7 @@ class SoundsPlayingUnitTests {
 	void testGetSound() {
     	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
     	
-    	ISound sound = _soundsPlaying.getSound(SOUND_ARCHETYPE.id());
+    	Sound sound = _soundsPlaying.getSound(SOUND_ARCHETYPE.id());
 
 		assertSame(sound, SOUND_ARCHETYPE);
     }

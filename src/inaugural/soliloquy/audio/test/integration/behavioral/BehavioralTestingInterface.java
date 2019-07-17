@@ -7,8 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import inaugural.soliloquy.audio.test.integration.IntegrationTestsSetup;
-import soliloquy.specs.audio.entities.IAudio;
-import soliloquy.specs.audio.entities.ISound;
+import soliloquy.specs.audio.entities.Audio;
+import soliloquy.specs.audio.entities.Sound;
 
 public class BehavioralTestingInterface implements ActionListener {
 	private final static String BUTTON_INITIALIZE = "Initialize";
@@ -32,8 +32,8 @@ public class BehavioralTestingInterface implements ActionListener {
 		}
 	}
 
-	private static IAudio AUDIO = SETUP.audio();
-	private static ISound SOUND;
+	private static Audio AUDIO = SETUP.audio();
+	private static Sound SOUND;
 	
 	private static boolean RUN_RECURRING_POSITION_CHECK = true;
 
@@ -194,7 +194,7 @@ public class BehavioralTestingInterface implements ActionListener {
 	
 	private void initialize() {
 		AUDIO.soundFactory().registerSoundTypes(SETUP.sampleSoundTypeFilenameMappings());
-		for(ISound sound : AUDIO.soundsPlaying().allSoundsPlaying()) {
+		for(Sound sound : AUDIO.soundsPlaying().allSoundsPlaying()) {
 			sound.stop();
 		}
 		SOUND = AUDIO.soundFactory().make(IntegrationTestsSetup.SOUND_TYPE_1_ID);

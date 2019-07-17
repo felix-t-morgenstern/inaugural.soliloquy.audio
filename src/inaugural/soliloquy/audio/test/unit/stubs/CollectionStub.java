@@ -3,11 +3,11 @@ package inaugural.soliloquy.audio.test.unit.stubs;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import soliloquy.specs.common.entities.IFunction;
-import soliloquy.specs.common.infrastructure.ICollection;
-import soliloquy.specs.common.infrastructure.IReadOnlyCollection;
+import soliloquy.specs.common.entities.Function;
+import soliloquy.specs.common.infrastructure.Collection;
+import soliloquy.specs.common.infrastructure.ReadOnlyCollection;
 
-public class CollectionStub<V> implements ICollection<V> {
+public class CollectionStub<V> implements Collection<V> {
 	private ArrayList<V> _collection = new ArrayList<V>();
 	private V _archetype;
 	
@@ -29,7 +29,7 @@ public class CollectionStub<V> implements ICollection<V> {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ICollection<V> makeClone() {
+	public Collection<V> makeClone() {
 		return new CollectionStub<V>((ArrayList<V>) _collection.clone());
 	}
 
@@ -49,7 +49,7 @@ public class CollectionStub<V> implements ICollection<V> {
 	}
 
 	@Override
-	public void addAll(ICollection<? extends V> items) throws UnsupportedOperationException {
+	public void addAll(Collection<? extends V> items) throws UnsupportedOperationException {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
@@ -72,7 +72,7 @@ public class CollectionStub<V> implements ICollection<V> {
 	}
 
 	@Override
-	public boolean equals(IReadOnlyCollection<V> iReadOnlyCollection) {
+	public boolean equals(ReadOnlyCollection<V> readOnlyCollection) {
 		return false;
 	}
 
@@ -104,13 +104,13 @@ public class CollectionStub<V> implements ICollection<V> {
 	}
 
 	@Override
-	public ICollection<IFunction<V, String>> validators() {
+	public Collection<Function<V, String>> validators() {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public IReadOnlyCollection<V> readOnlyRepresentation() {
+	public ReadOnlyCollection<V> readOnlyRepresentation() {
 		return null;
 	}
 

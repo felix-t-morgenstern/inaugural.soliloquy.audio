@@ -1,33 +1,34 @@
 package inaugural.soliloquy.audio;
 
-import soliloquy.specs.audio.entities.ISound;
-import soliloquy.specs.audio.entities.ISoundsPlaying;
-import soliloquy.specs.audio.factories.ISoundFactory;
-import soliloquy.specs.common.factories.IEntityUuidFactory;
-import soliloquy.specs.common.infrastructure.IMap;
-import soliloquy.specs.common.infrastructure.IPair;
-import soliloquy.specs.common.infrastructure.IReadOnlyMap;
-import soliloquy.specs.common.valueobjects.IEntityUuid;
+import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.audio.entities.SoundsPlaying;
+import soliloquy.specs.audio.factories.SoundFactory;
+import soliloquy.specs.common.factories.EntityUuidFactory;
+import soliloquy.specs.common.infrastructure.Map;
+import soliloquy.specs.common.infrastructure.Pair;
+import soliloquy.specs.common.infrastructure.ReadOnlyMap;
+import soliloquy.specs.common.valueobjects.EntityUuid;
 
-public class SoundFactory implements ISoundFactory {
-	private final IMap<String,String> SOUND_TYPE_FILENAMES;
-	private final ISoundsPlaying SOUNDS_PLAYING;
-	private final IEntityUuidFactory ENTITY_UUID_FACTORY;
+public class SoundFactoryImpl implements SoundFactory {
+	private final Map<String,String> SOUND_TYPE_FILENAMES;
+	private final SoundsPlaying SOUNDS_PLAYING;
+	private final EntityUuidFactory ENTITY_UUID_FACTORY;
 	
-	public SoundFactory(IMap<String,String> soundTypeFilenames, ISoundsPlaying soundsPlaying, IEntityUuidFactory entityUuidFactory) {
+	public SoundFactoryImpl(Map<String,String> soundTypeFilenames, SoundsPlaying soundsPlaying,
+							EntityUuidFactory entityUuidFactory) {
 		SOUND_TYPE_FILENAMES = soundTypeFilenames;
 		SOUNDS_PLAYING = soundsPlaying;
 		ENTITY_UUID_FACTORY = entityUuidFactory;
 	}
 	
-	private SoundFactory() {
+	private SoundFactoryImpl() {
 		SOUND_TYPE_FILENAMES = null;
 		SOUNDS_PLAYING = null;
 		ENTITY_UUID_FACTORY = null;
 	}
 
 	@SuppressWarnings("ConstantConditions")
-	public ISound make(String soundTypeId) throws IllegalArgumentException {
+	public Sound make(String soundTypeId) throws IllegalArgumentException {
 		if (soundTypeId == null) {
 			throw new IllegalArgumentException("SoundFactory.make: soundTypeId cannot be null");
 		}
@@ -39,21 +40,21 @@ public class SoundFactory implements ISoundFactory {
 			throw new IllegalArgumentException(
 					"SoundFactory.make: soundTypeId must correspond to a valid (i.e. registered) sound type id");
 		}
-		IEntityUuid id = ENTITY_UUID_FACTORY.createRandomEntityUuid();
-		ISound sound = new Sound(id, soundTypeId, filename, SOUNDS_PLAYING);
+		EntityUuid id = ENTITY_UUID_FACTORY.createRandomEntityUuid();
+		Sound sound = new SoundImpl(id, soundTypeId, filename, SOUNDS_PLAYING);
 		SOUNDS_PLAYING.registerSound(sound);
 		return sound;
 	}
 
 	public String getInterfaceName() {
-		return ISoundFactory.class.getCanonicalName();
+		return SoundFactory.class.getCanonicalName();
 	}
 
 	@SuppressWarnings("ConstantConditions")
 	@Override
-	public void registerSoundTypes(IReadOnlyMap<String, String> soundTypesToFilenamesMap)
+	public void registerSoundTypes(ReadOnlyMap<String, String> soundTypesToFilenamesMap)
 			throws IllegalArgumentException {
-		for(IPair<String,String> mapping : soundTypesToFilenamesMap) {
+		for(Pair<String,String> mapping : soundTypesToFilenamesMap) {
 			if (mapping.getItem1() == null) {
 				throw new IllegalArgumentException(
 						"SoundFactory.registerSounds: key cannot be null");
@@ -71,28 +72,28 @@ public class SoundFactory implements ISoundFactory {
 						"SoundFactory.registerSounds: value cannot be empty");
 			}
 		}
-		for(IPair<String,String> mapping : soundTypesToFilenamesMap) {
+		for(Pair<String,String> mapping : soundTypesToFilenamesMap) {
 			SOUND_TYPE_FILENAMES.put(mapping.getItem1(), mapping.getItem2());
 		}
 	}
 	
-	static ISound makeSoundArchetype() {
-		SoundFactory nonfunctionalSoundFactory = new SoundFactory();
+	static Sound makeSoundArchetype() {
+		SoundFactoryImpl nonfunctionalSoundFactory = new SoundFactoryImpl();
 		return nonfunctionalSoundFactory.new SoundArchetype();
 	}
 
 	// TODO: Move this class out to an archetypes namespace
-	public class SoundArchetype implements ISound {
+	public class SoundArchetype implements Sound {
 
 		@Override
-		public IEntityUuid id() {
+		public EntityUuid id() {
 			// stub method
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
 		public String getInterfaceName() {
-			return Sound.INTERFACE_NAME;
+			return SoundImpl.INTERFACE_NAME;
 		}
 
 		@Override

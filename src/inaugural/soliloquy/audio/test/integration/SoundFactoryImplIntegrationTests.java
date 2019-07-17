@@ -2,16 +2,16 @@ package inaugural.soliloquy.audio.test.integration;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import soliloquy.specs.audio.entities.ISound;
-import soliloquy.specs.audio.factories.ISoundFactory;
-import soliloquy.specs.common.infrastructure.IMap;
+import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.audio.factories.SoundFactory;
+import soliloquy.specs.common.infrastructure.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SoundFactoryIntegrationTests {
-	private ISoundFactory _soundFactory;
+class SoundFactoryImplIntegrationTests {
+	private SoundFactory _soundFactory;
 	
-	private IMap<String,String> _soundTypeFilenameMappings;
+	private Map<String,String> _soundTypeFilenameMappings;
 	
     @BeforeEach
 	void setUp() throws Exception
@@ -26,7 +26,7 @@ class SoundFactoryIntegrationTests {
     @Test
 	void testGetInterfaceName()
     {
-		assertEquals(ISoundFactory.class.getCanonicalName(), _soundFactory.getInterfaceName());
+		assertEquals(SoundFactory.class.getCanonicalName(), _soundFactory.getInterfaceName());
     }
 
     @Test
@@ -34,7 +34,7 @@ class SoundFactoryIntegrationTests {
     {
     	_soundFactory.registerSoundTypes(_soundTypeFilenameMappings);
     	
-    	ISound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
+    	Sound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
 
 		assertEquals(sound.soundTypeId(), IntegrationTestsSetup.SOUND_TYPE_1_ID);
     }

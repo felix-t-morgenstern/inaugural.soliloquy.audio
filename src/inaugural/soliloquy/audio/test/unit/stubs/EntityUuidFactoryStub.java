@@ -1,25 +1,25 @@
 package inaugural.soliloquy.audio.test.unit.stubs;
 
-import soliloquy.specs.common.factories.IEntityUuidFactory;
-import soliloquy.specs.common.valueobjects.IEntityUuid;
+import soliloquy.specs.common.factories.EntityUuidFactory;
+import soliloquy.specs.common.valueobjects.EntityUuid;
 
-public class EntityUuidFactoryStub implements IEntityUuidFactory {
+public class EntityUuidFactoryStub implements EntityUuidFactory {
 	public String getInterfaceName() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
-	public IEntityUuid createFromLongs(long mostSignificantBits, long leastSignificantBits) {
+	public EntityUuid createFromLongs(long mostSignificantBits, long leastSignificantBits) {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
-	public IEntityUuid createFromString(String uuidString) throws IllegalArgumentException {
+	public EntityUuid createFromString(String uuidString) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
-	public IEntityUuid createRandomEntityUuid() {
+	public EntityUuid createRandomEntityUuid() {
 		return new EntityUuidStub();
 	}
 }
