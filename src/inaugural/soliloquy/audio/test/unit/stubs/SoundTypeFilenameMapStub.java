@@ -5,10 +5,7 @@ import java.util.Iterator;
 
 import inaugural.soliloquy.audio.test.unit.SoundFactoryImplUnitTests;
 import soliloquy.specs.common.entities.Function;
-import soliloquy.specs.common.infrastructure.Collection;
-import soliloquy.specs.common.infrastructure.Map;
-import soliloquy.specs.common.infrastructure.Pair;
-import soliloquy.specs.common.infrastructure.ReadOnlyMap;
+import soliloquy.specs.common.infrastructure.*;
 
 public class SoundTypeFilenameMapStub implements Map<String,String> {
 	private HashMap<String,String> _mappings = new HashMap<>();
@@ -73,13 +70,13 @@ public class SoundTypeFilenameMapStub implements Map<String,String> {
 	}
 
 	@Override
-	public boolean equals(Collection<String> items) throws IllegalArgumentException {
+	public boolean equals(ReadableCollection<String> items) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean equals(ReadOnlyMap<String, String> map) throws IllegalArgumentException {
+	public boolean equals(ReadableMap<String, String> map) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
@@ -127,7 +124,7 @@ public class SoundTypeFilenameMapStub implements Map<String,String> {
 	}
 
 	@Override
-	public void putAll(Collection<Pair<String, String>> items) throws IllegalArgumentException {
+	public void putAll(ReadableCollection<Pair<String, String>> items) throws IllegalArgumentException {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}
@@ -151,7 +148,7 @@ public class SoundTypeFilenameMapStub implements Map<String,String> {
 	}
 
 	@Override
-	public ReadOnlyMap<String, String> readOnlyRepresentation() {
+	public ReadableMap<String, String> readOnlyRepresentation() {
 		return null;
 	}
 

@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import soliloquy.specs.common.entities.Function;
 import soliloquy.specs.common.infrastructure.Collection;
-import soliloquy.specs.common.infrastructure.ReadOnlyCollection;
+import soliloquy.specs.common.infrastructure.ReadableCollection;
 
 public class CollectionStub<V> implements Collection<V> {
 	private ArrayList<V> _collection = new ArrayList<V>();
@@ -72,7 +72,7 @@ public class CollectionStub<V> implements Collection<V> {
 	}
 
 	@Override
-	public boolean equals(ReadOnlyCollection<V> readOnlyCollection) {
+	public boolean equals(ReadableCollection<V> ReadableCollection) {
 		return false;
 	}
 
@@ -110,7 +110,7 @@ public class CollectionStub<V> implements Collection<V> {
 	}
 
 	@Override
-	public ReadOnlyCollection<V> readOnlyRepresentation() {
+	public ReadableCollection<V> readOnlyRepresentation() {
 		return null;
 	}
 

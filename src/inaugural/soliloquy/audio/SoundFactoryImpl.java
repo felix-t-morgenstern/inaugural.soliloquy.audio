@@ -6,7 +6,7 @@ import soliloquy.specs.audio.factories.SoundFactory;
 import soliloquy.specs.common.factories.EntityUuidFactory;
 import soliloquy.specs.common.infrastructure.Map;
 import soliloquy.specs.common.infrastructure.Pair;
-import soliloquy.specs.common.infrastructure.ReadOnlyMap;
+import soliloquy.specs.common.infrastructure.ReadableMap;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
 public class SoundFactoryImpl implements SoundFactory {
@@ -52,7 +52,7 @@ public class SoundFactoryImpl implements SoundFactory {
 
 	@SuppressWarnings("ConstantConditions")
 	@Override
-	public void registerSoundTypes(ReadOnlyMap<String, String> soundTypesToFilenamesMap)
+	public void registerSoundTypes(ReadableMap<String, String> soundTypesToFilenamesMap)
 			throws IllegalArgumentException {
 		for(Pair<String,String> mapping : soundTypesToFilenamesMap) {
 			if (mapping.getItem1() == null) {

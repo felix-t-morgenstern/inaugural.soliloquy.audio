@@ -4,10 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import soliloquy.specs.common.entities.Function;
-import soliloquy.specs.common.infrastructure.Collection;
-import soliloquy.specs.common.infrastructure.Map;
-import soliloquy.specs.common.infrastructure.Pair;
-import soliloquy.specs.common.infrastructure.ReadOnlyMap;
+import soliloquy.specs.common.infrastructure.*;
 
 public class MapStub<K,V> implements Map<K,V> {
 	private HashMap<K,V> _map = new HashMap<>();
@@ -66,13 +63,13 @@ public class MapStub<K,V> implements Map<K,V> {
 	}
 
 	@Override
-	public boolean equals(Collection<V> items) throws IllegalArgumentException {
+	public boolean equals(ReadableCollection<V> items) throws IllegalArgumentException {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean equals(ReadOnlyMap<K, V> map) throws IllegalArgumentException {
+	public boolean equals(ReadableMap<K, V> map) throws IllegalArgumentException {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
@@ -124,7 +121,7 @@ public class MapStub<K,V> implements Map<K,V> {
 	}
 
 	@Override
-	public void putAll(Collection<Pair<K, V>> items) throws IllegalArgumentException {
+	public void putAll(ReadableCollection<Pair<K, V>> items) throws IllegalArgumentException {
 		// Stub method; unimplemented
 		throw new UnsupportedOperationException();
 	}
@@ -146,7 +143,7 @@ public class MapStub<K,V> implements Map<K,V> {
 	}
 
 	@Override
-	public ReadOnlyMap<K, V> readOnlyRepresentation() {
+	public ReadableMap<K, V> readOnlyRepresentation() {
 		return null;
 	}
 
