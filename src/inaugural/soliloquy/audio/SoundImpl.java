@@ -5,6 +5,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
@@ -12,7 +13,7 @@ import java.io.File;
 
 public class SoundImpl implements Sound {
 	private final EntityUuid ID;
-	private final String SOUND_TYPE_ID;
+	private final SoundType SOUND_TYPE;
 	
 	private final SoundsPlaying SOUNDS_PLAYING;
 	
@@ -29,19 +30,16 @@ public class SoundImpl implements Sound {
 	
 	private double _volume;
 	
-	static final String INTERFACE_NAME = "soliloquy.audio.specs.ISound";
-	
-	public SoundImpl(EntityUuid id, String soundTypeId, String filename,
-					 SoundsPlaying soundsPlaying) {
+	public SoundImpl(EntityUuid id, SoundType soundType, SoundsPlaying soundsPlaying) {
 		// TODO: Test to make sure that id is non-null
 		ID = id;
 		// TODO: Test to make sure that soundTypeId is non-null and non-empty
-		SOUND_TYPE_ID = soundTypeId;
+		SOUND_TYPE = soundType;
 		
 		SOUNDS_PLAYING = soundsPlaying;
 		
 		new JFXPanel();
-		Media media = new Media(new File(filename).toURI().toString());
+		Media media = new Media(new File(soundType.filename()).toURI().toString());
 		MEDIA_PLAYER = new MediaPlayer(media);
 		
 		_isPaused = true;
@@ -64,11 +62,11 @@ public class SoundImpl implements Sound {
 	}
 
 	public String getInterfaceName() {
-		return INTERFACE_NAME;
+		return Sound.class.getCanonicalName();
 	}
 
-	public String soundTypeId() {
-		return SOUND_TYPE_ID;
+	public SoundType soundType() {
+		return SOUND_TYPE;
 	}
 
 	public void play() throws UnsupportedOperationException {

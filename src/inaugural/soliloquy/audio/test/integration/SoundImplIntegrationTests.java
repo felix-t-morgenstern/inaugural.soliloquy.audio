@@ -24,7 +24,7 @@ class SoundImplIntegrationTests {
     @Test
 	void testGetInterfaceName()
     {
-		assertEquals("soliloquy.audio.specs.ISound", _sound.getInterfaceName());
+		assertEquals(Sound.class.getCanonicalName(), _sound.getInterfaceName());
     }
 
     @Test

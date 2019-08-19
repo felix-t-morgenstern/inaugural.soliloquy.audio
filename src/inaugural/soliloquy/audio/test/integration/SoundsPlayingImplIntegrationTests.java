@@ -20,7 +20,7 @@ class SoundsPlayingImplIntegrationTests {
     	_soundsPlaying = setup.audio().soundsPlaying();
     	
     	_soundFactory = setup.audio().soundFactory();
-    	_soundFactory.registerSoundTypes(setup.sampleSoundTypeFilenameMappings());
+    	setup.audio().soundTypes().register(setup.sampleSoundType());
     }
     
     @Test

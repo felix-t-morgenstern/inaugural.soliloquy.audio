@@ -4,11 +4,14 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import inaugural.soliloquy.audio.AudioModule;
+import inaugural.soliloquy.audio.SoundTypeImpl;
 import inaugural.soliloquy.common.CommonModule;
 import soliloquy.specs.audio.entities.Audio;
 import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.common.factories.EntityUuidFactory;
 import soliloquy.specs.common.factories.MapFactory;
+import soliloquy.specs.common.factories.RegistryFactory;
 import soliloquy.specs.common.infrastructure.Map;
 
 import java.io.File;
@@ -17,11 +20,13 @@ import java.nio.file.Paths;
 
 public class IntegrationTestsSetup {
 	private final MapFactory MAP_FACTORY;
+	private final RegistryFactory REGISTRY_FACTORY;
 	
 	private final Audio AUDIO;
 	
 	public final static String SOUND_TYPE_1_ID = "SoundType1Id";
-	public String _soundType1Filename;
+
+	private String _soundType1Filename;
 	
 	public IntegrationTestsSetup() throws URISyntaxException {
 		_soundType1Filename = new File(String.valueOf(Paths.get(
@@ -34,8 +39,10 @@ public class IntegrationTestsSetup {
 		EntityUuidFactory entityUuidFactory = commonInjector.getInstance(EntityUuidFactory.class);
 		
 		MAP_FACTORY = commonInjector.getInstance(MapFactory.class);
+		REGISTRY_FACTORY = commonInjector.getInstance(RegistryFactory.class);
 		
-		Injector audioInjector = Guice.createInjector(new AudioModule(entityUuidFactory, MAP_FACTORY));
+		Injector audioInjector = Guice.createInjector(new AudioModule(entityUuidFactory,
+				MAP_FACTORY, REGISTRY_FACTORY));
 		
 		AUDIO = audioInjector.getInstance(Audio.class);
 	}
@@ -44,18 +51,12 @@ public class IntegrationTestsSetup {
 		return AUDIO;
 	}
 	
-	MapFactory mapFactory() {
-		return MAP_FACTORY;
-	}
-	
-	public Map<String,String> sampleSoundTypeFilenameMappings() {
-		Map<String,String> soundTypeFilenameMappings = mapFactory().make("", "");
-		soundTypeFilenameMappings.put(SOUND_TYPE_1_ID, _soundType1Filename);
-		return soundTypeFilenameMappings;
+	public SoundType sampleSoundType() {
+		return new SoundTypeImpl(SOUND_TYPE_1_ID, _soundType1Filename);
 	}
 	
 	public Sound sampleSound() {
-    	AUDIO.soundFactory().registerSoundTypes(sampleSoundTypeFilenameMappings());
+    	AUDIO.soundTypes().register(sampleSoundType());
     	
     	return AUDIO.soundFactory().make(SOUND_TYPE_1_ID);
 	}

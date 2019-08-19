@@ -4,14 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.factories.SoundFactory;
-import soliloquy.specs.common.infrastructure.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SoundFactoryImplIntegrationTests {
 	private SoundFactory _soundFactory;
-	
-	private Map<String,String> _soundTypeFilenameMappings;
 	
     @BeforeEach
 	void setUp() throws Exception
@@ -19,8 +16,7 @@ class SoundFactoryImplIntegrationTests {
     	IntegrationTestsSetup setup = new IntegrationTestsSetup();
     	
     	_soundFactory = setup.audio().soundFactory();
-    	
-    	_soundTypeFilenameMappings = setup.sampleSoundTypeFilenameMappings();
+    	setup.audio().soundTypes().register(setup.sampleSoundType());
     }
     
     @Test
@@ -32,11 +28,9 @@ class SoundFactoryImplIntegrationTests {
     @Test
 	void testMake()
     {
-    	_soundFactory.registerSoundTypes(_soundTypeFilenameMappings);
-    	
     	Sound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
 
-		assertEquals(sound.soundTypeId(), IntegrationTestsSetup.SOUND_TYPE_1_ID);
+		assertEquals(sound.soundType().id(), IntegrationTestsSetup.SOUND_TYPE_1_ID);
     }
 
     @Test

@@ -2,10 +2,12 @@ package inaugural.soliloquy.audio.test.unit;
 
 import inaugural.soliloquy.audio.SoundImpl;
 import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidStub;
+import inaugural.soliloquy.audio.test.unit.stubs.SoundTypeStub;
 import inaugural.soliloquy.audio.test.unit.stubs.SoundsPlayingStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
@@ -16,20 +18,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SoundImplUnitTests {
 	private SoundImpl _sound;
-	private String _filename;
+	private SoundType _soundType;
 
 	private final EntityUuid ENTITY_UUID = new EntityUuidStub();
 	private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingStub();
-	private final String SOUND_TYPE_ID = "Kevin_MacLeod_-_Living_Voyage";
 
 	@SuppressWarnings({"ConstantConditions", "SpellCheckingInspection"})
 	@BeforeEach
 	void setUp() throws Exception {
-		_filename = new File(String.valueOf(Paths.get(
+		String _filename = new File(String.valueOf(Paths.get(
 				getClass().getClassLoader()
 						.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toURI())
 				.toFile())).getAbsolutePath();
-		_sound = new SoundImpl(ENTITY_UUID, SOUND_TYPE_ID, _filename, SOUNDS_PLAYING);
+		_soundType = new SoundTypeStub(_filename);
+		_sound = new SoundImpl(ENTITY_UUID, _soundType, SOUNDS_PLAYING);
     }
     
     @Test
@@ -39,13 +41,13 @@ class SoundImplUnitTests {
 
     @Test
 	void testEquals() {
-		Sound sound2 = new SoundImpl(ENTITY_UUID, SOUND_TYPE_ID, _filename, SOUNDS_PLAYING);
+		Sound sound2 = new SoundImpl(ENTITY_UUID, _soundType, SOUNDS_PLAYING);
 		assertEquals(_sound, sound2);
 	}
 
     @Test
 	void testGetInterfaceName() {
-		assertEquals("soliloquy.audio.specs.ISound", _sound.getInterfaceName());
+		assertEquals(Sound.class.getCanonicalName(), _sound.getInterfaceName());
     }
 
     @Test

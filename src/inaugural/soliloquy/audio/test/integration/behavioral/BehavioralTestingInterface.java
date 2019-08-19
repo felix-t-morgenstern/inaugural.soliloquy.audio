@@ -125,7 +125,7 @@ public class BehavioralTestingInterface implements ActionListener {
 	
 	private static void updateLabels() throws InterruptedException {
 		LABEL_ID.setText("Sound Id: " + (SOUND == null ? "" : "" + SOUND.id()));
-		LABEL_TYPE_ID.setText("Sound Type Id: " + (SOUND == null ? "" : "" + SOUND.soundTypeId()));
+		LABEL_TYPE_ID.setText("Sound Type Id: " + (SOUND == null ? "" : "" + SOUND.soundType().id()));
 		LABEL_VOLUME.setText("Volume: " + (SOUND == null || SOUND.isStopped() ? "" : "" + SOUND.getVolume()));
 		LABEL_DURATION.setText("Duration, ms: " + (SOUND == null || SOUND.isStopped() ? "" : "" + SOUND.getMillisecondLength()));
 		LABEL_POSITION.setText("Position, ms: " + (SOUND == null || SOUND.isStopped() ? "" : "" + SOUND.getMillisecondPosition()));
@@ -193,7 +193,7 @@ public class BehavioralTestingInterface implements ActionListener {
 	}
 	
 	private void initialize() {
-		AUDIO.soundFactory().registerSoundTypes(SETUP.sampleSoundTypeFilenameMappings());
+		AUDIO.soundTypes().register(SETUP.sampleSoundType());
 		for(Sound sound : AUDIO.soundsPlaying().allSoundsPlaying()) {
 			sound.stop();
 		}

@@ -1,6 +1,7 @@
 package inaugural.soliloquy.audio.test.unit.stubs;
 
 import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
 public class SoundStub implements Sound
@@ -23,7 +24,7 @@ public class SoundStub implements Sound
 	}
 
 	@Override
-	public String soundTypeId() {
+	public SoundType soundType() {
 		// stub method
 		throw new UnsupportedOperationException();
 	}
