@@ -1,15 +1,16 @@
 package inaugural.soliloquy.audio.test.unit.stubs;
 
-import inaugural.soliloquy.audio.test.unit.SoundFactoryImplUnitTests;
-import java.util.ArrayList;
-import java.util.List;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.infrastructure.Collection;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SoundsPlayingStub implements SoundsPlaying {
 	public List<Sound> SoundsRemoved = new ArrayList<>();
+	public static Sound SoundRegistered;
 
 	public String getInterfaceName() {
 		// Stub class; not implemented
@@ -37,6 +38,6 @@ public class SoundsPlayingStub implements SoundsPlaying {
 
 	@Override
 	public void registerSound(Sound sound) throws IllegalArgumentException {
-		SoundFactoryImplUnitTests.SoundRegistered = sound;
+		SoundRegistered = sound;
 	}
 }

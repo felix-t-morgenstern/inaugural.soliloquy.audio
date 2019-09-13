@@ -4,6 +4,7 @@ import soliloquy.specs.common.infrastructure.Registry;
 import soliloquy.specs.common.shared.HasId;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class RegistryStub<T extends HasId> implements Registry<T> {
     private final HashMap<String,T> REGISTRY = new HashMap<>();
@@ -29,6 +30,11 @@ public class RegistryStub<T extends HasId> implements Registry<T> {
     }
 
     @Override
+    public int size() {
+        return 0;
+    }
+
+    @Override
     public T getArchetype() {
         return null;
     }
@@ -40,6 +46,11 @@ public class RegistryStub<T extends HasId> implements Registry<T> {
 
     @Override
     public String getInterfaceName() {
+        return null;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
         return null;
     }
 }
