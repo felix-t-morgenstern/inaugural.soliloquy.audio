@@ -176,14 +176,18 @@ public class SoundImpl implements Sound {
 		return () -> setVolume(volume);
 	}
 
-	public int getMillisecondLength() throws InterruptedException {
+	public int getMillisecondLength(){
 		while (!_isReady) {
-			Thread.sleep(10);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				throw new IllegalThreadStateException();
+			}
 		}
 		return _durationMs;
 	}
 
-	public int getMillisecondPosition() throws InterruptedException {
+	public int getMillisecondPosition() {
 		if (_isStopped) {
 			throw new UnsupportedOperationException(
 					"Sound.getMillisecondPosition: Sound has already been stopped");
@@ -192,8 +196,7 @@ public class SoundImpl implements Sound {
 			try {
 				Thread.sleep(10);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
-				throw e;
+				throw new IllegalThreadStateException();
 			}
 		}
 		return (int) MEDIA_PLAYER.getCurrentTime().toMillis();

@@ -1,5 +1,6 @@
 package inaugural.soliloquy.audio.test.unit;
 
+import inaugural.soliloquy.audio.test.fakes.FakeEntityUuid;
 import inaugural.soliloquy.audio.test.unit.stubs.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.audio.factories.SoundFactory;
 import soliloquy.specs.common.factories.EntityUuidFactory;
 import soliloquy.specs.common.infrastructure.Registry;
+import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -24,13 +26,12 @@ class SoundFactoryImplUnitTests {
 	private final Registry<SoundType> SOUND_TYPE_REGISTRY = new RegistryStub<>();
 	private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingStub();
 
-	public static Sound SoundRegistered;
 	private static String SoundTypeFilename;
 	
-    @BeforeEach
+    @SuppressWarnings("ConstantConditions")
+	@BeforeEach
 	void setUp() throws URISyntaxException {
-    	SoundRegistered = null;
-    	SoundTypeFilename = new File(String.valueOf(Paths.get(
+		SoundTypeFilename = new File(String.valueOf(Paths.get(
 				getClass().getClassLoader()
 						.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toURI())
 				.toFile())).getAbsolutePath();
@@ -57,10 +58,28 @@ class SoundFactoryImplUnitTests {
 		assertEquals(sound.id().getMostSignificantBits(), EntityUuidStub.MOST_SIGNIFICANT_BITS);
     }
 
+	@Test
+	void testMakeWithId() {
+		SOUND_TYPE_REGISTRY.register(new SoundTypeStub(SoundTypeFilename));
+    	final String entityUuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
+    	EntityUuid entityUuid = new FakeEntityUuid(entityUuidString);
+
+    	Sound sound = _soundFactory.make(SoundTypeStub.ID, entityUuid);
+
+    	assertEquals(entityUuid, sound.id());
+	}
+
     @Test
 	void testMakeWithInvalidSoundTypeId() {
 		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null));
 		assertThrows(IllegalArgumentException.class,
 				() -> _soundFactory.make("InvalidSoundTypeId!"));
     }
+
+    @Test
+	void testMakeWithNullEntityUuid() {
+		SOUND_TYPE_REGISTRY.register(new SoundTypeStub(SoundTypeFilename));
+		assertThrows(IllegalArgumentException.class,
+				() -> _soundFactory.make(SoundTypeFilename, null));
+	}
 }

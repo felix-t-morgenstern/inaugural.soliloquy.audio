@@ -116,15 +116,7 @@ class SoundImplIntegrationTests {
     @Test
 	void testGetMillisecondLength()
     {    	
-    	int millisecondLength = -1;
-		try
-		{
-			millisecondLength = _sound.getMillisecondLength();
-		}
-		catch (InterruptedException e)
-		{
-			fail("");
-		}
+    	int millisecondLength = _sound.getMillisecondLength();
 
 		assertTrue(millisecondLength == 208219 || millisecondLength == 208174);
     }

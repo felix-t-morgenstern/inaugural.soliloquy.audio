@@ -20,21 +20,28 @@ public class SoundFactoryImpl implements SoundFactory {
 		ENTITY_UUID_FACTORY = entityUuidFactory;
 	}
 
-	@SuppressWarnings("ConstantConditions")
 	public Sound make(String soundTypeId) throws IllegalArgumentException {
+		return make(soundTypeId, ENTITY_UUID_FACTORY.createRandomEntityUuid());
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	@Override
+	public Sound make(String soundTypeId, EntityUuid entityUuid) throws IllegalArgumentException {
 		if (soundTypeId == null) {
-			throw new IllegalArgumentException("SoundFactory.make: soundTypeId cannot be null");
+			throw new IllegalArgumentException("SoundFactoryImpl.make: soundTypeId cannot be null");
+		}
+		if (entityUuid == null) {
+			throw new IllegalArgumentException("SoundFactoryImpl.make: entityUuid cannot be null");
 		}
 		if (!SOUND_TYPES_REGISTRY.contains(soundTypeId)) {
-			throw new IllegalArgumentException("SoundFactory.make: Invalid soundTypeId provided");
+			throw new IllegalArgumentException("SoundFactoryImpl.make: Invalid soundTypeId provided");
 		}
 		SoundType soundType = SOUND_TYPES_REGISTRY.get(soundTypeId);
 		if (soundType == null) {
 			throw new IllegalArgumentException(
-					"SoundFactory.make: soundTypeId must correspond to a valid (i.e. registered) sound type id");
+					"SoundFactoryImpl.make: soundTypeId must correspond to a valid (i.e. registered) sound type id");
 		}
-		EntityUuid id = ENTITY_UUID_FACTORY.createRandomEntityUuid();
-		Sound sound = new SoundImpl(id, soundType, SOUNDS_PLAYING);
+		Sound sound = new SoundImpl(entityUuid, soundType, SOUNDS_PLAYING);
 		SOUNDS_PLAYING.registerSound(sound);
 		return sound;
 	}
