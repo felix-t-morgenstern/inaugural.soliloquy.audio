@@ -40,11 +40,6 @@ public class RegistryStub<T extends HasId> implements Registry<T> {
     }
 
     @Override
-    public String getUnparameterizedInterfaceName() {
-        return null;
-    }
-
-    @Override
     public String getInterfaceName() {
         return null;
     }

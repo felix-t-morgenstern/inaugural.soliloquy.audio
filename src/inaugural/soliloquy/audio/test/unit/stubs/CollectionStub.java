@@ -113,10 +113,4 @@ public class CollectionStub<V> implements Collection<V> {
 	public ReadableCollection<V> readOnlyRepresentation() {
 		return null;
 	}
-
-	@Override
-	public String getUnparameterizedInterfaceName() {
-		// Stub method; unimplemented
-		throw new UnsupportedOperationException();
-	}
 }

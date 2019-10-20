@@ -33,12 +33,6 @@ public class SoundTypeFilenamesMapStub implements Map<String,String> {
 	}
 
 	@Override
-	public String getUnparameterizedInterfaceName() {
-		// Stub class; not implemented
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public String getInterfaceName() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
@@ -198,12 +192,6 @@ public class SoundTypeFilenamesMapStub implements Map<String,String> {
 
 			@Override
 			public String getSecondArchetype() throws IllegalStateException {
-				// Stub class; not implemented
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public String getUnparameterizedInterfaceName() {
 				// Stub class; not implemented
 				throw new UnsupportedOperationException();
 			}

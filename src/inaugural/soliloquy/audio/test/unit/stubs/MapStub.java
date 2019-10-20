@@ -151,10 +151,4 @@ public class MapStub<K,V> implements Map<K,V> {
 	public int size() {
 		return _map.size();
 	}
-
-	@Override
-	public String getUnparameterizedInterfaceName() {
-		// Stub method; unimplemented
-		throw new UnsupportedOperationException();
-	}
 }
