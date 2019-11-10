@@ -2,7 +2,6 @@ package inaugural.soliloquy.audio.test.fakes;
 
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
-import soliloquy.specs.audio.exceptions.SoundUninitializedException;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
 public class FakeSound implements Sound {
@@ -111,12 +110,12 @@ public class FakeSound implements Sound {
     }
 
     @Override
-    public int getMillisecondLength() throws SoundUninitializedException {
+    public int getMillisecondLength() {
         return 0;
     }
 
     @Override
-    public int getMillisecondPosition() throws SoundUninitializedException, UnsupportedOperationException {
+    public int getMillisecondPosition() throws UnsupportedOperationException {
         return _msPosition;
     }
 
