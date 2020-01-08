@@ -194,7 +194,7 @@ public class BehavioralTestingInterface implements ActionListener {
 	
 	private void initialize() {
 		AUDIO.soundTypes().register(SETUP.sampleSoundType());
-		for(Sound sound : AUDIO.soundsPlaying().allSoundsPlaying()) {
+		for(Sound sound : AUDIO.soundsPlaying()) {
 			sound.stop();
 		}
 		SOUND = AUDIO.soundFactory().make(IntegrationTestsSetup.SOUND_TYPE_1_ID);

@@ -1,14 +1,14 @@
 package inaugural.soliloquy.audio.test.unit;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import inaugural.soliloquy.audio.SoundsPlayingImpl;
 import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidStub;
 import inaugural.soliloquy.audio.test.unit.stubs.MapFactoryStub;
 import inaugural.soliloquy.audio.test.unit.stubs.SoundStub;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.common.factories.MapFactory;
-import soliloquy.specs.common.infrastructure.Collection;
+import soliloquy.specs.common.infrastructure.ReadableCollection;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,11 +42,21 @@ class SoundsPlayingImplUnitTests {
     }
 
     @Test
-	void testAllSoundsPlaying() {
+	void testSize() {
+    	fail("");
+	}
+
+	@Test
+	void testIterator() {
+    	fail("");
+	}
+
+    @Test
+	void testRepresentation() {
     	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
     	
-    	Collection<Sound> allSoundsPlaying1 = _soundsPlaying.allSoundsPlaying();
-    	Collection<Sound> allSoundsPlaying2 = _soundsPlaying.allSoundsPlaying();
+    	ReadableCollection<Sound> allSoundsPlaying1 = _soundsPlaying.representation();
+		ReadableCollection<Sound> allSoundsPlaying2 = _soundsPlaying.representation();
 
 		assertNotSame(allSoundsPlaying1, allSoundsPlaying2);
 		assertEquals(1, allSoundsPlaying1.size());

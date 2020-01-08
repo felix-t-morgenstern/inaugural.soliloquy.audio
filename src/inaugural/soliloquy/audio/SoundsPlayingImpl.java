@@ -3,9 +3,11 @@ package inaugural.soliloquy.audio;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.factories.MapFactory;
-import soliloquy.specs.common.infrastructure.Collection;
 import soliloquy.specs.common.infrastructure.Map;
+import soliloquy.specs.common.infrastructure.ReadableCollection;
 import soliloquy.specs.common.valueobjects.EntityUuid;
+
+import java.util.Iterator;
 
 public class SoundsPlayingImpl implements SoundsPlaying {
 	
@@ -22,8 +24,13 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 	}
 
 	@Override
-	public Collection<Sound> allSoundsPlaying() {
-		return _soundsPlaying.getValues();
+	public int size() {
+		return 0;
+	}
+
+	@Override
+	public ReadableCollection<Sound> representation() {
+		return _soundsPlaying.getValues().readOnlyRepresentation();
 	}
 
 	@SuppressWarnings("ConstantConditions")
@@ -55,4 +62,8 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 		_soundsPlaying.removeByKeyAndValue(sound.id(), sound);
 	}
 
+	@Override
+	public Iterator<Sound> iterator() {
+		return null;
+	}
 }

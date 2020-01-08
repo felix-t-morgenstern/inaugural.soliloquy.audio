@@ -4,15 +4,22 @@ import inaugural.soliloquy.audio.test.unit.stubs.CollectionStub;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.infrastructure.Collection;
+import soliloquy.specs.common.infrastructure.ReadableCollection;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class FakeSoundsPlaying implements SoundsPlaying {
     private final HashMap<EntityUuid,Sound> SOUNDS_PLAYING = new HashMap<>();
 
     @Override
-    public Collection<Sound> allSoundsPlaying() {
+    public int size() {
+        return 0;
+    }
+
+    @Override
+    public ReadableCollection<Sound> representation() {
         Collection<Sound> allSoundsPlaying = new CollectionStub<>();
         SOUNDS_PLAYING.values().forEach(allSoundsPlaying::add);
         return allSoundsPlaying;
@@ -40,6 +47,11 @@ public class FakeSoundsPlaying implements SoundsPlaying {
 
     @Override
     public String getInterfaceName() {
+        return null;
+    }
+
+    @Override
+    public Iterator<Sound> iterator() {
         return null;
     }
 }

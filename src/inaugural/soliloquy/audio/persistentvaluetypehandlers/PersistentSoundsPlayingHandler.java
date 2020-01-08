@@ -3,15 +3,13 @@ package inaugural.soliloquy.audio.persistentvaluetypehandlers;
 import com.google.gson.Gson;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
-import soliloquy.specs.common.infrastructure.Collection;
 import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
-
-import java.util.ArrayList;
 
 public class PersistentSoundsPlayingHandler implements PersistentValueTypeHandler<SoundsPlaying> {
     private final PersistentValueTypeHandler<Sound> PERSISTENT_SOUND_HANDLER;
     private final SoundsPlaying SOUNDS_PLAYING;
 
+    @SuppressWarnings("ConstantConditions")
     public PersistentSoundsPlayingHandler(
             PersistentValueTypeHandler<Sound> persistentSoundHandler,
             SoundsPlaying soundsPlaying) {
@@ -29,7 +27,7 @@ public class PersistentSoundsPlayingHandler implements PersistentValueTypeHandle
 
     @Override
     public SoundsPlaying read(String data) throws IllegalArgumentException {
-        SOUNDS_PLAYING.allSoundsPlaying().forEach(SOUNDS_PLAYING::removeSound);
+        SOUNDS_PLAYING.forEach(SOUNDS_PLAYING::removeSound);
 
         SoundsPlayingDTO soundsPlayingDTO = new Gson().fromJson(data, SoundsPlayingDTO.class);
         for(String soundJson : soundsPlayingDTO.soundDTOs) {
@@ -42,10 +40,9 @@ public class PersistentSoundsPlayingHandler implements PersistentValueTypeHandle
     @Override
     public String write(SoundsPlaying soundsPlaying) {
         SoundsPlayingDTO soundsPlayingDTO = new SoundsPlayingDTO();
-        Collection<Sound> soundsPlayingCollection = SOUNDS_PLAYING.allSoundsPlaying();
-        String[] jsonObjects = new String[soundsPlayingCollection.size()];
+        String[] jsonObjects = new String[soundsPlaying.size()];
         int index = 0;
-        for(Sound soundPlaying : soundsPlayingCollection) {
+        for(Sound soundPlaying : SOUNDS_PLAYING) {
             jsonObjects[index++] = PERSISTENT_SOUND_HANDLER.write(soundPlaying);
         }
         soundsPlayingDTO.soundDTOs = jsonObjects;
