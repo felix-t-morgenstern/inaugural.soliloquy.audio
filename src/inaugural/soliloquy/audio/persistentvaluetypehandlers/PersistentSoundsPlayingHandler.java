@@ -1,6 +1,7 @@
 package inaugural.soliloquy.audio.persistentvaluetypehandlers;
 
 import com.google.gson.Gson;
+import inaugural.soliloquy.audio.archetypes.SoundsPlayingArchetype;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
@@ -8,6 +9,8 @@ import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
 public class PersistentSoundsPlayingHandler implements PersistentValueTypeHandler<SoundsPlaying> {
     private final PersistentValueTypeHandler<Sound> PERSISTENT_SOUND_HANDLER;
     private final SoundsPlaying SOUNDS_PLAYING;
+
+    private static final SoundsPlaying ARCHETYPE = new SoundsPlayingArchetype();
 
     @SuppressWarnings("ConstantConditions")
     public PersistentSoundsPlayingHandler(
@@ -27,6 +30,15 @@ public class PersistentSoundsPlayingHandler implements PersistentValueTypeHandle
 
     @Override
     public SoundsPlaying read(String data) throws IllegalArgumentException {
+        if (data == null) {
+            throw new IllegalArgumentException(
+                    "PersistentSoundsPlayingHandler.read: data cannot be null");
+        }
+        if (data.equals("")) {
+            throw new IllegalArgumentException(
+                    "PersistentSoundsPlayingHandler.read: data cannot be empty");
+        }
+
         SOUNDS_PLAYING.forEach(SOUNDS_PLAYING::removeSound);
 
         SoundsPlayingDTO soundsPlayingDTO = new Gson().fromJson(data, SoundsPlayingDTO.class);
@@ -51,7 +63,7 @@ public class PersistentSoundsPlayingHandler implements PersistentValueTypeHandle
 
     @Override
     public SoundsPlaying getArchetype() {
-        return null;
+        return ARCHETYPE;
     }
 
     @Override

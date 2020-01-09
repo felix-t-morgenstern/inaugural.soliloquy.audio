@@ -11,6 +11,8 @@ import soliloquy.specs.common.factories.MapFactory;
 import soliloquy.specs.common.infrastructure.ReadableCollection;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SoundsPlayingImplUnitTests {
@@ -43,12 +45,37 @@ class SoundsPlayingImplUnitTests {
 
     @Test
 	void testSize() {
-    	fail("");
+		Sound sound1 = new SoundStub(new EntityUuidStub());
+		Sound sound2 = new SoundStub(new EntityUuidStub());
+		Sound sound3 = new SoundStub(new EntityUuidStub());
+
+		_soundsPlaying.registerSound(sound1);
+		_soundsPlaying.registerSound(sound2);
+		_soundsPlaying.registerSound(sound3);
+
+		int size = _soundsPlaying.size();
+
+    	assertEquals(3, size);
 	}
 
 	@Test
 	void testIterator() {
-    	fail("");
+		Sound sound1 = new SoundStub(new EntityUuidStub());
+		Sound sound2 = new SoundStub(new EntityUuidStub());
+		Sound sound3 = new SoundStub(new EntityUuidStub());
+
+		_soundsPlaying.registerSound(sound1);
+		_soundsPlaying.registerSound(sound2);
+		_soundsPlaying.registerSound(sound3);
+
+		ArrayList<Sound> fromIterator = new ArrayList<>();
+
+		_soundsPlaying.forEach(fromIterator::add);
+
+		assertEquals(3, fromIterator.size());
+		assertTrue(fromIterator.contains(sound1));
+		assertTrue(fromIterator.contains(sound2));
+		assertTrue(fromIterator.contains(sound3));
 	}
 
     @Test

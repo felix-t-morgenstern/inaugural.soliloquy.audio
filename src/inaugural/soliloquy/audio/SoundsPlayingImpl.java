@@ -25,7 +25,7 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 
 	@Override
 	public int size() {
-		return 0;
+		return _soundsPlaying.size();
 	}
 
 	@Override
@@ -64,6 +64,6 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 
 	@Override
 	public Iterator<Sound> iterator() {
-		return null;
+		return _soundsPlaying.getValues().iterator();
 	}
 }

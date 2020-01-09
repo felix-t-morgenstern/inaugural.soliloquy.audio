@@ -15,12 +15,12 @@ public class FakeSoundsPlaying implements SoundsPlaying {
 
     @Override
     public int size() {
-        return 0;
+        return SOUNDS_PLAYING.size();
     }
 
     @Override
     public ReadableCollection<Sound> representation() {
-        Collection<Sound> allSoundsPlaying = new CollectionStub<>();
+        Collection<Sound> allSoundsPlaying = new CollectionStub<>(null);
         SOUNDS_PLAYING.values().forEach(allSoundsPlaying::add);
         return allSoundsPlaying;
     }
@@ -52,6 +52,6 @@ public class FakeSoundsPlaying implements SoundsPlaying {
 
     @Override
     public Iterator<Sound> iterator() {
-        return null;
+        return SOUNDS_PLAYING.values().iterator();
     }
 }
