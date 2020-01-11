@@ -45,7 +45,7 @@ class SoundFactoryImplUnitTests {
 
     @Test
 	void testMake() {
-    	SOUND_TYPE_REGISTRY.register(new SoundTypeStub(SoundTypeFilename));
+    	SOUND_TYPE_REGISTRY.add(new SoundTypeStub(SoundTypeFilename));
     	
     	Sound sound = _soundFactory.make(SoundTypeStub.ID);
 
@@ -60,7 +60,7 @@ class SoundFactoryImplUnitTests {
 
 	@Test
 	void testMakeWithId() {
-		SOUND_TYPE_REGISTRY.register(new SoundTypeStub(SoundTypeFilename));
+		SOUND_TYPE_REGISTRY.add(new SoundTypeStub(SoundTypeFilename));
     	final String entityUuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
     	EntityUuid entityUuid = new FakeEntityUuid(entityUuidString);
 
@@ -78,7 +78,7 @@ class SoundFactoryImplUnitTests {
 
     @Test
 	void testMakeWithNullEntityUuid() {
-		SOUND_TYPE_REGISTRY.register(new SoundTypeStub(SoundTypeFilename));
+		SOUND_TYPE_REGISTRY.add(new SoundTypeStub(SoundTypeFilename));
 		assertThrows(IllegalArgumentException.class,
 				() -> _soundFactory.make(SoundTypeFilename, null));
 	}

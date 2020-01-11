@@ -16,7 +16,7 @@ class SoundFactoryImplIntegrationTests {
     	IntegrationTestsSetup setup = new IntegrationTestsSetup();
     	
     	_soundFactory = setup.audio().soundFactory();
-    	setup.audio().soundTypes().register(setup.sampleSoundType());
+    	setup.audio().soundTypes().add(setup.sampleSoundType());
     }
     
     @Test

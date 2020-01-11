@@ -30,7 +30,7 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 
 	@Override
 	public ReadableCollection<Sound> representation() {
-		return _soundsPlaying.getValues().readOnlyRepresentation();
+		return _soundsPlaying.getValues().representation();
 	}
 
 	@SuppressWarnings("ConstantConditions")

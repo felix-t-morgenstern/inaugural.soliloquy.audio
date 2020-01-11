@@ -24,7 +24,7 @@ class SoundsPlayingImplIntegrationTests {
     	_soundsPlaying = setup.audio().soundsPlaying();
     	
     	_soundFactory = setup.audio().soundFactory();
-    	setup.audio().soundTypes().register(setup.sampleSoundType());
+    	setup.audio().soundTypes().add(setup.sampleSoundType());
     }
     
     @Test

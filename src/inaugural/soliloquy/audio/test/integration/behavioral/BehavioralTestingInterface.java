@@ -123,7 +123,7 @@ public class BehavioralTestingInterface implements ActionListener {
 		System.out.println(msg);
 	}
 	
-	private static void updateLabels() throws InterruptedException {
+	private static void updateLabels() {
 		LABEL_ID.setText("Sound Id: " + (SOUND == null ? "" : "" + SOUND.id()));
 		LABEL_TYPE_ID.setText("Sound Type Id: " + (SOUND == null ? "" : "" + SOUND.soundType().id()));
 		LABEL_VOLUME.setText("Volume: " + (SOUND == null || SOUND.isStopped() ? "" : "" + SOUND.getVolume()));
@@ -185,15 +185,11 @@ public class BehavioralTestingInterface implements ActionListener {
 				log("Unrecognized command.");
 				break;
 		}
-		try {
-			updateLabels();
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}
+		updateLabels();
 	}
 	
 	private void initialize() {
-		AUDIO.soundTypes().register(SETUP.sampleSoundType());
+		AUDIO.soundTypes().add(SETUP.sampleSoundType());
 		for(Sound sound : AUDIO.soundsPlaying()) {
 			sound.stop();
 		}
@@ -271,13 +267,7 @@ public class BehavioralTestingInterface implements ActionListener {
 			volumeTask.start();
 			positionTask.start();
 			Thread.sleep(250);
-			new Thread(() -> {
-				try {
-					updateLabels();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}).start();
+			new Thread(BehavioralTestingInterface::updateLabels).start();
 		} catch(Exception e) {
 			log(e.getClass().getName() + " caught");
 		}

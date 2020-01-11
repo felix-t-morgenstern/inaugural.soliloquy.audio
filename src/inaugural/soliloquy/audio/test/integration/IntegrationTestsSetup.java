@@ -2,7 +2,6 @@ package inaugural.soliloquy.audio.test.integration;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-
 import inaugural.soliloquy.audio.AudioModule;
 import inaugural.soliloquy.audio.SoundTypeImpl;
 import inaugural.soliloquy.common.CommonModule;
@@ -12,16 +11,13 @@ import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.common.factories.EntityUuidFactory;
 import soliloquy.specs.common.factories.MapFactory;
 import soliloquy.specs.common.factories.RegistryFactory;
-import soliloquy.specs.common.infrastructure.Map;
 
 import java.io.File;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
 public class IntegrationTestsSetup {
-	private final MapFactory MAP_FACTORY;
-	private final RegistryFactory REGISTRY_FACTORY;
-	
+
 	private final Audio AUDIO;
 	
 	public final static String SOUND_TYPE_1_ID = "SoundType1Id";
@@ -38,11 +34,9 @@ public class IntegrationTestsSetup {
 		
 		EntityUuidFactory entityUuidFactory = commonInjector.getInstance(EntityUuidFactory.class);
 		
-		MAP_FACTORY = commonInjector.getInstance(MapFactory.class);
-		REGISTRY_FACTORY = commonInjector.getInstance(RegistryFactory.class);
-		
 		Injector audioInjector = Guice.createInjector(new AudioModule(entityUuidFactory,
-				MAP_FACTORY, REGISTRY_FACTORY));
+				commonInjector.getInstance(MapFactory.class),
+				commonInjector.getInstance(RegistryFactory.class)));
 		
 		AUDIO = audioInjector.getInstance(Audio.class);
 	}
@@ -55,8 +49,8 @@ public class IntegrationTestsSetup {
 		return new SoundTypeImpl(SOUND_TYPE_1_ID, _soundType1Filename);
 	}
 	
-	public Sound sampleSound() {
-    	AUDIO.soundTypes().register(sampleSoundType());
+	Sound sampleSound() {
+    	AUDIO.soundTypes().add(sampleSoundType());
     	
     	return AUDIO.soundFactory().make(SOUND_TYPE_1_ID);
 	}
