@@ -7,11 +7,13 @@ import soliloquy.specs.common.infrastructure.Collection;
 import soliloquy.specs.common.infrastructure.ReadableCollection;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class FakeSoundsPlaying implements SoundsPlaying {
     private final HashMap<EntityUuid,Sound> SOUNDS_PLAYING = new HashMap<>();
+    private ArrayList<Sound> _soundsInOrder = new ArrayList<>();
 
     @Override
     public int size() {
@@ -38,6 +40,7 @@ public class FakeSoundsPlaying implements SoundsPlaying {
     @Override
     public void registerSound(Sound sound) throws IllegalArgumentException {
         SOUNDS_PLAYING.put(sound.id(), sound);
+        _soundsInOrder.add(sound);
     }
 
     @Override
@@ -52,6 +55,6 @@ public class FakeSoundsPlaying implements SoundsPlaying {
 
     @Override
     public Iterator<Sound> iterator() {
-        return SOUNDS_PLAYING.values().iterator();
+        return _soundsInOrder.iterator();
     }
 }

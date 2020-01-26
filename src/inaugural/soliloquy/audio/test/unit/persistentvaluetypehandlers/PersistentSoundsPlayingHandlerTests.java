@@ -79,12 +79,14 @@ class PersistentSoundsPlayingHandlerTests {
     @Test
     void testArchetype() {
         assertNotNull(_persistentSoundsPlayingHandler.getArchetype());
-        assertEquals(Sound.class.getCanonicalName(),
+        assertEquals(SoundsPlaying.class.getCanonicalName(),
                 _persistentSoundsPlayingHandler.getArchetype().getInterfaceName());
     }
 
     @Test
     void testGetInterfaceName() {
-        fail("");
+        assertEquals(PersistentValueTypeHandler.class.getCanonicalName() + "<" +
+                SoundsPlaying.class.getCanonicalName() + ">",
+                _persistentSoundsPlayingHandler.getInterfaceName());
     }
 }

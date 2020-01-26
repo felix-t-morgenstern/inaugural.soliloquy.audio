@@ -2,11 +2,13 @@ package inaugural.soliloquy.audio.persistentvaluetypehandlers;
 
 import com.google.gson.Gson;
 import inaugural.soliloquy.audio.archetypes.SoundsPlayingArchetype;
+import inaugural.soliloquy.common.HasOneGenericParam;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
 
-public class PersistentSoundsPlayingHandler implements PersistentValueTypeHandler<SoundsPlaying> {
+public class PersistentSoundsPlayingHandler extends HasOneGenericParam<SoundsPlaying>
+        implements PersistentValueTypeHandler<SoundsPlaying> {
     private final PersistentValueTypeHandler<Sound> PERSISTENT_SOUND_HANDLER;
     private final SoundsPlaying SOUNDS_PLAYING;
 
@@ -67,8 +69,8 @@ public class PersistentSoundsPlayingHandler implements PersistentValueTypeHandle
     }
 
     @Override
-    public String getInterfaceName() {
-        return null;
+    public String getUnparameterizedInterfaceName() {
+        return PersistentValueTypeHandler.class.getCanonicalName();
     }
 
     private class SoundsPlayingDTO {

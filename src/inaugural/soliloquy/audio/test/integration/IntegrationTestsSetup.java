@@ -19,16 +19,18 @@ import java.nio.file.Paths;
 public class IntegrationTestsSetup {
 
 	private final Audio AUDIO;
-	
+
 	public final static String SOUND_TYPE_1_ID = "SoundType1Id";
+
+	private final static String RESOURCE = "Kevin_MacLeod_-_Living_Voyage.mp3";
 
 	private String _soundType1Filename;
 	
+	@SuppressWarnings("ConstantConditions")
 	public IntegrationTestsSetup() throws URISyntaxException {
-		_soundType1Filename = new File(String.valueOf(Paths.get(
-				getClass().getClassLoader()
-						.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toURI())
-				.toFile())).getAbsolutePath();
+		_soundType1Filename = new File(String.valueOf(
+				Paths.get(getClass().getClassLoader().getResource(RESOURCE).toURI())))
+				.getAbsolutePath();
 
 		Injector commonInjector = Guice.createInjector(new CommonModule());
 		
