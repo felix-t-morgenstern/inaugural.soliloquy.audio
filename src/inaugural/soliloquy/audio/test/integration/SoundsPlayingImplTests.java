@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SoundsPlayingImplIntegrationTests {
+class SoundsPlayingImplTests {
 	private SoundsPlaying _soundsPlaying;
 	private SoundFactory _soundFactory;
 	

@@ -1,57 +1,35 @@
-package inaugural.soliloquy.audio.test.unit;
+package inaugural.soliloquy.audio.test.integration;
 
-import inaugural.soliloquy.audio.SoundImpl;
-import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidStub;
-import inaugural.soliloquy.audio.test.unit.stubs.SoundTypeStub;
-import inaugural.soliloquy.audio.test.unit.stubs.SoundsPlayingStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
-import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
-import soliloquy.specs.common.valueobjects.EntityUuid;
-
-import java.io.File;
-import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SoundImplUnitTests {
-	private SoundImpl _sound;
-	private SoundType _soundType;
-
-	private final EntityUuid ENTITY_UUID = new EntityUuidStub();
-	private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingStub();
-
-	@SuppressWarnings({"ConstantConditions", "SpellCheckingInspection"})
-	@BeforeEach
-	void setUp() throws Exception {
-		String _filename = new File(String.valueOf(Paths.get(
-				getClass().getClassLoader()
-						.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toURI())
-				.toFile())).getAbsolutePath();
-		_soundType = new SoundTypeStub(_filename);
-		_sound = new SoundImpl(ENTITY_UUID, _soundType, SOUNDS_PLAYING);
+class SoundImplTests {
+	private Sound _sound;
+	private SoundsPlaying _soundsPlaying;
+	
+    @BeforeEach
+	void setUp() throws Exception
+    {
+    	IntegrationTestsSetup setup = new IntegrationTestsSetup();
+    	
+    	_soundsPlaying = setup.audio().soundsPlaying();
+    	
+    	_sound = setup.sampleSound();
     }
     
     @Test
-	void testId() {
-		assertSame(_sound.id(), ENTITY_UUID);
-    }
-
-    @Test
-	void testEquals() {
-		Sound sound2 = new SoundImpl(ENTITY_UUID, _soundType, SOUNDS_PLAYING);
-		assertEquals(_sound, sound2);
-	}
-
-    @Test
-	void testGetInterfaceName() {
+	void testGetInterfaceName()
+    {
 		assertEquals(Sound.class.getCanonicalName(), _sound.getInterfaceName());
     }
 
     @Test
-	void testIsPaused() {
+	void testIsPaused()
+    {
     	assertTrue(_sound.isPaused());
     	
     	_sound.play();
@@ -68,7 +46,8 @@ class SoundImplUnitTests {
     }
 
     @Test
-	void testIsPlaying() {
+	void testIsPlaying()
+    {
     	assertTrue(!_sound.isPlaying());
     	
     	_sound.play();
@@ -89,7 +68,8 @@ class SoundImplUnitTests {
     }
 
     @Test
-	void testIsMuted() {
+	void testIsMuted()
+    {
     	assertTrue(!_sound.isMuted());
     	
     	_sound.mute();
@@ -102,7 +82,8 @@ class SoundImplUnitTests {
     }
 
     @Test
-	void testIsStopped() {
+	void testIsStopped()
+    {
     	assertTrue(!_sound.isStopped());
     	
     	_sound.play();
@@ -119,7 +100,8 @@ class SoundImplUnitTests {
     }
 
     @Test
-	void testGetVolume() {
+	void testGetVolume()
+    {
 		assertEquals(1.0, _sound.getVolume());
     	
     	_sound.setVolume(0.5);
@@ -132,16 +114,17 @@ class SoundImplUnitTests {
     }
 
     @Test
-	void testGetMillisecondLength() {
+	void testGetMillisecondLength()
+    {    	
     	int millisecondLength = _sound.getMillisecondLength();
-    	
-		// TODO: Determine whether an intermittent test failure occurs here
+
 		assertTrue(millisecondLength == 208219 || millisecondLength == 208174);
     }
 
     @Test
-	void testGetMillisecondPosition() throws InterruptedException {
-    	final int timeToWait = 1000;
+	void testGetMillisecondPosition() throws InterruptedException
+    {
+    	final int timeToWait = 500;
 
 		assertEquals(0, _sound.getMillisecondPosition());
     	
@@ -159,7 +142,8 @@ class SoundImplUnitTests {
     }
 
     @Test
-	void testIsLooping() {
+	void testIsLooping()
+    {
     	_sound.setVolume(0.0);
     	
     	assertTrue(!_sound.getIsLooping());
@@ -170,29 +154,21 @@ class SoundImplUnitTests {
     }
 
     @Test
-	void testStopRemovesSoundFromSoundsPlaying() {
+	void testStopRemovesSoundFromSoundsPlaying()
+    {
+    	assertTrue(_soundsPlaying.isPlayingSound(_sound.id()));
+    	
     	_sound.stop();
-
-		assertSame(((SoundsPlayingStub) SOUNDS_PLAYING).SoundsRemoved.get(0), _sound);
+    	
+    	assertTrue(!_soundsPlaying.isPlayingSound(_sound.id()));
     }
 
     @Test
-	void testEndOfSoundRemovesSoundFromSoundsPlaying() throws InterruptedException {
-		_sound.setVolume(0);
-		int msLength = _sound.getMillisecondLength();
-		_sound.setMillisecondPosition(msLength - 10);
-		_sound.play();
-		Thread.sleep(3000);
-
-		assertTrue(_sound.isStopped());
-		assertSame(((SoundsPlayingStub) SOUNDS_PLAYING).SoundsRemoved.get(0), _sound);
-	}
-
-    @Test
-	void testOperationsOnStoppedSound() {
+	void testOperationsOnStoppedSound()
+    {
     	_sound.stop();
 
-    	assertThrows(UnsupportedOperationException.class, () -> _sound.play());
+		assertThrows(UnsupportedOperationException.class, () -> _sound.play());
 		assertThrows(UnsupportedOperationException.class, () -> _sound.pause());
 		assertThrows(UnsupportedOperationException.class, () -> _sound.mute());
 		assertThrows(UnsupportedOperationException.class, () -> _sound.unmute());

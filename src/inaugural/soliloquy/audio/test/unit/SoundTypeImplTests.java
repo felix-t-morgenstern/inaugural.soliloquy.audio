@@ -8,7 +8,7 @@ import soliloquy.specs.audio.entities.SoundType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class SoundTypeImplUnitTests {
+class SoundTypeImplTests {
     private SoundType _soundType;
 
     private final String ID = "SoundTypeId";

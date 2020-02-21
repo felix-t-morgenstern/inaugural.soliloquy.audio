@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SoundFactoryImplUnitTests {
+class SoundFactoryImplTests {
 	private SoundFactoryImpl _soundFactory;
 	
 	private final EntityUuidFactory ENTITY_UUID_FACTORY = new EntityUuidFactoryStub();
@@ -37,6 +37,19 @@ class SoundFactoryImplUnitTests {
 				.toFile())).getAbsolutePath();
     	_soundFactory = new SoundFactoryImpl(SOUND_TYPE_REGISTRY, SOUNDS_PLAYING, ENTITY_UUID_FACTORY);
     }
+
+    @Test
+	void testConstructorWithInvalidParams() {
+		assertThrows(IllegalArgumentException.class,
+				() -> new SoundFactoryImpl(null, SOUNDS_PLAYING,
+						ENTITY_UUID_FACTORY));
+		assertThrows(IllegalArgumentException.class,
+				() -> new SoundFactoryImpl(SOUND_TYPE_REGISTRY, null,
+						ENTITY_UUID_FACTORY));
+		assertThrows(IllegalArgumentException.class,
+				() -> new SoundFactoryImpl(SOUND_TYPE_REGISTRY, SOUNDS_PLAYING,
+						null));
+	}
     
     @Test
 	void testGetInterfaceName() {
@@ -77,9 +90,15 @@ class SoundFactoryImplUnitTests {
     }
 
     @Test
-	void testMakeWithNullEntityUuid() {
+	void testMakeWithInvalidParams() {
+		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null));
+		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(""));
 		SOUND_TYPE_REGISTRY.add(new SoundTypeStub(SoundTypeFilename));
 		assertThrows(IllegalArgumentException.class,
 				() -> _soundFactory.make(SoundTypeFilename, null));
+		final String entityUuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
+		EntityUuid entityUuid = new FakeEntityUuid(entityUuidString);
+		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null, entityUuid));
+		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make("", entityUuid));
 	}
 }

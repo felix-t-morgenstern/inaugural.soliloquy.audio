@@ -6,6 +6,7 @@ import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.audio.factories.SoundFactory;
 import soliloquy.specs.common.infrastructure.Registry;
 
+// TODO: Add post hoc tests for AudioImpl
 public class AudioImpl implements Audio {
 	private final SoundsPlaying SOUNDS_PLAYING;
 	private final SoundFactory SOUND_FACTORY;

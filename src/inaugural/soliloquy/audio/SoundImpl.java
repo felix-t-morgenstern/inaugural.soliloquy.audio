@@ -1,5 +1,6 @@
 package inaugural.soliloquy.audio;
 
+import inaugural.soliloquy.common.Check;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -31,12 +32,9 @@ public class SoundImpl implements Sound {
 	private double _volume;
 	
 	public SoundImpl(EntityUuid id, SoundType soundType, SoundsPlaying soundsPlaying) {
-		// TODO: Test to make sure that id is non-null
-		ID = id;
-		// TODO: Test to make sure that soundTypeId is non-null and non-empty
-		SOUND_TYPE = soundType;
-		
-		SOUNDS_PLAYING = soundsPlaying;
+		ID = Check.ifNull(id, "SoundImpl", null, "id");
+		SOUND_TYPE = Check.ifNull(soundType, "SoundImpl", null, "soundType");
+		SOUNDS_PLAYING = Check.ifNull(soundsPlaying, "SoundImpl", null, "soundsPlaying");
 		
 		new JFXPanel();
 		Media media = new Media(new File(soundType.filename()).toURI().toString());

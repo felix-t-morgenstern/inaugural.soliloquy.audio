@@ -1,5 +1,6 @@
 package inaugural.soliloquy.audio;
 
+import inaugural.soliloquy.common.Check;
 import soliloquy.specs.audio.entities.SoundType;
 
 public class SoundTypeImpl implements SoundType {
@@ -8,20 +9,8 @@ public class SoundTypeImpl implements SoundType {
 
     @SuppressWarnings("ConstantConditions")
     public SoundTypeImpl(String id, String filename) {
-        if (id == null) {
-            throw new IllegalArgumentException("SoundTypeImpl: id must be non-null");
-        }
-        if (id.equals("")) {
-            throw new IllegalArgumentException("SoundTypeImpl: id must be non-empty");
-        }
-        ID = id;
-        if (filename == null) {
-            throw new IllegalArgumentException("SoundTypeImpl: filename must be non-null");
-        }
-        if (filename.equals("")) {
-            throw new IllegalArgumentException("SoundTypeImpl: filename must be non-empty");
-        }
-        FILENAME = filename;
+        ID = Check.ifNullOrEmpty(id, "SoundTypeImpl", null, "id");
+        FILENAME = Check.ifNullOrEmpty(filename, "SoundTypeImpl", null, "filename");
     }
 
     @Override

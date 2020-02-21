@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SoundsPlayingImplUnitTests {
+class SoundsPlayingImplTests {
 	private SoundsPlayingImpl _soundsPlaying;
 	
 	private final MapFactory MAP_FACTORY = new MapFactoryStub();
@@ -26,6 +26,16 @@ class SoundsPlayingImplUnitTests {
 	void setUp() {
     	_soundsPlaying = new SoundsPlayingImpl(MAP_FACTORY, ENTITY_UUID, SOUND_ARCHETYPE);
     }
+
+    @Test
+	void testConstructorWithInvalidParams() {
+		assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(null,
+				ENTITY_UUID, SOUND_ARCHETYPE));
+		assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(MAP_FACTORY,
+				null, SOUND_ARCHETYPE));
+		assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(MAP_FACTORY,
+				ENTITY_UUID, null));
+	}
     
     @Test
 	void testGetInterfaceName() {
@@ -40,7 +50,7 @@ class SoundsPlayingImplUnitTests {
     	
     	_soundsPlaying.removeSound(SOUND_ARCHETYPE);
 
-    	assertTrue(!_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.id()));
+		assertFalse(_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.id()));
     }
 
     @Test
@@ -108,4 +118,10 @@ class SoundsPlayingImplUnitTests {
 
 		assertSame(sound, SOUND_ARCHETYPE);
     }
+
+    @Test
+	void testRegisterAndRemoveWithInvalidParams() {
+		assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.registerSound(null));
+		assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.removeSound(null));
+	}
 }

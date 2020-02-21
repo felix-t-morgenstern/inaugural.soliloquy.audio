@@ -7,7 +7,8 @@ import soliloquy.specs.audio.factories.SoundFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SoundFactoryImplIntegrationTests {
+// TODO: Ensure that all relevant unit tests are duplicated here (and in other single-class integration test classes)
+class SoundFactoryImplTests {
 	private SoundFactory _soundFactory;
 	
     @BeforeEach

@@ -1,5 +1,6 @@
 package inaugural.soliloquy.audio;
 
+import inaugural.soliloquy.common.Check;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
@@ -15,24 +16,21 @@ public class SoundFactoryImpl implements SoundFactory {
 	
 	public SoundFactoryImpl(Registry<SoundType> soundTypesRegistry, SoundsPlaying soundsPlaying,
 							EntityUuidFactory entityUuidFactory) {
-		SOUND_TYPES_REGISTRY = soundTypesRegistry;
-		SOUNDS_PLAYING = soundsPlaying;
-		ENTITY_UUID_FACTORY = entityUuidFactory;
+		SOUND_TYPES_REGISTRY = Check.ifNull(soundTypesRegistry, "SoundFactoryImpl", null,
+				"soundTypesRegistry");
+		SOUNDS_PLAYING = Check.ifNull(soundsPlaying, "SoundFactoryImpl", null, "soundsPlaying");
+		ENTITY_UUID_FACTORY = Check.ifNull(entityUuidFactory, "SoundFactoryImpl", null,
+				"entityUuidFactory");
 	}
 
 	public Sound make(String soundTypeId) throws IllegalArgumentException {
 		return make(soundTypeId, ENTITY_UUID_FACTORY.createRandomEntityUuid());
 	}
 
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public Sound make(String soundTypeId, EntityUuid entityUuid) throws IllegalArgumentException {
-		if (soundTypeId == null) {
-			throw new IllegalArgumentException("SoundFactoryImpl.make: soundTypeId cannot be null");
-		}
-		if (entityUuid == null) {
-			throw new IllegalArgumentException("SoundFactoryImpl.make: entityUuid cannot be null");
-		}
+		Check.ifNullOrEmpty(soundTypeId, "SoundFactoryImpl", "make", "soundTypeId");
+		Check.ifNull(entityUuid, "SoundFactoryImpl", "make", "entityUuid");
 		if (!SOUND_TYPES_REGISTRY.contains(soundTypeId)) {
 			throw new IllegalArgumentException("SoundFactoryImpl.make: Invalid soundTypeId provided");
 		}
