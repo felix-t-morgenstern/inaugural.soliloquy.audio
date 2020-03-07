@@ -1,4 +1,4 @@
-package inaugural.soliloquy.audio.test.unit.stubs;
+package inaugural.soliloquy.audio.test.fakes;
 
 import soliloquy.specs.common.infrastructure.Collection;
 import soliloquy.specs.common.infrastructure.ReadableCollection;
@@ -8,7 +8,7 @@ import soliloquy.specs.common.shared.HasId;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class RegistryStub<T extends HasId> implements Registry<T> {
+public class FakeRegistry<T extends HasId> implements Registry<T> {
     private final HashMap<String,T> REGISTRY = new HashMap<>();
 
     @Override

@@ -1,7 +1,10 @@
 package inaugural.soliloquy.audio.test.unit;
 
-import inaugural.soliloquy.audio.test.fakes.FakeEntityUuid;
-import inaugural.soliloquy.audio.test.unit.stubs.*;
+import inaugural.soliloquy.audio.test.fakes.FakeRegistry;
+import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
+import inaugural.soliloquy.audio.test.stubs.EntityUuidFactoryStub;
+import inaugural.soliloquy.audio.test.stubs.SoundsPlayingStub;
+import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import inaugural.soliloquy.audio.SoundFactoryImpl;
@@ -23,7 +26,7 @@ class SoundFactoryImplTests {
 	private SoundFactoryImpl _soundFactory;
 	
 	private final EntityUuidFactory ENTITY_UUID_FACTORY = new EntityUuidFactoryStub();
-	private final Registry<SoundType> SOUND_TYPE_REGISTRY = new RegistryStub<>();
+	private final Registry<SoundType> SOUND_TYPE_REGISTRY = new FakeRegistry<>();
 	private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingStub();
 
 	private static String SoundTypeFilename;
@@ -58,26 +61,26 @@ class SoundFactoryImplTests {
 
     @Test
 	void testMake() {
-    	SOUND_TYPE_REGISTRY.add(new SoundTypeStub(SoundTypeFilename));
+    	SOUND_TYPE_REGISTRY.add(new FakeSoundType(SoundTypeFilename));
     	
-    	Sound sound = _soundFactory.make(SoundTypeStub.ID);
+    	Sound sound = _soundFactory.make(FakeSoundType.ID);
 
     	// NB: The filename provided to Sound cannot be exposed by Sound without editing its functionality;
     	//     it is not responsible in any way for reporting its filename.
     	//     Testing this functionality is reserved for behavioral integration testing.
 
-		assertEquals(SoundTypeStub.ID, sound.soundType().id());
+		assertEquals(FakeSoundType.ID, sound.soundType().id());
 		assertEquals(SoundTypeFilename, sound.soundType().filename());
 		assertEquals(sound.id().getMostSignificantBits(), EntityUuidStub.MOST_SIGNIFICANT_BITS);
     }
 
 	@Test
 	void testMakeWithId() {
-		SOUND_TYPE_REGISTRY.add(new SoundTypeStub(SoundTypeFilename));
+		SOUND_TYPE_REGISTRY.add(new FakeSoundType(SoundTypeFilename));
     	final String entityUuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
-    	EntityUuid entityUuid = new FakeEntityUuid(entityUuidString);
+    	EntityUuid entityUuid = new inaugural.soliloquy.audio.test.fakes.FakeEntityUuid(entityUuidString);
 
-    	Sound sound = _soundFactory.make(SoundTypeStub.ID, entityUuid);
+    	Sound sound = _soundFactory.make(FakeSoundType.ID, entityUuid);
 
     	assertEquals(entityUuid, sound.id());
 	}
@@ -93,11 +96,11 @@ class SoundFactoryImplTests {
 	void testMakeWithInvalidParams() {
 		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null));
 		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(""));
-		SOUND_TYPE_REGISTRY.add(new SoundTypeStub(SoundTypeFilename));
+		SOUND_TYPE_REGISTRY.add(new FakeSoundType(SoundTypeFilename));
 		assertThrows(IllegalArgumentException.class,
 				() -> _soundFactory.make(SoundTypeFilename, null));
 		final String entityUuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
-		EntityUuid entityUuid = new FakeEntityUuid(entityUuidString);
+		EntityUuid entityUuid = new inaugural.soliloquy.audio.test.fakes.FakeEntityUuid(entityUuidString);
 		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null, entityUuid));
 		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make("", entityUuid));
 	}

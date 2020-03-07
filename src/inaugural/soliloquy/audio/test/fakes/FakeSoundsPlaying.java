@@ -1,6 +1,5 @@
 package inaugural.soliloquy.audio.test.fakes;
 
-import inaugural.soliloquy.audio.test.unit.stubs.CollectionStub;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.infrastructure.Collection;
@@ -22,7 +21,7 @@ public class FakeSoundsPlaying implements SoundsPlaying {
 
     @Override
     public ReadableCollection<Sound> representation() {
-        Collection<Sound> allSoundsPlaying = new CollectionStub<>(null);
+        Collection<Sound> allSoundsPlaying = new FakeCollection<>(null);
         SOUNDS_PLAYING.values().forEach(allSoundsPlaying::add);
         return allSoundsPlaying;
     }

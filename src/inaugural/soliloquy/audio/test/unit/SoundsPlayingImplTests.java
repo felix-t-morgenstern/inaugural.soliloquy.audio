@@ -1,9 +1,9 @@
 package inaugural.soliloquy.audio.test.unit;
 
 import inaugural.soliloquy.audio.SoundsPlayingImpl;
-import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidStub;
-import inaugural.soliloquy.audio.test.unit.stubs.MapFactoryStub;
-import inaugural.soliloquy.audio.test.unit.stubs.SoundStub;
+import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
+import inaugural.soliloquy.audio.test.fakes.FakeMapFactory;
+import inaugural.soliloquy.audio.test.fakes.FakeSound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
@@ -18,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class SoundsPlayingImplTests {
 	private SoundsPlayingImpl _soundsPlaying;
 	
-	private final MapFactory MAP_FACTORY = new MapFactoryStub();
+	private final MapFactory MAP_FACTORY = new FakeMapFactory();
 	private final EntityUuid ENTITY_UUID = new EntityUuidStub();
-	private final Sound SOUND_ARCHETYPE = new SoundStub(ENTITY_UUID);
+	private final Sound SOUND_ARCHETYPE = new FakeSound(ENTITY_UUID);
 	
     @BeforeEach
 	void setUp() {
@@ -55,9 +55,9 @@ class SoundsPlayingImplTests {
 
     @Test
 	void testSize() {
-		Sound sound1 = new SoundStub(new EntityUuidStub());
-		Sound sound2 = new SoundStub(new EntityUuidStub());
-		Sound sound3 = new SoundStub(new EntityUuidStub());
+		Sound sound1 = new FakeSound(new EntityUuidStub());
+		Sound sound2 = new FakeSound(new EntityUuidStub());
+		Sound sound3 = new FakeSound(new EntityUuidStub());
 
 		_soundsPlaying.registerSound(sound1);
 		_soundsPlaying.registerSound(sound2);
@@ -70,9 +70,9 @@ class SoundsPlayingImplTests {
 
 	@Test
 	void testIterator() {
-		Sound sound1 = new SoundStub(new EntityUuidStub());
-		Sound sound2 = new SoundStub(new EntityUuidStub());
-		Sound sound3 = new SoundStub(new EntityUuidStub());
+		Sound sound1 = new FakeSound(new EntityUuidStub());
+		Sound sound2 = new FakeSound(new EntityUuidStub());
+		Sound sound3 = new FakeSound(new EntityUuidStub());
 
 		_soundsPlaying.registerSound(sound1);
 		_soundsPlaying.registerSound(sound2);

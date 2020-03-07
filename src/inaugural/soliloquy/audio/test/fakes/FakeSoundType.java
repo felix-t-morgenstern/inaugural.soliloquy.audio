@@ -3,20 +3,21 @@ package inaugural.soliloquy.audio.test.fakes;
 import soliloquy.specs.audio.entities.SoundType;
 
 public class FakeSoundType implements SoundType {
-    private String _id;
+    public final static String ID = "SoundTypeStubId";
+    public final String FILENAME;
 
-    public FakeSoundType(String soundTypeId) {
-        _id = soundTypeId;
+    public FakeSoundType(String filename) {
+        FILENAME = filename;
     }
 
     @Override
     public String filename() {
-        return null;
+        return FILENAME;
     }
 
     @Override
     public String id() throws IllegalStateException {
-        return _id;
+        return ID;
     }
 
     @Override

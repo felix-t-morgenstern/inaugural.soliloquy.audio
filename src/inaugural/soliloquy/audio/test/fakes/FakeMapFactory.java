@@ -1,14 +1,15 @@
-package inaugural.soliloquy.audio.test.unit.stubs;
+package inaugural.soliloquy.audio.test.fakes;
 
+import inaugural.soliloquy.audio.test.fakes.FakeMap;
 import soliloquy.specs.common.factories.MapFactory;
 import soliloquy.specs.common.infrastructure.Map;
 
-public class MapFactoryStub implements MapFactory {
+public class FakeMapFactory implements MapFactory {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public <K, V> Map<K, V> make(K archetype1, V archetype2) {
-		return new MapStub();
+		return new FakeMap();
 	}    	
 
 	@Override

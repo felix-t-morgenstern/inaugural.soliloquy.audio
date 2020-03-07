@@ -1,4 +1,4 @@
-package inaugural.soliloquy.audio.test.unit.stubs;
+package inaugural.soliloquy.audio.test.stubs;
 
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;

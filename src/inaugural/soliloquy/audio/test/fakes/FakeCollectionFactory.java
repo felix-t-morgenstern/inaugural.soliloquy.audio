@@ -1,12 +1,13 @@
-package inaugural.soliloquy.audio.test.unit.stubs;
+package inaugural.soliloquy.audio.test.fakes;
 
+import inaugural.soliloquy.audio.test.fakes.FakeCollection;
 import soliloquy.specs.common.factories.CollectionFactory;
 import soliloquy.specs.common.infrastructure.Collection;
 
-public class CollectionFactoryStub implements CollectionFactory {
+public class FakeCollectionFactory implements CollectionFactory {
 	@Override
 	public <T> Collection<T> make(T archetype) throws IllegalArgumentException {
-		return new CollectionStub<>(archetype);
+		return new FakeCollection<>(archetype);
 	}
 
 	@Override

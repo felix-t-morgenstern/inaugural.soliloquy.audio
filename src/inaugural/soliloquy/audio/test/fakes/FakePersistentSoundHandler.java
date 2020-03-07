@@ -21,17 +21,17 @@ public class FakePersistentSoundHandler implements PersistentValueTypeHandler<So
                     "PersistentSoundHandler.read: data cannot be empty.");
         }
         SoundDTO soundDTO = new Gson().fromJson(data, SoundDTO.class);
-        Sound readValue = SOUND_FACTORY.make(soundDTO.soundTypeId,
-                ENTITY_UUID_FACTORY.createFromString(soundDTO.soundId));
-        readValue.setIsLooping(soundDTO.isLooping);
-        readValue.setVolume(soundDTO.volume);
-        if (soundDTO.isMuted) {
+        Sound readValue = SOUND_FACTORY.make(soundDTO.type,
+                ENTITY_UUID_FACTORY.createFromString(soundDTO.id));
+        readValue.setIsLooping(soundDTO.looping);
+        readValue.setVolume(soundDTO.vol);
+        if (soundDTO.muted) {
             readValue.mute();
         } else {
             readValue.unmute();
         }
-        readValue.setMillisecondPosition(soundDTO.msPosition);
-        if (soundDTO.isPaused) {
+        readValue.setMillisecondPosition(soundDTO.msPos);
+        if (soundDTO.paused) {
             readValue.pause();
         } else {
             readValue.play();
@@ -46,13 +46,13 @@ public class FakePersistentSoundHandler implements PersistentValueTypeHandler<So
                     "PersistentSoundHandler.write: sound cannot be null");
         }
         SoundDTO soundDTO = new SoundDTO();
-        soundDTO.soundId = sound.id().toString();
-        soundDTO.soundTypeId = sound.soundType().id();
-        soundDTO.isPaused = sound.isPaused();
-        soundDTO.isMuted = sound.isMuted();
-        soundDTO.volume = sound.getVolume();
-        soundDTO.msPosition = sound.getMillisecondPosition();
-        soundDTO.isLooping = sound.getIsLooping();
+        soundDTO.id = sound.id().toString();
+        soundDTO.type = sound.soundType().id();
+        soundDTO.paused = sound.isPaused();
+        soundDTO.muted = sound.isMuted();
+        soundDTO.vol = sound.getVolume();
+        soundDTO.msPos = sound.getMillisecondPosition();
+        soundDTO.looping = sound.getIsLooping();
         return new Gson().toJson(soundDTO);
     }
 
@@ -67,12 +67,12 @@ public class FakePersistentSoundHandler implements PersistentValueTypeHandler<So
     }
 
     private class SoundDTO {
-        String soundId;
-        String soundTypeId;
-        boolean isPaused;
-        boolean isMuted;
-        double volume;
-        int msPosition;
-        boolean isLooping;
+        String id;
+        String type;
+        boolean paused;
+        boolean muted;
+        double vol;
+        int msPos;
+        boolean looping;
     }
 }

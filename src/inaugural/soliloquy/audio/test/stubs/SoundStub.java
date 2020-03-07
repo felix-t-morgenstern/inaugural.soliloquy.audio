@@ -6,7 +6,7 @@ import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
-public class StubSound implements Sound {
+public class SoundStub implements Sound {
     private final static SoundType SOUND_TYPE = new FakeSoundType("SoundTypeId");
 
     public final static EntityUuid ID = new FakeEntityUuid("839f1134-3622-493f-ba19-7d7be392cd3b");

@@ -4,7 +4,7 @@ import com.google.gson.JsonSyntaxException;
 import inaugural.soliloquy.audio.persistentvaluetypehandlers.PersistentSoundHandler;
 import inaugural.soliloquy.audio.test.fakes.FakeEntityUuidFactory;
 import inaugural.soliloquy.audio.test.fakes.FakeSoundFactory;
-import inaugural.soliloquy.audio.test.stubs.StubSound;
+import inaugural.soliloquy.audio.test.stubs.SoundStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
@@ -18,7 +18,7 @@ class PersistentSoundHandlerTests {
 
     private PersistentValueTypeHandler<Sound> _persistentSoundHandler;
 
-    private final static String DATA = "{\"soundId\":\"839f1134-3622-493f-ba19-7d7be392cd3b\",\"soundTypeId\":\"SoundTypeId\",\"isPaused\":true,\"isMuted\":true,\"volume\":0.5,\"msPosition\":100,\"isLooping\":true}";
+    private final static String DATA = "{\"id\":\"839f1134-3622-493f-ba19-7d7be392cd3b\",\"type\":\"SoundTypeStubId\",\"paused\":true,\"muted\":true,\"vol\":0.5,\"msPos\":100,\"looping\":true}";
 
     @BeforeEach
     void setUp() {
@@ -26,7 +26,6 @@ class PersistentSoundHandlerTests {
                 ENTITY_UUID_FACTORY);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Test
     void testConstructorWithInvalidParams() {
         assertThrows(IllegalArgumentException.class, () -> new PersistentSoundHandler(null,
@@ -52,7 +51,7 @@ class PersistentSoundHandlerTests {
 
     @Test
     void testWrite() {
-        String writtenValue = _persistentSoundHandler.write(new StubSound());
+        String writtenValue = _persistentSoundHandler.write(new SoundStub());
 
         assertEquals(DATA, writtenValue);
     }
@@ -67,12 +66,12 @@ class PersistentSoundHandlerTests {
         Sound readValue = _persistentSoundHandler.read(DATA);
 
         assertNotNull(readValue);
-        assertEquals(StubSound.ID, readValue.id());
-        assertEquals(StubSound.IS_PAUSED, readValue.isPaused());
-        assertEquals(StubSound.IS_MUTED, readValue.isMuted());
-        assertEquals(StubSound.IS_LOOPING, readValue.getIsLooping());
-        assertEquals(StubSound.VOLUME, readValue.getVolume());
-        assertEquals(StubSound.MS_POSITION, readValue.getMillisecondPosition());
+        assertEquals(SoundStub.ID, readValue.id());
+        assertEquals(SoundStub.IS_PAUSED, readValue.isPaused());
+        assertEquals(SoundStub.IS_MUTED, readValue.isMuted());
+        assertEquals(SoundStub.IS_LOOPING, readValue.getIsLooping());
+        assertEquals(SoundStub.VOLUME, readValue.getVolume());
+        assertEquals(SoundStub.MS_POSITION, readValue.getMillisecondPosition());
     }
 
     @Test

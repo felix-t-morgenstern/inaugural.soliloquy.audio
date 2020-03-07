@@ -15,6 +15,11 @@ public class FakeSound implements Sound {
 
     public EntityUuid _id;
 
+    public FakeSound(EntityUuid id) {
+        _id = id;
+        SOUND_TYPE = null;
+    }
+
     public FakeSound(SoundType soundType) {
         SOUND_TYPE = soundType;
     }

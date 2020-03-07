@@ -1,12 +1,13 @@
-package inaugural.soliloquy.audio.test.unit.stubs;
+package inaugural.soliloquy.audio.test.fakes;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
+import inaugural.soliloquy.audio.test.fakes.FakeCollection;
 import soliloquy.specs.common.entities.Function;
 import soliloquy.specs.common.infrastructure.*;
 
-public class MapStub<K,V> implements Map<K,V> {
+public class FakeMap<K,V> implements Map<K,V> {
 	private HashMap<K,V> _map = new HashMap<>();
 
 	@Override
@@ -75,7 +76,7 @@ public class MapStub<K,V> implements Map<K,V> {
 
 	@Override
 	public Collection<K> getKeys() {
-		Collection<K> keys = new CollectionStub<>();
+		Collection<K> keys = new FakeCollection<>();
 		for (K key : _map.keySet()) {
 			keys.add(key);
 		}
@@ -84,7 +85,7 @@ public class MapStub<K,V> implements Map<K,V> {
 
 	@Override
 	public Collection<V> getValues() {
-		Collection<V> values = new CollectionStub<>();
+		Collection<V> values = new FakeCollection<>();
 		for (V value : _map.values()) {
 			values.add(value);
 		}

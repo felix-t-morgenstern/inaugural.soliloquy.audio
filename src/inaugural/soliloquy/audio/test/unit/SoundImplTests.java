@@ -1,9 +1,9 @@
 package inaugural.soliloquy.audio.test.unit;
 
 import inaugural.soliloquy.audio.SoundImpl;
-import inaugural.soliloquy.audio.test.unit.stubs.EntityUuidStub;
-import inaugural.soliloquy.audio.test.unit.stubs.SoundTypeStub;
-import inaugural.soliloquy.audio.test.unit.stubs.SoundsPlayingStub;
+import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
+import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
+import inaugural.soliloquy.audio.test.stubs.SoundsPlayingStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
@@ -30,7 +30,7 @@ class SoundImplTests {
 				getClass().getClassLoader()
 						.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toURI())
 				.toFile())).getAbsolutePath();
-		_soundType = new SoundTypeStub(_filename);
+		_soundType = new FakeSoundType(_filename);
 		_sound = new SoundImpl(ENTITY_UUID, _soundType, SOUNDS_PLAYING);
     }
 

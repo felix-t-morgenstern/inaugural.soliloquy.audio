@@ -22,7 +22,7 @@ class PersistentSoundsPlayingHandlerTests {
             "654326eb-0adf-49ef-8c43-18209574d635",
             "384d4555-1a11-481f-8e3c-dfdf059bd110",
             "5fa15321-0a5f-4d3b-9a70-9e9ae7f3ce85"));
-    private final String DATA = "{\"soundDTOs\":[\"{\\\"soundId\\\":\\\"654326eb-0adf-49ef-8c43-18209574d635\\\",\\\"soundTypeId\\\":\\\"soundType0Id\\\",\\\"isPaused\\\":false,\\\"isMuted\\\":false,\\\"volume\\\":0.0,\\\"msPosition\\\":0,\\\"isLooping\\\":false}\",\"{\\\"soundId\\\":\\\"384d4555-1a11-481f-8e3c-dfdf059bd110\\\",\\\"soundTypeId\\\":\\\"soundType1Id\\\",\\\"isPaused\\\":false,\\\"isMuted\\\":false,\\\"volume\\\":0.0,\\\"msPosition\\\":0,\\\"isLooping\\\":false}\",\"{\\\"soundId\\\":\\\"5fa15321-0a5f-4d3b-9a70-9e9ae7f3ce85\\\",\\\"soundTypeId\\\":\\\"soundType2Id\\\",\\\"isPaused\\\":false,\\\"isMuted\\\":false,\\\"volume\\\":0.0,\\\"msPosition\\\":0,\\\"isLooping\\\":false}\"]}";
+    private final String DATA = "{\"soundDTOs\":[\"{\\\"id\\\":\\\"654326eb-0adf-49ef-8c43-18209574d635\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\",\"{\\\"id\\\":\\\"384d4555-1a11-481f-8e3c-dfdf059bd110\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\",\"{\\\"id\\\":\\\"5fa15321-0a5f-4d3b-9a70-9e9ae7f3ce85\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\"]}";
 
     @BeforeEach
     void setUp() {

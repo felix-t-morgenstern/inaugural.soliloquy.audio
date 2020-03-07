@@ -2,11 +2,11 @@ package inaugural.soliloquy.audio.persistentvaluetypehandlers;
 
 import com.google.gson.Gson;
 import inaugural.soliloquy.audio.archetypes.SoundArchetype;
+import inaugural.soliloquy.tools.Check;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.factories.SoundFactory;
 import soliloquy.specs.common.factories.EntityUuidFactory;
 import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
-import soliloquy.specs.common.valueobjects.EntityUuid;
 
 public class PersistentSoundHandler implements PersistentValueTypeHandler<Sound> {
     private final static Sound ARCHETYPE = new SoundArchetype();
@@ -14,16 +14,8 @@ public class PersistentSoundHandler implements PersistentValueTypeHandler<Sound>
     private final EntityUuidFactory ENTITY_UUID_FACTORY;
 
     public PersistentSoundHandler(SoundFactory soundFactory, EntityUuidFactory entityUuidFactory) {
-        if (soundFactory == null) {
-            throw new IllegalArgumentException(
-                    "PersistentSoundHandler: soundFactory must be non-null");
-        }
-        SOUND_FACTORY = soundFactory;
-        if (entityUuidFactory == null) {
-            throw new IllegalArgumentException(
-                    "PersistentSoundHandler: entityUuidFactory must be non-null");
-        }
-        ENTITY_UUID_FACTORY = entityUuidFactory;
+        SOUND_FACTORY = Check.ifNull(soundFactory, "soundFactory");
+        ENTITY_UUID_FACTORY = Check.ifNull(entityUuidFactory, "entityUuidFactory");
     }
 
     @Override
@@ -37,17 +29,17 @@ public class PersistentSoundHandler implements PersistentValueTypeHandler<Sound>
                     "PersistentSoundHandler.read: data cannot be empty.");
         }
         SoundDTO soundDTO = new Gson().fromJson(data, SoundDTO.class);
-        Sound readValue = SOUND_FACTORY.make(soundDTO.soundTypeId,
-                ENTITY_UUID_FACTORY.createFromString(soundDTO.soundId));
-        readValue.setIsLooping(soundDTO.isLooping);
-        readValue.setVolume(soundDTO.volume);
-        if (soundDTO.isMuted) {
+        Sound readValue = SOUND_FACTORY.make(soundDTO.type,
+                ENTITY_UUID_FACTORY.createFromString(soundDTO.id));
+        readValue.setIsLooping(soundDTO.looping);
+        readValue.setVolume(soundDTO.vol);
+        if (soundDTO.muted) {
             readValue.mute();
         } else {
             readValue.unmute();
         }
-        readValue.setMillisecondPosition(soundDTO.msPosition);
-        if (soundDTO.isPaused) {
+        readValue.setMillisecondPosition(soundDTO.msPos);
+        if (soundDTO.paused) {
             readValue.pause();
         } else {
             readValue.play();
@@ -62,13 +54,13 @@ public class PersistentSoundHandler implements PersistentValueTypeHandler<Sound>
                     "PersistentSoundHandler.write: sound cannot be null");
         }
         SoundDTO soundDTO = new SoundDTO();
-        soundDTO.soundId = sound.id().toString();
-        soundDTO.soundTypeId = sound.soundType().id();
-        soundDTO.isPaused = sound.isPaused();
-        soundDTO.isMuted = sound.isMuted();
-        soundDTO.volume = sound.getVolume();
-        soundDTO.msPosition = sound.getMillisecondPosition();
-        soundDTO.isLooping = sound.getIsLooping();
+        soundDTO.id = sound.id().toString();
+        soundDTO.type = sound.soundType().id();
+        soundDTO.paused = sound.isPaused();
+        soundDTO.muted = sound.isMuted();
+        soundDTO.vol = sound.getVolume();
+        soundDTO.msPos = sound.getMillisecondPosition();
+        soundDTO.looping = sound.getIsLooping();
         return new Gson().toJson(soundDTO);
     }
 
@@ -84,12 +76,12 @@ public class PersistentSoundHandler implements PersistentValueTypeHandler<Sound>
     }
 
     private class SoundDTO {
-        String soundId;
-        String soundTypeId;
-        boolean isPaused;
-        boolean isMuted;
-        double volume;
-        int msPosition;
-        boolean isLooping;
+        String id;
+        String type;
+        boolean paused;
+        boolean muted;
+        double vol;
+        int msPos;
+        boolean looping;
     }
 }

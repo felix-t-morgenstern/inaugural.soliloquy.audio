@@ -1,14 +1,14 @@
-package inaugural.soliloquy.audio.test.unit.stubs;
+package inaugural.soliloquy.audio.test.fakes;
 
 import soliloquy.specs.common.infrastructure.Collection;
 import soliloquy.specs.common.infrastructure.ReadableCollection;
 
-public class CollectionStub<V> extends ReadableCollectionStub<V> implements Collection<V> {
-	CollectionStub() {
+public class FakeCollection<V> extends FakeReadableCollection<V> implements Collection<V> {
+	FakeCollection() {
 		super();
 	}
 
-	public CollectionStub(V archetype) {
+	public FakeCollection(V archetype) {
 		super(archetype);
 	}
 
@@ -43,6 +43,6 @@ public class CollectionStub<V> extends ReadableCollectionStub<V> implements Coll
 
 	@Override
 	public ReadableCollection<V> representation() {
-		return new ReadableCollectionStub<>(_archetype, _collection);
+		return new FakeReadableCollection<>(_archetype, _collection);
 	}
 }
