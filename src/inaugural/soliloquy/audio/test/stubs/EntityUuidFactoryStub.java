@@ -1,6 +1,5 @@
 package inaugural.soliloquy.audio.test.stubs;
 
-import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import soliloquy.specs.common.factories.EntityUuidFactory;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 

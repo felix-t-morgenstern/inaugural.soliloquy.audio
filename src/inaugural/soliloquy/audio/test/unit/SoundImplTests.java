@@ -3,7 +3,7 @@ package inaugural.soliloquy.audio.test.unit;
 import inaugural.soliloquy.audio.SoundImpl;
 import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
-import inaugural.soliloquy.audio.test.stubs.SoundsPlayingStub;
+import inaugural.soliloquy.audio.test.spydoubles.SoundsPlayingSpyDouble;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
@@ -21,7 +21,7 @@ class SoundImplTests {
 	private SoundType _soundType;
 
 	private final EntityUuid ENTITY_UUID = new EntityUuidStub();
-	private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingStub();
+	private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingSpyDouble();
 
 	@SuppressWarnings("ConstantConditions")
 	@BeforeEach
@@ -183,7 +183,7 @@ class SoundImplTests {
 	void testStopRemovesSoundFromSoundsPlaying() {
     	_sound.stop();
 
-		assertSame(((SoundsPlayingStub) SOUNDS_PLAYING).SoundsRemoved.get(0), _sound);
+		assertSame(((SoundsPlayingSpyDouble) SOUNDS_PLAYING).SoundsRemoved.get(0), _sound);
     }
 
     @Test
@@ -195,7 +195,7 @@ class SoundImplTests {
 		Thread.sleep(3000);
 
 		assertTrue(_sound.isStopped());
-		assertSame(((SoundsPlayingStub) SOUNDS_PLAYING).SoundsRemoved.get(0), _sound);
+		assertSame(((SoundsPlayingSpyDouble) SOUNDS_PLAYING).SoundsRemoved.get(0), _sound);
 	}
 
     @Test

@@ -1,4 +1,4 @@
-package inaugural.soliloquy.audio.test.stubs;
+package inaugural.soliloquy.audio.test.spydoubles;
 
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class SoundsPlayingStub implements SoundsPlaying {
+public class SoundsPlayingSpyDouble implements SoundsPlaying {
 	public List<Sound> SoundsRemoved = new ArrayList<>();
 	public static Sound SoundRegistered;
 

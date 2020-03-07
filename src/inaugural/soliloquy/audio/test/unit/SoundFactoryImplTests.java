@@ -3,7 +3,7 @@ package inaugural.soliloquy.audio.test.unit;
 import inaugural.soliloquy.audio.test.fakes.FakeRegistry;
 import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
 import inaugural.soliloquy.audio.test.stubs.EntityUuidFactoryStub;
-import inaugural.soliloquy.audio.test.stubs.SoundsPlayingStub;
+import inaugural.soliloquy.audio.test.spydoubles.SoundsPlayingSpyDouble;
 import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class SoundFactoryImplTests {
 	
 	private final EntityUuidFactory ENTITY_UUID_FACTORY = new EntityUuidFactoryStub();
 	private final Registry<SoundType> SOUND_TYPE_REGISTRY = new FakeRegistry<>();
-	private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingStub();
+	private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingSpyDouble();
 
 	private static String SoundTypeFilename;
 	
