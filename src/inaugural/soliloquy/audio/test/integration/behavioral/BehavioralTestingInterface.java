@@ -20,6 +20,8 @@ public class BehavioralTestingInterface implements ActionListener {
 	private final static String BUTTON_HALF_VOLUME = "Half Volume";
 	private final static String BUTTON_FULL_VOLUME = "Full Volume";
 	private final static String BUTTON_CUSTOM_TASK = "Custom Task";
+	private final static String BUTTON_PLAY_LOOP = "Play Loop";
+	private final static String BUTTON_STOP_LOOP = "Stop Loop";
 	
 	private static BehavioralTestingInterface INTERFACE = new BehavioralTestingInterface();
 	private static IntegrationTestsSetup SETUP;
@@ -34,6 +36,7 @@ public class BehavioralTestingInterface implements ActionListener {
 
 	private static Audio AUDIO = SETUP.audio();
 	private static Sound SOUND;
+	private static Sound SOUND_LOOPING;
 	
 	private static boolean RUN_RECURRING_POSITION_CHECK = true;
 
@@ -112,8 +115,18 @@ public class BehavioralTestingInterface implements ActionListener {
 		buttonCustomTask.setBounds(20, 420, 120, 30);
 		buttonCustomTask.addActionListener(INTERFACE);
 		frame.add(buttonCustomTask);
+
+		JButton buttonPlayLoop = new JButton(BUTTON_PLAY_LOOP);
+		buttonPlayLoop.setBounds(20, 480, 120, 30);
+		buttonPlayLoop.addActionListener(INTERFACE);
+		frame.add(buttonPlayLoop);
+
+		JButton buttonStopLoop = new JButton(BUTTON_STOP_LOOP);
+		buttonStopLoop.setBounds(20, 540, 120, 30);
+		buttonStopLoop.addActionListener(INTERFACE);
+		frame.add(buttonStopLoop);
 		
-		frame.setSize(500,550);
+		frame.setSize(500,650);
 		frame.setLayout(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -181,6 +194,14 @@ public class BehavioralTestingInterface implements ActionListener {
 				log("Clicked " + BUTTON_CUSTOM_TASK);
 				new Thread(this::customTask).start();
 				break;
+			case BUTTON_PLAY_LOOP:
+				log("Clicked " + BUTTON_PLAY_LOOP);
+				new Thread(this::playLoop).start();
+				break;
+			case BUTTON_STOP_LOOP:
+				log("Clicked " + BUTTON_STOP_LOOP);
+				new Thread(this::stopLoop).start();
+				break;
 			default:
 				log("Unrecognized command.");
 				break;
@@ -190,10 +211,12 @@ public class BehavioralTestingInterface implements ActionListener {
 	
 	private void initialize() {
 		AUDIO.soundTypes().add(SETUP.sampleSoundType());
+		AUDIO.soundTypes().add(SETUP.sampleLoopingSoundType());
 		for(Sound sound : AUDIO.soundsPlaying()) {
 			sound.stop();
 		}
 		SOUND = AUDIO.soundFactory().make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
+		SOUND_LOOPING = AUDIO.soundFactory().make(IntegrationTestsSetup.SOUND_TYPE_2_ID);
 		RUN_RECURRING_POSITION_CHECK = true;
 		Thread runRecurringPositionCheckThread = new Thread(this::recurringPositionCheck);
 		runRecurringPositionCheckThread.start();
@@ -271,5 +294,13 @@ public class BehavioralTestingInterface implements ActionListener {
 		} catch(Exception e) {
 			log(e.getClass().getName() + " caught");
 		}
+	}
+
+	private void playLoop() {
+		SOUND_LOOPING.play();
+	}
+
+	private void stopLoop() {
+		SOUND_LOOPING.stop();
 	}
 }
