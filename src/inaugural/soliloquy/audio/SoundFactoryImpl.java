@@ -38,6 +38,13 @@ public class SoundFactoryImpl implements SoundFactory {
 					"SoundFactoryImpl.make: soundTypeId must correspond to a valid (i.e. registered) sound type id");
 		}
 		Sound sound = new SoundImpl(entityUuid, soundType, SOUNDS_PLAYING);
+		if (soundType.defaultLoopingStopMs() != null) {
+			sound.setIsLooping(true);
+			sound.setLoopingStopMs(soundType.defaultLoopingStopMs());
+		}
+		if (soundType.defaultLoopingRestartMs() != null) {
+			sound.setLoopingRestartMs(soundType.defaultLoopingRestartMs());
+		}
 		SOUNDS_PLAYING.registerSound(sound);
 		return sound;
 	}

@@ -150,6 +150,26 @@ public class FakeSound implements Sound {
     }
 
     @Override
+    public void setLoopingStopMs(Integer i) throws IllegalArgumentException {
+
+    }
+
+    @Override
+    public Runnable setLoopingStopMsTask(Integer i) throws IllegalArgumentException {
+        return null;
+    }
+
+    @Override
+    public void setLoopingRestartMs(int i) throws IllegalArgumentException {
+
+    }
+
+    @Override
+    public Runnable setLoopingRestartMsTask(int i) throws IllegalArgumentException {
+        return null;
+    }
+
+    @Override
     public EntityUuid id() {
         return _id;
     }

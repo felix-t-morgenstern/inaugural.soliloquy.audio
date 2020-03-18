@@ -166,4 +166,28 @@ public class SoundArchetype implements Sound {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public void setLoopingStopMs(Integer i) throws IllegalArgumentException {
+        // stub method
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable setLoopingStopMsTask(Integer i) throws IllegalArgumentException {
+        // stub method
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setLoopingRestartMs(int i) throws IllegalArgumentException {
+        // stub method
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable setLoopingRestartMsTask(int i) throws IllegalArgumentException {
+        // stub method
+        throw new UnsupportedOperationException();
+    }
+
 }

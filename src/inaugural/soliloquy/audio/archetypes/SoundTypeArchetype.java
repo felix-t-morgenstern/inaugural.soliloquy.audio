@@ -14,6 +14,16 @@ public class SoundTypeArchetype implements SoundType {
     }
 
     @Override
+    public Integer defaultLoopingStopMs() throws IllegalStateException {
+        return null;
+    }
+
+    @Override
+    public Integer defaultLoopingRestartMs() throws IllegalStateException {
+        return null;
+    }
+
+    @Override
     public String getInterfaceName() {
         return SoundType.class.getCanonicalName();
     }

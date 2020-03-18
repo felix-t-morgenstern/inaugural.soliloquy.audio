@@ -65,63 +65,63 @@ class SoundImplTests {
     	assertTrue(_sound.isPaused());
     	
     	_sound.play();
-    	
-    	assertTrue(!_sound.isPaused());
+
+		assertFalse(_sound.isPaused());
     	
     	_sound.pause();
     	
     	assertTrue(_sound.isPaused());
     	
     	_sound.stop();
-    	
-    	assertTrue(!_sound.isPaused());
+
+		assertFalse(_sound.isPaused());
     }
 
     @Test
 	void testIsPlaying() {
-    	assertTrue(!_sound.isPlaying());
+		assertFalse(_sound.isPlaying());
     	
     	_sound.play();
     	
     	assertTrue(_sound.isPlaying());
     	
     	_sound.pause();
-    	
-    	assertTrue(!_sound.isPlaying());
+
+		assertFalse(_sound.isPlaying());
     	
     	_sound.play();
     	
     	assertTrue(_sound.isPlaying());
     	
     	_sound.stop();
-    	
-    	assertTrue(!_sound.isPlaying());
+
+		assertFalse(_sound.isPlaying());
     }
 
     @Test
 	void testIsMuted() {
-    	assertTrue(!_sound.isMuted());
+		assertFalse(_sound.isMuted());
     	
     	_sound.mute();
     	
     	assertTrue(_sound.isMuted());
     	
     	_sound.unmute();
-    	
-    	assertTrue(!_sound.isMuted());
+
+		assertFalse(_sound.isMuted());
     }
 
     @Test
 	void testIsStopped() {
-    	assertTrue(!_sound.isStopped());
+		assertFalse(_sound.isStopped());
     	
     	_sound.play();
 
-    	assertTrue(!_sound.isStopped());
+		assertFalse(_sound.isStopped());
     	
     	_sound.mute();
 
-    	assertTrue(!_sound.isStopped());
+		assertFalse(_sound.isStopped());
     	
     	_sound.stop();
 
@@ -171,13 +171,72 @@ class SoundImplTests {
     @Test
 	void testIsLooping() {
     	_sound.setVolume(0.0);
-    	
-    	assertTrue(!_sound.getIsLooping());
+
+		assertFalse(_sound.getIsLooping());
     	
     	_sound.setIsLooping(true);
     	
     	assertTrue(_sound.getIsLooping());
     }
+
+    @Test
+	void testSetLoopingStopAndRestartMs() throws InterruptedException {
+		final int stopMs = 2000;
+		final int restartMs = 1000;
+
+		_sound.setLoopingStopMs(stopMs);
+		_sound.setLoopingRestartMs(restartMs);
+		_sound.setIsLooping(true);
+		_sound.mute();
+		_sound.play();
+
+		// NB: I am aware that this test is not deterministic due to potential race conditions; I
+		// am electing to test the side effects of this method in this way, because there are no
+		// other ways to measure side effects.
+		final int numberOfTestsToRun = 100;
+		int numberOfTestsRan = 0;
+		int numberOfLoopsRun = 0;
+		int prevMsPosition = -1;
+		while(numberOfTestsRan < numberOfTestsToRun) {
+			int msPosition = _sound.getMillisecondPosition();
+			if (msPosition < prevMsPosition) {
+				numberOfLoopsRun++;
+			}
+			if (numberOfLoopsRun > 0) {
+				assertTrue(msPosition >= restartMs - 5,
+						"msPosition: " + msPosition + ", restartMs: " + restartMs + ", " +
+								"numberOfTestsRan: " + numberOfTestsRan);
+			}
+			assertTrue(msPosition < stopMs + 250,
+					"msPosition: " + msPosition + ", stopMs: " + stopMs + ", " +
+					"numberOfTestsRan: " + numberOfTestsRan);
+			Thread.sleep(100);
+			numberOfTestsRan++;
+			prevMsPosition = msPosition;
+		}
+		assertTrue(numberOfLoopsRun >= 6);
+	}
+
+	@Test
+	void testSetLoopingStartOrStopInvalidValues() {
+		final int soundLength = _sound.getMillisecondLength();
+
+		assertThrows(IllegalArgumentException.class, () -> _sound.setLoopingStopMs(-1));
+		assertThrows(IllegalArgumentException.class, () -> _sound.setLoopingRestartMs(-1));
+		assertThrows(IllegalArgumentException.class,
+				() -> _sound.setLoopingStopMs(soundLength + 1));
+		assertThrows(IllegalArgumentException.class,
+				() -> _sound.setLoopingRestartMs(soundLength + 1));
+
+		final int stopMs = 456;
+		final int restartMs = 123;
+
+		_sound.setLoopingStopMs(stopMs);
+		_sound.setLoopingRestartMs(restartMs);
+
+		assertThrows(IllegalArgumentException.class, () -> _sound.setLoopingStopMs(restartMs));
+		assertThrows(IllegalArgumentException.class, () -> _sound.setLoopingRestartMs(stopMs));
+	}
 
     @Test
 	void testStopRemovesSoundFromSoundsPlaying() {
@@ -211,5 +270,7 @@ class SoundImplTests {
 		assertThrows(UnsupportedOperationException.class, () -> _sound.getVolume());
 		assertThrows(UnsupportedOperationException.class, () -> _sound.setVolume(0));
 		assertThrows(UnsupportedOperationException.class, () -> _sound.getMillisecondPosition());
+		assertThrows(UnsupportedOperationException.class, () -> _sound.setLoopingStopMs(456));
+		assertThrows(UnsupportedOperationException.class, () -> _sound.setLoopingRestartMs(123));
     }
 }

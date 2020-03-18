@@ -21,6 +21,8 @@ public class IntegrationTestsSetup {
 	private final Audio AUDIO;
 
 	public final static String SOUND_TYPE_1_ID = "SoundType1Id";
+	public final Integer SOUND_TYPE_DEFAULT_LOOPING_STOP_MS = 456;
+	public final Integer SOUND_TYPE_DEFAULT_LOOPING_RESTART_MS = 123;
 
 	private final static String RESOURCE = "Kevin_MacLeod_-_Living_Voyage.mp3";
 
@@ -48,7 +50,8 @@ public class IntegrationTestsSetup {
 	}
 	
 	public SoundType sampleSoundType() {
-		return new SoundTypeImpl(SOUND_TYPE_1_ID, _soundType1Filename);
+		return new SoundTypeImpl(SOUND_TYPE_1_ID, _soundType1Filename,
+				SOUND_TYPE_DEFAULT_LOOPING_STOP_MS, SOUND_TYPE_DEFAULT_LOOPING_RESTART_MS);
 	}
 	
 	Sound sampleSound() {

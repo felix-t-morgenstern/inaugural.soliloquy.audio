@@ -13,18 +13,35 @@ class SoundTypeImplTests {
 
     private final String ID = "SoundTypeId";
     private final String FILENAME = "SoundTypeFilename";
+    private final Integer DEFAULT_LOOPING_STOP_MS = 456456;
+    private final Integer DEFAULT_LOOPING_RESTART_MS = 123123;
 
     @BeforeEach
     void setUp() {
-        _soundType = new SoundTypeImpl(ID, FILENAME);
+        _soundType = new SoundTypeImpl(ID, FILENAME, DEFAULT_LOOPING_STOP_MS,
+                DEFAULT_LOOPING_RESTART_MS);
     }
 
     @Test
     void testConstructorWithInvalidParams() {
-        assertThrows(IllegalArgumentException.class, () -> new SoundTypeImpl(null, FILENAME));
-        assertThrows(IllegalArgumentException.class, () -> new SoundTypeImpl("", FILENAME));
-        assertThrows(IllegalArgumentException.class, () -> new SoundTypeImpl(ID, null));
-        assertThrows(IllegalArgumentException.class, () -> new SoundTypeImpl(ID, ""));
+        assertThrows(IllegalArgumentException.class,
+                () -> new SoundTypeImpl(null, FILENAME, DEFAULT_LOOPING_STOP_MS,
+                        DEFAULT_LOOPING_RESTART_MS));
+        assertThrows(IllegalArgumentException.class,
+                () -> new SoundTypeImpl(ID, null, DEFAULT_LOOPING_STOP_MS,
+                        DEFAULT_LOOPING_RESTART_MS));
+        assertThrows(IllegalArgumentException.class,
+                () -> new SoundTypeImpl(ID, "", DEFAULT_LOOPING_STOP_MS,
+                        DEFAULT_LOOPING_RESTART_MS));
+        assertThrows(IllegalArgumentException.class,
+                () -> new SoundTypeImpl(ID, FILENAME, -DEFAULT_LOOPING_STOP_MS,
+                        DEFAULT_LOOPING_RESTART_MS));
+        assertThrows(IllegalArgumentException.class,
+                () -> new SoundTypeImpl(ID, FILENAME, DEFAULT_LOOPING_STOP_MS,
+                        -DEFAULT_LOOPING_RESTART_MS));
+        assertThrows(IllegalArgumentException.class,
+                () -> new SoundTypeImpl(ID, FILENAME, DEFAULT_LOOPING_RESTART_MS,
+                        DEFAULT_LOOPING_STOP_MS));
     }
 
     @Test
@@ -40,5 +57,15 @@ class SoundTypeImplTests {
     @Test
     void testFilename() {
         assertEquals(FILENAME, _soundType.filename());
+    }
+
+    @Test
+    void testDefaultLoopingStopMs() {
+        assertEquals(DEFAULT_LOOPING_STOP_MS, _soundType.defaultLoopingStopMs());
+    }
+
+    @Test
+    void testDefaultLoopingRestartMs() {
+        assertEquals(DEFAULT_LOOPING_RESTART_MS, _soundType.defaultLoopingRestartMs());
     }
 }

@@ -4,7 +4,6 @@ import inaugural.soliloquy.audio.test.fakes.FakeRegistry;
 import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
 import inaugural.soliloquy.audio.test.stubs.EntityUuidFactoryStub;
 import inaugural.soliloquy.audio.test.spydoubles.SoundsPlayingSpyDouble;
-import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import inaugural.soliloquy.audio.SoundFactoryImpl;
@@ -12,6 +11,7 @@ import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.audio.factories.SoundFactory;
+import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import soliloquy.specs.common.factories.EntityUuidFactory;
 import soliloquy.specs.common.infrastructure.Registry;
 import soliloquy.specs.common.valueobjects.EntityUuid;
@@ -72,6 +72,11 @@ class SoundFactoryImplTests {
 		assertEquals(FakeSoundType.ID, sound.soundType().id());
 		assertEquals(SoundTypeFilename, sound.soundType().filename());
 		assertEquals(sound.id().getMostSignificantBits(), EntityUuidStub.MOST_SIGNIFICANT_BITS);
+		assertTrue(sound.getIsLooping());
+		assertThrows(IllegalArgumentException.class,
+				() -> sound.setLoopingStopMs(FakeSoundType.DEFAULT_LOOPING_RESTART_MS));
+		assertThrows(IllegalArgumentException.class,
+				() -> sound.setLoopingRestartMs(FakeSoundType.DEFAULT_LOOPING_STOP_MS));
     }
 
 	@Test
