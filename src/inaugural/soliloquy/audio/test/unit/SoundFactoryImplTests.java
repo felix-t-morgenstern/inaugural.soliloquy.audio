@@ -70,7 +70,7 @@ class SoundFactoryImplTests {
     	//     Testing this functionality is reserved for behavioral integration testing.
 
 		assertEquals(FakeSoundType.ID, sound.soundType().id());
-		assertEquals(SoundTypeFilename, sound.soundType().filename());
+		assertEquals(SoundTypeFilename, sound.soundType().absolutePath());
 		assertEquals(sound.id().getMostSignificantBits(), EntityUuidStub.MOST_SIGNIFICANT_BITS);
 		assertTrue(sound.getIsLooping());
 		assertThrows(IllegalArgumentException.class,

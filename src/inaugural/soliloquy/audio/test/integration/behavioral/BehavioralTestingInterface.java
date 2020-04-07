@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import inaugural.soliloquy.audio.test.integration.IntegrationTestsSetup;
-import soliloquy.specs.audio.entities.Audio;
+import soliloquy.specs.audio.Audio;
 import soliloquy.specs.audio.entities.Sound;
 
 public class BehavioralTestingInterface implements ActionListener {

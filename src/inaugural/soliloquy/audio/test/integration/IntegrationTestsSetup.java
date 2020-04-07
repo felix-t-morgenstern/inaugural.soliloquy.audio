@@ -5,7 +5,7 @@ import com.google.inject.Injector;
 import inaugural.soliloquy.audio.AudioModule;
 import inaugural.soliloquy.audio.SoundTypeImpl;
 import inaugural.soliloquy.common.CommonModule;
-import soliloquy.specs.audio.entities.Audio;
+import soliloquy.specs.audio.Audio;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.common.factories.EntityUuidFactory;

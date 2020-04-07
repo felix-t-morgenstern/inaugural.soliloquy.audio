@@ -3,7 +3,7 @@ package inaugural.soliloquy.audio;
 import com.google.inject.AbstractModule;
 import inaugural.soliloquy.audio.archetypes.SoundArchetype;
 import inaugural.soliloquy.audio.archetypes.SoundTypeArchetype;
-import soliloquy.specs.audio.entities.Audio;
+import soliloquy.specs.audio.Audio;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;

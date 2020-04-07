@@ -1,6 +1,6 @@
 package inaugural.soliloquy.audio;
 
-import soliloquy.specs.audio.entities.Audio;
+import soliloquy.specs.audio.Audio;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.audio.factories.SoundFactory;

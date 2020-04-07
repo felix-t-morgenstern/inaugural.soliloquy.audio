@@ -4,7 +4,7 @@ import soliloquy.specs.audio.entities.SoundType;
 
 public class SoundTypeArchetype implements SoundType {
     @Override
-    public String filename() {
+    public String absolutePath() {
         return null;
     }
 

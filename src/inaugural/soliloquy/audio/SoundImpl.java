@@ -42,7 +42,7 @@ public class SoundImpl implements Sound {
 		SOUNDS_PLAYING = Check.ifNull(soundsPlaying, "soundsPlaying");
 		
 		new JFXPanel();
-		MEDIA = new Media(new File(soundType.filename()).toURI().toString());
+		MEDIA = new Media(new File(soundType.absolutePath()).toURI().toString());
 		MEDIA_PLAYER = new MediaPlayer(MEDIA);
 		
 		_isPaused = true;
