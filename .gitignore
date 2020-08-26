@@ -7,4 +7,9 @@ target
 *.md5
 *.sha1
 *.pom
-.idea
+.idea/inaugural.soliloquy.audio.iml
+.idea/libraries
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/workspace.xml
+.idea/shelf
