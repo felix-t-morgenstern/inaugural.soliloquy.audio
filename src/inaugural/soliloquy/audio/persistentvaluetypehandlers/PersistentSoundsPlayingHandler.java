@@ -2,7 +2,7 @@ package inaugural.soliloquy.audio.persistentvaluetypehandlers;
 
 import com.google.gson.Gson;
 import inaugural.soliloquy.audio.archetypes.SoundsPlayingArchetype;
-import inaugural.soliloquy.common.HasOneGenericParam;
+import inaugural.soliloquy.tools.generic.HasOneGenericParam;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
