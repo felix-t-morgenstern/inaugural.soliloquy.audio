@@ -1,6 +1,5 @@
 package inaugural.soliloquy.audio.test.fakes;
 
-import inaugural.soliloquy.audio.test.fakes.FakeMap;
 import soliloquy.specs.common.factories.MapFactory;
 import soliloquy.specs.common.infrastructure.Map;
 
@@ -9,8 +8,14 @@ public class FakeMapFactory implements MapFactory {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public <K, V> Map<K, V> make(K archetype1, V archetype2) {
-		return new FakeMap();
-	}    	
+		return new FakeMap(archetype1, archetype2);
+	}
+
+	@Override
+	public <K, V> Map<K, V> make(java.util.Map<K, V> map, K k, V v) throws IllegalArgumentException {
+		// Stub method; unimplemented
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public String getInterfaceName() {

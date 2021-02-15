@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.audio.factories.SoundFactory;
-import soliloquy.specs.common.infrastructure.ReadableCollection;
+import soliloquy.specs.common.infrastructure.List;
 
 import java.util.ArrayList;
 
@@ -44,7 +44,7 @@ class SoundsPlayingImplTests {
     	
     	_soundsPlaying.removeSound(sound);
 
-    	assertTrue(!_soundsPlaying.isPlayingSound(sound.id()));
+		assertFalse(_soundsPlaying.isPlayingSound(sound.id()));
     }
 
 	@Test
@@ -87,8 +87,8 @@ class SoundsPlayingImplTests {
     {
     	Sound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
     	
-    	ReadableCollection<Sound> allSoundsPlaying1 = _soundsPlaying.representation();
-		ReadableCollection<Sound> allSoundsPlaying2 = _soundsPlaying.representation();
+    	List<Sound> allSoundsPlaying1 = _soundsPlaying.representation();
+		List<Sound> allSoundsPlaying2 = _soundsPlaying.representation();
 
 		assertNotSame(allSoundsPlaying1, allSoundsPlaying2);
 		assertEquals(1, allSoundsPlaying1.size());

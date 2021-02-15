@@ -2,8 +2,7 @@ package inaugural.soliloquy.audio.test.fakes;
 
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
-import soliloquy.specs.common.infrastructure.Collection;
-import soliloquy.specs.common.infrastructure.ReadableCollection;
+import soliloquy.specs.common.infrastructure.List;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.util.ArrayList;
@@ -20,9 +19,9 @@ public class FakeSoundsPlaying implements SoundsPlaying {
     }
 
     @Override
-    public ReadableCollection<Sound> representation() {
-        Collection<Sound> allSoundsPlaying = new FakeCollection<>(null);
-        SOUNDS_PLAYING.values().forEach(allSoundsPlaying::add);
+    public List<Sound> representation() {
+        List<Sound> allSoundsPlaying = new FakeList<>(null);
+        allSoundsPlaying.addAll(SOUNDS_PLAYING.values());
         return allSoundsPlaying;
     }
 

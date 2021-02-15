@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
+import soliloquy.specs.common.infrastructure.List;
 import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
-import soliloquy.specs.common.infrastructure.ReadableCollection;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,7 +62,7 @@ class PersistentSoundsPlayingHandlerTests {
 
         _persistentSoundsPlayingHandler.read(DATA);
 
-        ReadableCollection<Sound> soundsPlaying = _soundsPlaying.representation();
+        List<Sound> soundsPlaying = _soundsPlaying.representation();
 
         assertEquals(3, soundsPlaying.size());
         soundsPlaying.forEach(sp -> assertTrue(ENTITY_UUIDS.contains(sp.id().toString())));

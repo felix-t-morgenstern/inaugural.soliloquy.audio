@@ -33,66 +33,66 @@ class SoundImplTests {
     	assertTrue(_sound.isPaused());
     	
     	_sound.play();
-    	
-    	assertTrue(!_sound.isPaused());
+
+		assertFalse(_sound.isPaused());
     	
     	_sound.pause();
     	
     	assertTrue(_sound.isPaused());
     	
     	_sound.stop();
-    	
-    	assertTrue(!_sound.isPaused());
+
+		assertFalse(_sound.isPaused());
     }
 
     @Test
 	void testIsPlaying()
     {
-    	assertTrue(!_sound.isPlaying());
+		assertFalse(_sound.isPlaying());
     	
     	_sound.play();
     	
     	assertTrue(_sound.isPlaying());
     	
     	_sound.pause();
-    	
-    	assertTrue(!_sound.isPlaying());
+
+		assertFalse(_sound.isPlaying());
     	
     	_sound.play();
     	
     	assertTrue(_sound.isPlaying());
     	
     	_sound.stop();
-    	
-    	assertTrue(!_sound.isPlaying());
+
+		assertFalse(_sound.isPlaying());
     }
 
     @Test
 	void testIsMuted()
     {
-    	assertTrue(!_sound.isMuted());
+		assertFalse(_sound.isMuted());
     	
     	_sound.mute();
     	
     	assertTrue(_sound.isMuted());
     	
     	_sound.unmute();
-    	
-    	assertTrue(!_sound.isMuted());
+
+		assertFalse(_sound.isMuted());
     }
 
     @Test
 	void testIsStopped()
     {
-    	assertTrue(!_sound.isStopped());
+		assertFalse(_sound.isStopped());
     	
     	_sound.play();
 
-    	assertTrue(!_sound.isStopped());
+		assertFalse(_sound.isStopped());
     	
     	_sound.mute();
 
-    	assertTrue(!_sound.isStopped());
+		assertFalse(_sound.isStopped());
     	
     	_sound.stop();
 
@@ -145,8 +145,8 @@ class SoundImplTests {
 	void testIsLooping()
     {
     	_sound.setVolume(0.0);
-    	
-    	assertTrue(!_sound.getIsLooping());
+
+		assertFalse(_sound.getIsLooping());
     	
     	_sound.setIsLooping(true);
     	
@@ -159,8 +159,8 @@ class SoundImplTests {
     	assertTrue(_soundsPlaying.isPlayingSound(_sound.id()));
     	
     	_sound.stop();
-    	
-    	assertTrue(!_soundsPlaying.isPlayingSound(_sound.id()));
+
+		assertFalse(_soundsPlaying.isPlayingSound(_sound.id()));
     }
 
     @Test

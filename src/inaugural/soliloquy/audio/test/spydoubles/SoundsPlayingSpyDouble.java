@@ -2,15 +2,14 @@ package inaugural.soliloquy.audio.test.spydoubles;
 
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
-import soliloquy.specs.common.infrastructure.ReadableCollection;
+import soliloquy.specs.common.infrastructure.List;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class SoundsPlayingSpyDouble implements SoundsPlaying {
-	public List<Sound> SoundsRemoved = new ArrayList<>();
+	public java.util.List<Sound> SoundsRemoved = new ArrayList<>();
 	public static Sound SoundRegistered;
 
 	public String getInterfaceName() {
@@ -25,7 +24,7 @@ public class SoundsPlayingSpyDouble implements SoundsPlaying {
 	}
 
 	@Override
-	public ReadableCollection<Sound> representation() {
+	public List<Sound> representation() {
 		// Stub class; not implemented
 		throw new UnsupportedOperationException();
 	}

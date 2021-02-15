@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.common.factories.MapFactory;
-import soliloquy.specs.common.infrastructure.ReadableCollection;
+import soliloquy.specs.common.infrastructure.List;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.util.ArrayList;
@@ -92,8 +92,8 @@ class SoundsPlayingImplTests {
 	void testRepresentation() {
     	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
     	
-    	ReadableCollection<Sound> allSoundsPlaying1 = _soundsPlaying.representation();
-		ReadableCollection<Sound> allSoundsPlaying2 = _soundsPlaying.representation();
+    	List<Sound> allSoundsPlaying1 = _soundsPlaying.representation();
+		List<Sound> allSoundsPlaying2 = _soundsPlaying.representation();
 
 		assertNotSame(allSoundsPlaying1, allSoundsPlaying2);
 		assertEquals(1, allSoundsPlaying1.size());

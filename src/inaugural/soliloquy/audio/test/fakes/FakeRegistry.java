@@ -1,10 +1,10 @@
 package inaugural.soliloquy.audio.test.fakes;
 
-import soliloquy.specs.common.infrastructure.Collection;
-import soliloquy.specs.common.infrastructure.ReadableCollection;
+import soliloquy.specs.common.infrastructure.List;
 import soliloquy.specs.common.infrastructure.Registry;
 import soliloquy.specs.common.shared.HasId;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -12,22 +12,22 @@ public class FakeRegistry<T extends HasId> implements Registry<T> {
     private final HashMap<String,T> REGISTRY = new HashMap<>();
 
     @Override
-    public boolean contains(String id) {
-        return REGISTRY.containsKey(id);
+    public boolean contains(String s) {
+        return REGISTRY.containsKey(s);
     }
 
     @Override
-    public T get(String id) {
-        return REGISTRY.get(id);
+    public T get(String s) {
+        return REGISTRY.get(s);
     }
 
     @Override
-    public void add(T item) throws IllegalArgumentException {
-        REGISTRY.put(item.id(), item);
+    public void add(T t) throws IllegalArgumentException {
+        REGISTRY.put(t.id(), t);
     }
 
     @Override
-    public void addAll(ReadableCollection<? extends T> collection) throws UnsupportedOperationException {
+    public void addAll(Object[] objects) throws IllegalArgumentException {
 
     }
 
@@ -37,8 +37,18 @@ public class FakeRegistry<T extends HasId> implements Registry<T> {
     }
 
     @Override
+    public void addAll(Collection<T> collection) throws IllegalArgumentException {
+
+    }
+
+    @Override
     public void clear() throws UnsupportedOperationException {
 
+    }
+
+    @Override
+    public List<T> representation() {
+        return null;
     }
 
     @Override
@@ -47,13 +57,8 @@ public class FakeRegistry<T extends HasId> implements Registry<T> {
     }
 
     @Override
-    public ReadableCollection<T> representation() {
-        return null;
-    }
-
-    @Override
-    public boolean remove(String id) {
-        return REGISTRY.remove(id) != null;
+    public boolean remove(String s) {
+        return REGISTRY.remove(s) != null;
     }
 
     @Override
@@ -62,28 +67,13 @@ public class FakeRegistry<T extends HasId> implements Registry<T> {
     }
 
     @Override
-    public boolean equals(ReadableCollection<T> readableCollection) {
-        return false;
-    }
-
-    @Override
-    public T get(int i) {
-        return null;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public Object[] toArray() {
-        return new Object[0];
-    }
-
-    @Override
     public int size() {
-        return 0;
+        return REGISTRY.size();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return REGISTRY.values().iterator();
     }
 
     @Override
@@ -93,16 +83,6 @@ public class FakeRegistry<T extends HasId> implements Registry<T> {
 
     @Override
     public String getInterfaceName() {
-        return null;
-    }
-
-    @Override
-    public Iterator<T> iterator() {
-        return null;
-    }
-
-    @Override
-    public Collection<T> makeClone() {
         return null;
     }
 }

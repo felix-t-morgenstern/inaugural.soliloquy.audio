@@ -4,14 +4,13 @@ import inaugural.soliloquy.tools.Check;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.factories.MapFactory;
+import soliloquy.specs.common.infrastructure.List;
 import soliloquy.specs.common.infrastructure.Map;
-import soliloquy.specs.common.infrastructure.ReadableCollection;
 import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.util.Iterator;
 
 public class SoundsPlayingImpl implements SoundsPlaying {
-	
 	private Map<EntityUuid, Sound> _soundsPlaying;
 	
 	@SuppressWarnings("ConstantConditions")
@@ -33,8 +32,8 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 	}
 
 	@Override
-	public ReadableCollection<Sound> representation() {
-		return _soundsPlaying.getValues().representation();
+	public List<Sound> representation() {
+		return _soundsPlaying.getValuesList();
 	}
 
 	@Override
@@ -57,13 +56,13 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void removeSound(Sound sound) throws IllegalArgumentException {
-		_soundsPlaying.removeByKeyAndValue(
+		_soundsPlaying.remove(
 				Check.ifNull(sound, "sound").id(),
 				sound);
 	}
 
 	@Override
 	public Iterator<Sound> iterator() {
-		return _soundsPlaying.getValues().iterator();
+		return _soundsPlaying.values().iterator();
 	}
 }
