@@ -1,12 +1,13 @@
-package inaugural.soliloquy.audio.test.unit;
+package inaugural.soliloquy.audio.test.unit.infrastructure;
 
-import inaugural.soliloquy.audio.SoundsLoaderImpl;
+import inaugural.soliloquy.audio.infrastructure.AudioLoaderImpl;
 import inaugural.soliloquy.audio.test.fakes.FakeRegistry;
 import inaugural.soliloquy.audio.test.fakes.FakeSoundTypeFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.factories.SoundTypeFactory;
+import soliloquy.specs.audio.infrastructure.AudioLoader;
 import soliloquy.specs.common.infrastructure.Registry;
 
 import java.nio.file.Paths;
@@ -16,8 +17,8 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SoundsLoaderImplTests {
-    private SoundsLoaderImpl _soundsLoader;
+class AudioLoaderImplTests {
+    private AudioLoaderImpl _audioLoader;
 
     private final Registry<SoundType> SOUND_TYPES_REGISTRY = new FakeRegistry<>();
     private final SoundTypeFactory SOUND_TYPE_FACTORY = new FakeSoundTypeFactory();
@@ -53,16 +54,16 @@ class SoundsLoaderImplTests {
         DEFAULT_LOOPING_STOP_MS_FOR_IDS.put(ID_3, DEFAULT_LOOPING_STOP_MS_3);
         DEFAULT_LOOPING_RESTART_MS_FOR_IDS.put(ID_3, DEFAULT_LOOPING_RESTART_MS_3);
 
-        _soundsLoader = new SoundsLoaderImpl(SOUND_TYPES_REGISTRY, SOUND_TYPE_FACTORY);
-        _soundsLoader.filetypes().addAll(Arrays.asList("mp3", "wav"));
+        _audioLoader = new AudioLoaderImpl(SOUND_TYPES_REGISTRY, SOUND_TYPE_FACTORY);
+        _audioLoader.filetypes().addAll(Arrays.asList("mp3", "wav"));
     }
 
     @Test
     void testConstructorWithInvalidParams() {
         assertThrows(IllegalArgumentException.class,
-                () -> new SoundsLoaderImpl(null, SOUND_TYPE_FACTORY));
+                () -> new AudioLoaderImpl(null, SOUND_TYPE_FACTORY));
         assertThrows(IllegalArgumentException.class,
-                () -> new SoundsLoaderImpl(SOUND_TYPES_REGISTRY, null));
+                () -> new AudioLoaderImpl(SOUND_TYPES_REGISTRY, null));
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -70,10 +71,10 @@ class SoundsLoaderImplTests {
     void testLoadFromDirectory() {
         String soundsFolderRelativePath = "";
 
-        _soundsLoader.setDefaultLoopingStopMsForIds(DEFAULT_LOOPING_STOP_MS_FOR_IDS);
-        _soundsLoader.setDefaultLoopingRestartMsForIds(DEFAULT_LOOPING_RESTART_MS_FOR_IDS);
+        _audioLoader.setDefaultLoopingStopMsForIds(DEFAULT_LOOPING_STOP_MS_FOR_IDS);
+        _audioLoader.setDefaultLoopingRestartMsForIds(DEFAULT_LOOPING_RESTART_MS_FOR_IDS);
 
-        _soundsLoader.loadFromDirectory(soundsFolderRelativePath, IDS_FOR_FILENAMES);
+        _audioLoader.loadFromDirectory(soundsFolderRelativePath, IDS_FOR_FILENAMES);
 
         SoundType type1 = SOUND_TYPES_REGISTRY.get(ID_1);
         assertNotNull(type1);
@@ -100,12 +101,17 @@ class SoundsLoaderImplTests {
     @Test
     void testSetDefaultLoopingStopMsForIdsWithInvalidParams() {
         assertThrows(IllegalArgumentException.class,
-                () -> _soundsLoader.setDefaultLoopingStopMsForIds(null));
+                () -> _audioLoader.setDefaultLoopingStopMsForIds(null));
     }
 
     @Test
     void testSetDefaultLoopingRestartMsForIdsWithInvalidParams() {
         assertThrows(IllegalArgumentException.class,
-                () -> _soundsLoader.setDefaultLoopingRestartMsForIds(null));
+                () -> _audioLoader.setDefaultLoopingRestartMsForIds(null));
+    }
+
+    @Test
+    void testGetInterfaceName() {
+        assertEquals(AudioLoader.class.getCanonicalName(), _audioLoader.getInterfaceName());
     }
 }

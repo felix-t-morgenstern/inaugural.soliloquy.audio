@@ -1,6 +1,6 @@
-package inaugural.soliloquy.audio.test.unit;
+package inaugural.soliloquy.audio.test.unit.entities;
 
-import inaugural.soliloquy.audio.SoundImpl;
+import inaugural.soliloquy.audio.entities.SoundImpl;
 import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
 import inaugural.soliloquy.audio.test.spydoubles.SoundsPlayingSpyDouble;

@@ -1,4 +1,4 @@
-package inaugural.soliloquy.audio;
+package inaugural.soliloquy.audio.entities;
 
 import inaugural.soliloquy.tools.Check;
 import javafx.embed.swing.JFXPanel;

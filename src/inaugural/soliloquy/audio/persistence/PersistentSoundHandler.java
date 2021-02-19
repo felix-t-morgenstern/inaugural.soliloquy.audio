@@ -1,4 +1,4 @@
-package inaugural.soliloquy.audio.persistentvaluetypehandlers;
+package inaugural.soliloquy.audio.persistence;
 
 import com.google.gson.Gson;
 import inaugural.soliloquy.audio.archetypes.SoundArchetype;
@@ -6,7 +6,7 @@ import inaugural.soliloquy.tools.Check;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.factories.SoundFactory;
 import soliloquy.specs.common.factories.EntityUuidFactory;
-import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
+import soliloquy.specs.common.persistence.PersistentValueTypeHandler;
 
 public class PersistentSoundHandler implements PersistentValueTypeHandler<Sound> {
     private final static Sound ARCHETYPE = new SoundArchetype();

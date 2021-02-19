@@ -1,13 +1,13 @@
-package inaugural.soliloquy.audio.test.unit.persistentvaluetypehandlers;
+package inaugural.soliloquy.audio.test.unit.persistence;
 
-import inaugural.soliloquy.audio.persistentvaluetypehandlers.PersistentSoundsPlayingHandler;
+import inaugural.soliloquy.audio.persistence.PersistentSoundsPlayingHandler;
 import inaugural.soliloquy.audio.test.fakes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.infrastructure.List;
-import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
+import soliloquy.specs.common.persistence.PersistentValueTypeHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;

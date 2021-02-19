@@ -1,4 +1,4 @@
-package inaugural.soliloquy.audio.test.unit;
+package inaugural.soliloquy.audio.test.unit.factories;
 
 import inaugural.soliloquy.audio.test.fakes.FakeRegistry;
 import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
@@ -6,7 +6,7 @@ import inaugural.soliloquy.audio.test.stubs.EntityUuidFactoryStub;
 import inaugural.soliloquy.audio.test.spydoubles.SoundsPlayingSpyDouble;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import inaugural.soliloquy.audio.SoundFactoryImpl;
+import inaugural.soliloquy.audio.factories.SoundFactoryImpl;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;

@@ -3,7 +3,7 @@ package inaugural.soliloquy.audio.test.integration;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import inaugural.soliloquy.audio.AudioModule;
-import inaugural.soliloquy.audio.SoundTypeImpl;
+import inaugural.soliloquy.audio.entities.SoundTypeImpl;
 import inaugural.soliloquy.common.CommonModule;
 import soliloquy.specs.audio.Audio;
 import soliloquy.specs.audio.entities.Sound;
@@ -66,7 +66,7 @@ public class IntegrationTestsSetup {
 				SOUND_TYPE_DEFAULT_LOOPING_STOP_MS, SOUND_TYPE_DEFAULT_LOOPING_RESTART_MS);
 	}
 
-	Sound sampleSound() {
+	public Sound sampleSound() {
 		AUDIO.soundTypes().add(sampleSoundType());
 
 		return AUDIO.soundFactory().make(SOUND_TYPE_1_ID);

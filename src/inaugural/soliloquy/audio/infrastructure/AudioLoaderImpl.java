@@ -1,9 +1,10 @@
-package inaugural.soliloquy.audio;
+package inaugural.soliloquy.audio.infrastructure;
 
 import inaugural.soliloquy.tools.Check;
 import org.apache.commons.io.FilenameUtils;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.factories.SoundTypeFactory;
+import soliloquy.specs.audio.infrastructure.AudioLoader;
 import soliloquy.specs.common.infrastructure.Registry;
 
 import java.io.File;
@@ -11,7 +12,7 @@ import java.io.FileFilter;
 import java.net.URISyntaxException;
 import java.util.*;
 
-public class SoundsLoaderImpl {
+public class AudioLoaderImpl implements AudioLoader {
     private final Registry<SoundType> SOUND_TYPES_REGISTRY;
     private final SoundTypeFactory SOUND_TYPE_FACTORY;
 
@@ -19,8 +20,8 @@ public class SoundsLoaderImpl {
     private final Map<String,Integer> DEFAULT_LOOPING_STOP_MS_FOR_IDS;
     private final Map<String,Integer> DEFAULT_LOOPING_RESTART_MS_FOR_IDS;
 
-    public SoundsLoaderImpl(Registry<SoundType> soundTypesRegistry,
-                            SoundTypeFactory soundTypeFactory) {
+    public AudioLoaderImpl(Registry<SoundType> soundTypesRegistry,
+                           SoundTypeFactory soundTypeFactory) {
         SOUND_TYPES_REGISTRY = Check.ifNull(soundTypesRegistry, "soundTypesRegistry");
         SOUND_TYPE_FACTORY = Check.ifNull(soundTypeFactory, "soundTypeFactory");
 
@@ -67,12 +68,17 @@ public class SoundsLoaderImpl {
 
     private String getLocalDirectory() {
         try {
-            return new File(SoundsLoaderImpl.class.getProtectionDomain().getCodeSource().getLocation()
+            return new File(AudioLoaderImpl.class.getProtectionDomain().getCodeSource().getLocation()
                     .toURI()).getPath();
         } catch (URISyntaxException e) {
             e.printStackTrace();
             throw new IllegalStateException(e.getMessage());
         }
+    }
+
+    @Override
+    public String getInterfaceName() {
+        return AudioLoader.class.getCanonicalName();
     }
 
     private class SoundsLoaderFilenameFilter implements FileFilter {

@@ -1,59 +1,54 @@
-package inaugural.soliloquy.audio.test.unit;
+package inaugural.soliloquy.audio.test.integration.entities;
 
-import inaugural.soliloquy.audio.SoundsPlayingImpl;
+import inaugural.soliloquy.audio.test.integration.IntegrationTestsSetup;
 import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
-import inaugural.soliloquy.audio.test.fakes.FakeMapFactory;
 import inaugural.soliloquy.audio.test.fakes.FakeSound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
-import soliloquy.specs.common.factories.MapFactory;
+import soliloquy.specs.audio.entities.SoundsPlaying;
+import soliloquy.specs.audio.factories.SoundFactory;
 import soliloquy.specs.common.infrastructure.List;
-import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SoundsPlayingImplTests {
-	private SoundsPlayingImpl _soundsPlaying;
-	
-	private final MapFactory MAP_FACTORY = new FakeMapFactory();
-	private final EntityUuid ENTITY_UUID = new EntityUuidStub();
-	private final Sound SOUND_ARCHETYPE = new FakeSound(ENTITY_UUID);
+	private SoundsPlaying _soundsPlaying;
+	private SoundFactory _soundFactory;
 	
     @BeforeEach
-	void setUp() {
-    	_soundsPlaying = new SoundsPlayingImpl(MAP_FACTORY, ENTITY_UUID, SOUND_ARCHETYPE);
+	void setUp() throws Exception
+    {
+    	IntegrationTestsSetup setup = new IntegrationTestsSetup();
+    	_soundsPlaying = setup.audio().soundsPlaying();
+    	
+    	_soundFactory = setup.audio().soundFactory();
+    	setup.audio().soundTypes().add(setup.sampleSoundType());
     }
-
-    @Test
-	void testConstructorWithInvalidParams() {
-		assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(null,
-				ENTITY_UUID, SOUND_ARCHETYPE));
-		assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(MAP_FACTORY,
-				null, SOUND_ARCHETYPE));
-		assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(MAP_FACTORY,
-				ENTITY_UUID, null));
-	}
     
     @Test
-	void testGetInterfaceName() {
+	void testGetInterfaceName()
+    {
 		assertEquals("soliloquy.audio.specs.ISoundsPlaying", _soundsPlaying.getInterfaceName());
     }
 
     @Test
-	void testRegisterAndRemoveSound() {
-    	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
+	void testRegisterAndRemoveSound()
+    {
+    	Sound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
     	
-    	assertTrue(_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.id()));
+    	_soundsPlaying.registerSound(sound);
     	
-    	_soundsPlaying.removeSound(SOUND_ARCHETYPE);
+    	assertTrue(_soundsPlaying.isPlayingSound(sound.id()));
+    	
+    	_soundsPlaying.removeSound(sound);
 
-		assertFalse(_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.id()));
+		assertFalse(_soundsPlaying.isPlayingSound(sound.id()));
     }
 
-    @Test
+	@Test
 	void testSize() {
 		Sound sound1 = new FakeSound(new EntityUuidStub());
 		Sound sound2 = new FakeSound(new EntityUuidStub());
@@ -65,7 +60,7 @@ class SoundsPlayingImplTests {
 
 		int size = _soundsPlaying.size();
 
-    	assertEquals(3, size);
+		assertEquals(3, size);
 	}
 
 	@Test
@@ -89,39 +84,37 @@ class SoundsPlayingImplTests {
 	}
 
     @Test
-	void testRepresentation() {
-    	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
+	void testRepresentation()
+    {
+    	Sound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
     	
     	List<Sound> allSoundsPlaying1 = _soundsPlaying.representation();
 		List<Sound> allSoundsPlaying2 = _soundsPlaying.representation();
 
 		assertNotSame(allSoundsPlaying1, allSoundsPlaying2);
 		assertEquals(1, allSoundsPlaying1.size());
-    	assertTrue(allSoundsPlaying1.contains(SOUND_ARCHETYPE));
+    	assertTrue(allSoundsPlaying1.contains(sound));
     }
 
     @Test
-	void testGetSoundWithNullId() {
+	void testGetSoundWithNullId()
+    {
     	assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.getSound(null));
     }
 
     @Test
-	void testIsPlayingSoundWithNullId() {
+	void testIsPlayingSoundWithNullId()
+    {
 		assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.isPlayingSound(null));
     }
 
     @Test
-	void testGetSound() {
-    	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
+	void testGetSound()
+    {
+    	Sound soundMade = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
     	
-    	Sound sound = _soundsPlaying.getSound(SOUND_ARCHETYPE.id());
+    	Sound soundPlaying = _soundsPlaying.getSound(soundMade.id());
 
-		assertSame(sound, SOUND_ARCHETYPE);
+		assertSame(soundMade, soundPlaying);
     }
-
-    @Test
-	void testRegisterAndRemoveWithInvalidParams() {
-		assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.registerSound(null));
-		assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.removeSound(null));
-	}
 }

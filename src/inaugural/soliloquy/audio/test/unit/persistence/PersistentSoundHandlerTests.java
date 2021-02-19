@@ -1,7 +1,7 @@
-package inaugural.soliloquy.audio.test.unit.persistentvaluetypehandlers;
+package inaugural.soliloquy.audio.test.unit.persistence;
 
 import com.google.gson.JsonSyntaxException;
-import inaugural.soliloquy.audio.persistentvaluetypehandlers.PersistentSoundHandler;
+import inaugural.soliloquy.audio.persistence.PersistentSoundHandler;
 import inaugural.soliloquy.audio.test.fakes.FakeEntityUuidFactory;
 import inaugural.soliloquy.audio.test.fakes.FakeSoundFactory;
 import inaugural.soliloquy.audio.test.stubs.SoundStub;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.common.factories.EntityUuidFactory;
-import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
+import soliloquy.specs.common.persistence.PersistentValueTypeHandler;
 
 import static org.junit.jupiter.api.Assertions.*;
 

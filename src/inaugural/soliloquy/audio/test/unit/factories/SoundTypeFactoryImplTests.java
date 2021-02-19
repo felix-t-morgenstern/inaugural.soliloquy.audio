@@ -1,6 +1,6 @@
-package inaugural.soliloquy.audio.test.unit;
+package inaugural.soliloquy.audio.test.unit.factories;
 
-import inaugural.soliloquy.audio.SoundTypeFactoryImpl;
+import inaugural.soliloquy.audio.factories.SoundTypeFactoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.SoundType;

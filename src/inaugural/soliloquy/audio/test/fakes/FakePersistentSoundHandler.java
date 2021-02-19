@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.factories.SoundFactory;
 import soliloquy.specs.common.factories.EntityUuidFactory;
-import soliloquy.specs.common.infrastructure.PersistentValueTypeHandler;
+import soliloquy.specs.common.persistence.PersistentValueTypeHandler;
 
 public class FakePersistentSoundHandler implements PersistentValueTypeHandler<Sound> {
     private final SoundFactory SOUND_FACTORY = new FakeSoundFactory();
@@ -66,6 +66,7 @@ public class FakePersistentSoundHandler implements PersistentValueTypeHandler<So
         return null;
     }
 
+    @SuppressWarnings("InnerClassMayBeStatic")
     private class SoundDTO {
         String id;
         String type;

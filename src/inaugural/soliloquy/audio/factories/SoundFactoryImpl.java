@@ -1,5 +1,6 @@
-package inaugural.soliloquy.audio;
+package inaugural.soliloquy.audio.factories;
 
+import inaugural.soliloquy.audio.entities.SoundImpl;
 import inaugural.soliloquy.tools.Check;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
