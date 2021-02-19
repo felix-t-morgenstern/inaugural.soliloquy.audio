@@ -20,8 +20,8 @@ class SoundTypeFactoryImplTests {
     void testMake() {
         final String id = "id";
         final String path = "path";
-        final Integer stopMs = 123;
-        final Integer restartMs = 456;
+        final Integer restartMs = 123;
+        final Integer stopMs = 456;
 
         SoundType result = _soundTypeFactory.make(id, path, stopMs, restartMs);
 
@@ -44,11 +44,9 @@ class SoundTypeFactoryImplTests {
         assertThrows(IllegalArgumentException.class,
                 () -> _soundTypeFactory.make("", path, stopMs, restartMs));
         assertThrows(IllegalArgumentException.class,
-                () -> _soundTypeFactory.make(null, path, stopMs, restartMs));
+                () -> _soundTypeFactory.make(id, null, stopMs, restartMs));
         assertThrows(IllegalArgumentException.class,
                 () -> _soundTypeFactory.make(id, "", stopMs, restartMs));
-        assertThrows(IllegalArgumentException.class,
-                () -> _soundTypeFactory.make(id, path, restartMs, stopMs));
         assertThrows(IllegalArgumentException.class,
                 () -> _soundTypeFactory.make(id, path, restartMs, restartMs));
         assertThrows(IllegalArgumentException.class,
