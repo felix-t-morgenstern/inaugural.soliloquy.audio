@@ -18,6 +18,7 @@ public class PersistentSoundsPlayingHandler extends HasOneGenericParam<SoundsPla
     public PersistentSoundsPlayingHandler(
             PersistentValueTypeHandler<Sound> persistentSoundHandler,
             SoundsPlaying soundsPlaying) {
+        super(ARCHETYPE);
         if (persistentSoundHandler == null) {
             throw new IllegalArgumentException(
                     "PersistentSoundsPlayingHandler: persistentSoundHandler cannot be null");
