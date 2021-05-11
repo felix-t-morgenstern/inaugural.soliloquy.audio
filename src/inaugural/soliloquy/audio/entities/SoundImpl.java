@@ -13,7 +13,7 @@ import soliloquy.specs.common.valueobjects.EntityUuid;
 import java.io.File;
 
 public class SoundImpl implements Sound {
-	private final EntityUuid ID;
+	private final EntityUuid UUID;
 	private final SoundType SOUND_TYPE;
 	
 	private final SoundsPlaying SOUNDS_PLAYING;
@@ -36,8 +36,8 @@ public class SoundImpl implements Sound {
 	private double _volume;
 	
 	@SuppressWarnings("ConstantConditions")
-	public SoundImpl(EntityUuid id, SoundType soundType, SoundsPlaying soundsPlaying) {
-		ID = Check.ifNull(id, "id");
+	public SoundImpl(EntityUuid uuid, SoundType soundType, SoundsPlaying soundsPlaying) {
+		UUID = Check.ifNull(uuid, "uuid");
 		SOUND_TYPE = Check.ifNull(soundType, "soundType");
 		SOUNDS_PLAYING = Check.ifNull(soundsPlaying, "soundsPlaying");
 		
@@ -56,9 +56,7 @@ public class SoundImpl implements Sound {
 		{
 			_loopStopMs = _durationMs = (int) MEDIA_PLAYER.getTotalDuration().toMillis();
 			_isReady = true;
-			MEDIA_PLAYER.setOnMarker(mediaMarkerEvent -> {
-				setMillisecondPosition(_loopRestartMs+1);
-			});
+			MEDIA_PLAYER.setOnMarker(mediaMarkerEvent -> setMillisecondPosition(_loopRestartMs+1));
 			MEDIA_PLAYER.setOnEndOfMedia(this::stop);
 		});
 		while (!_isReady) {
@@ -66,46 +64,56 @@ public class SoundImpl implements Sound {
 		}
 	}
 
-	public EntityUuid id() throws IllegalStateException {
-		return ID;
+	@Override
+	public EntityUuid uuid() throws IllegalStateException {
+		return UUID;
 	}
 
+	@Override
 	public String getInterfaceName() {
 		return Sound.class.getCanonicalName();
 	}
 
+	@Override
 	public SoundType soundType() {
 		return SOUND_TYPE;
 	}
 
+	@Override
 	public void play() throws UnsupportedOperationException {
 		throwWhenStopped("play");
 		MEDIA_PLAYER.play();
 		_isPaused = false;
 	}
 
+	@Override
 	public Runnable playTask() {
 		return this::play;
 	}
 
+	@Override
 	public void pause() {
 		throwWhenStopped("pause");
 		MEDIA_PLAYER.pause();
 		_isPaused = true;
 	}
 
+	@Override
 	public Runnable pauseTask() {
 		return this::pause;
 	}
 
+	@Override
 	public boolean isPaused() {
 		return _isPaused;
 	}
 
+	@Override
 	public boolean isPlaying() {
 		return !_isPaused && !_isStopped;
 	}
 
+	@Override
 	public void stop() throws UnsupportedOperationException {
 		MEDIA_PLAYER.stop();
 		MEDIA_PLAYER.dispose();
@@ -116,16 +124,19 @@ public class SoundImpl implements Sound {
 		SOUNDS_PLAYING.removeSound(this);
 	}
 
+	@Override
 	public Runnable stopTask() {
 		return this::stop;
 	}
 
+	@Override
 	public void mute() {
 		throwWhenStopped("mute");
 		MEDIA_PLAYER.setVolume(0.0);
 		_isMuted = true;
 	}
 
+	@Override
 	public Runnable muteTask() {
 		return this::mute;
 	}
@@ -136,24 +147,29 @@ public class SoundImpl implements Sound {
 		_isMuted = false;
 	}
 
+	@Override
 	public Runnable unmuteTask() {
 		return this::unmute;
 	}
 
+	@Override
 	public boolean isMuted() throws UnsupportedOperationException {
 		throwWhenStopped("isMuted");
 		return _isMuted;
 	}
 
+	@Override
 	public boolean isStopped() {
 		return _isStopped;
 	}
 
+	@Override
 	public double getVolume() throws UnsupportedOperationException {
 		throwWhenStopped("getVolume");
 		return _volume;
 	}
 
+	@Override
 	public void setVolume(double volume)
 			throws IllegalArgumentException, UnsupportedOperationException {
 		throwWhenStopped("setVolume");
@@ -163,10 +179,12 @@ public class SoundImpl implements Sound {
 		_volume = volume;
 	}
 
+	@Override
 	public Runnable setVolumeTask(double volume) throws IllegalArgumentException {
 		return () -> setVolume(volume);
 	}
 
+	@Override
 	public int getMillisecondLength(){
 		while (!_isReady) {
 			try {
@@ -178,6 +196,7 @@ public class SoundImpl implements Sound {
 		return _durationMs;
 	}
 
+	@Override
 	public int getMillisecondPosition() {
 		throwWhenStopped("getMillisecondPosition");
 		while (!_isReady) {
@@ -190,21 +209,25 @@ public class SoundImpl implements Sound {
 		return (int) MEDIA_PLAYER.getCurrentTime().toMillis();
 	}
 
+	@Override
 	public void setMillisecondPosition(int ms)
 			throws IllegalArgumentException, UnsupportedOperationException {
 		throwWhenStopped("setMillisecondPosition");
 		MEDIA_PLAYER.seek(Duration.millis(ms));
 	}
 
+	@Override
 	public Runnable setMillisecondPositionTask(int ms) throws IllegalArgumentException {
 		return () -> setMillisecondPosition(ms);
 	}
 
+	@Override
 	public boolean getIsLooping() throws UnsupportedOperationException {
 		throwWhenStopped("getIsLooping");
 		return _isLooping;
 	}
 
+	@Override
 	public void setIsLooping(boolean isLooping) throws UnsupportedOperationException {
 		throwWhenStopped("setIsLooping");
 		if (isLooping) {
@@ -215,6 +238,7 @@ public class SoundImpl implements Sound {
 		_isLooping = isLooping;
 	}
 
+	@Override
 	public Runnable setIsLoopingTask(boolean isLooping) {
 		return () -> setIsLooping(isLooping);
 	}
@@ -273,7 +297,7 @@ public class SoundImpl implements Sound {
 			return false;
 		}
 		Sound sound = (Sound) o;
-		return sound.id().equals(ID);
+		return sound.uuid().equals(UUID);
 	}
 
 	private void throwWhenStopped(String methodName) {

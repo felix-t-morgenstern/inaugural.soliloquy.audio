@@ -46,7 +46,7 @@ public class FakePersistentSoundHandler implements PersistentValueTypeHandler<So
                     "PersistentSoundHandler.write: sound cannot be null");
         }
         SoundDTO soundDTO = new SoundDTO();
-        soundDTO.id = sound.id().toString();
+        soundDTO.id = sound.uuid().toString();
         soundDTO.type = sound.soundType().id();
         soundDTO.paused = sound.isPaused();
         soundDTO.muted = sound.isMuted();
@@ -66,8 +66,7 @@ public class FakePersistentSoundHandler implements PersistentValueTypeHandler<So
         return null;
     }
 
-    @SuppressWarnings("InnerClassMayBeStatic")
-    private class SoundDTO {
+    private static class SoundDTO {
         String id;
         String type;
         boolean paused;

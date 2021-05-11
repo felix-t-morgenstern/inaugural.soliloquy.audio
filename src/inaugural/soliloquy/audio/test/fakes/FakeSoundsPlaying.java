@@ -37,13 +37,13 @@ public class FakeSoundsPlaying implements SoundsPlaying {
 
     @Override
     public void registerSound(Sound sound) throws IllegalArgumentException {
-        SOUNDS_PLAYING.put(sound.id(), sound);
+        SOUNDS_PLAYING.put(sound.uuid(), sound);
         _soundsInOrder.add(sound);
     }
 
     @Override
     public void removeSound(Sound sound) throws IllegalArgumentException {
-        SOUNDS_PLAYING.remove(sound.id());
+        SOUNDS_PLAYING.remove(sound.uuid());
     }
 
     @Override

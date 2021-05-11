@@ -66,7 +66,7 @@ class PersistentSoundHandlerTests {
         Sound readValue = _persistentSoundHandler.read(DATA);
 
         assertNotNull(readValue);
-        assertEquals(SoundStub.ID, readValue.id());
+        assertEquals(SoundStub.UUID, readValue.uuid());
         assertEquals(SoundStub.IS_PAUSED, readValue.isPaused());
         assertEquals(SoundStub.IS_MUTED, readValue.isMuted());
         assertEquals(SoundStub.IS_LOOPING, readValue.getIsLooping());

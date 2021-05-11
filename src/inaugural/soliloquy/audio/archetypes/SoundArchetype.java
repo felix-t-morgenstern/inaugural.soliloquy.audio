@@ -7,7 +7,7 @@ import soliloquy.specs.common.valueobjects.EntityUuid;
 public class SoundArchetype implements Sound {
 
     @Override
-    public EntityUuid id() {
+    public EntityUuid uuid() {
         // stub method
         throw new UnsupportedOperationException();
     }

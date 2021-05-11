@@ -157,11 +157,11 @@ class SoundImplTests {
     @Test
 	void testStopRemovesSoundFromSoundsPlaying()
     {
-    	assertTrue(_soundsPlaying.isPlayingSound(_sound.id()));
+    	assertTrue(_soundsPlaying.isPlayingSound(_sound.uuid()));
     	
     	_sound.stop();
 
-		assertFalse(_soundsPlaying.isPlayingSound(_sound.id()));
+		assertFalse(_soundsPlaying.isPlayingSound(_sound.uuid()));
     }
 
     @Test

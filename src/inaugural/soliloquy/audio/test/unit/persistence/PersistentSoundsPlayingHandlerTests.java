@@ -45,7 +45,7 @@ class PersistentSoundsPlayingHandlerTests {
         int id = 0;
         for(String entityUuid : ENTITY_UUIDS) {
             FakeSound soundToAdd = new FakeSound(new FakeSoundType("soundType" + id++ + "Id"));
-            soundToAdd._id = new FakeEntityUuid(entityUuid);
+            soundToAdd._uuid = new FakeEntityUuid(entityUuid);
             _soundsPlaying.registerSound(soundToAdd);
         }
 
@@ -57,7 +57,7 @@ class PersistentSoundsPlayingHandlerTests {
     @Test
     void testRead() {
         FakeSound previouslyPlayingSound = new FakeSound(new FakeSoundType("soundType4Id"));
-        previouslyPlayingSound._id = new FakeEntityUuid("f23795c5-32fc-4df7-a936-7722311db17c");
+        previouslyPlayingSound._uuid = new FakeEntityUuid("f23795c5-32fc-4df7-a936-7722311db17c");
         _soundsPlaying.registerSound(previouslyPlayingSound);
 
         _persistentSoundsPlayingHandler.read(DATA);
@@ -65,7 +65,7 @@ class PersistentSoundsPlayingHandlerTests {
         List<Sound> soundsPlaying = _soundsPlaying.representation();
 
         assertEquals(3, soundsPlaying.size());
-        soundsPlaying.forEach(sp -> assertTrue(ENTITY_UUIDS.contains(sp.id().toString())));
+        soundsPlaying.forEach(sp -> assertTrue(ENTITY_UUIDS.contains(sp.uuid().toString())));
     }
 
     @Test

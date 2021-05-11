@@ -46,11 +46,11 @@ class SoundsPlayingImplTests {
 	void testRegisterAndRemoveSound() {
     	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
     	
-    	assertTrue(_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.id()));
+    	assertTrue(_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.uuid()));
     	
     	_soundsPlaying.removeSound(SOUND_ARCHETYPE);
 
-		assertFalse(_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.id()));
+		assertFalse(_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.uuid()));
     }
 
     @Test
@@ -114,7 +114,7 @@ class SoundsPlayingImplTests {
 	void testGetSound() {
     	_soundsPlaying.registerSound(SOUND_ARCHETYPE);
     	
-    	Sound sound = _soundsPlaying.getSound(SOUND_ARCHETYPE.id());
+    	Sound sound = _soundsPlaying.getSound(SOUND_ARCHETYPE.uuid());
 
 		assertSame(sound, SOUND_ARCHETYPE);
     }

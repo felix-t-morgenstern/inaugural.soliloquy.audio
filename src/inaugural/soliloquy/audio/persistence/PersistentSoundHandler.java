@@ -54,7 +54,7 @@ public class PersistentSoundHandler implements PersistentValueTypeHandler<Sound>
                     "PersistentSoundHandler.write: sound cannot be null");
         }
         SoundDTO soundDTO = new SoundDTO();
-        soundDTO.id = sound.id().toString();
+        soundDTO.id = sound.uuid().toString();
         soundDTO.type = sound.soundType().id();
         soundDTO.paused = sound.isPaused();
         soundDTO.muted = sound.isMuted();
@@ -75,7 +75,7 @@ public class PersistentSoundHandler implements PersistentValueTypeHandler<Sound>
                 Sound.class.getCanonicalName() + ">";
     }
 
-    private class SoundDTO {
+    private static class SoundDTO {
         String id;
         String type;
         boolean paused;

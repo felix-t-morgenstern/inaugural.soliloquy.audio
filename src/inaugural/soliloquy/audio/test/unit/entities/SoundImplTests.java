@@ -46,7 +46,7 @@ class SoundImplTests {
     
     @Test
 	void testId() {
-		assertSame(_sound.id(), ENTITY_UUID);
+		assertSame(_sound.uuid(), ENTITY_UUID);
     }
 
     @Test

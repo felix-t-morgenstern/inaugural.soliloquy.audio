@@ -13,7 +13,7 @@ public class FakeSoundFactory implements SoundFactory {
     @Override
     public Sound make(String soundTypeId, EntityUuid entityUuid) throws IllegalArgumentException {
         FakeSound newSound = new FakeSound(new FakeSoundType(soundTypeId));
-        newSound._id = entityUuid;
+        newSound._uuid = entityUuid;
         return newSound;
     }
 

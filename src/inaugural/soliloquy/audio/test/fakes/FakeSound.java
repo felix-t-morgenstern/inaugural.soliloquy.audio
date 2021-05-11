@@ -13,10 +13,10 @@ public class FakeSound implements Sound {
     private double _volume;
     private boolean _isLooping;
 
-    public EntityUuid _id;
+    public EntityUuid _uuid;
 
-    public FakeSound(EntityUuid id) {
-        _id = id;
+    public FakeSound(EntityUuid uuid) {
+        _uuid = uuid;
         SOUND_TYPE = null;
     }
 
@@ -170,8 +170,8 @@ public class FakeSound implements Sound {
     }
 
     @Override
-    public EntityUuid id() {
-        return _id;
+    public EntityUuid uuid() {
+        return _uuid;
     }
 
     @Override

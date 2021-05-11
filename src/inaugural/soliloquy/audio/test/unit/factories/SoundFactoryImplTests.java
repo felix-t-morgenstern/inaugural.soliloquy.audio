@@ -71,7 +71,7 @@ class SoundFactoryImplTests {
 
 		assertEquals(FakeSoundType.ID, sound.soundType().id());
 		assertEquals(SoundTypeFilename, sound.soundType().absolutePath());
-		assertEquals(sound.id().getMostSignificantBits(), EntityUuidStub.MOST_SIGNIFICANT_BITS);
+		assertEquals(sound.uuid().getMostSignificantBits(), EntityUuidStub.MOST_SIGNIFICANT_BITS);
 		assertTrue(sound.getIsLooping());
 		assertThrows(IllegalArgumentException.class,
 				() -> sound.setLoopingStopMs(FakeSoundType.DEFAULT_LOOPING_RESTART_MS));
@@ -80,14 +80,15 @@ class SoundFactoryImplTests {
     }
 
 	@Test
-	void testMakeWithId() {
+	void testMakeWithUuid() {
 		SOUND_TYPE_REGISTRY.add(new FakeSoundType(SoundTypeFilename));
     	final String entityUuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
-    	EntityUuid entityUuid = new inaugural.soliloquy.audio.test.fakes.FakeEntityUuid(entityUuidString);
+    	EntityUuid entityUuid =
+				new inaugural.soliloquy.audio.test.fakes.FakeEntityUuid(entityUuidString);
 
     	Sound sound = _soundFactory.make(FakeSoundType.ID, entityUuid);
 
-    	assertEquals(entityUuid, sound.id());
+    	assertEquals(entityUuid, sound.uuid());
 	}
 
     @Test
@@ -105,7 +106,8 @@ class SoundFactoryImplTests {
 		assertThrows(IllegalArgumentException.class,
 				() -> _soundFactory.make(SoundTypeFilename, null));
 		final String entityUuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
-		EntityUuid entityUuid = new inaugural.soliloquy.audio.test.fakes.FakeEntityUuid(entityUuidString);
+		EntityUuid entityUuid =
+				new inaugural.soliloquy.audio.test.fakes.FakeEntityUuid(entityUuidString);
 		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null, entityUuid));
 		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make("", entityUuid));
 	}

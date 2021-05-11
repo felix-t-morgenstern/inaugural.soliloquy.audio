@@ -41,11 +41,11 @@ class SoundsPlayingImplTests {
     	
     	_soundsPlaying.registerSound(sound);
     	
-    	assertTrue(_soundsPlaying.isPlayingSound(sound.id()));
+    	assertTrue(_soundsPlaying.isPlayingSound(sound.uuid()));
     	
     	_soundsPlaying.removeSound(sound);
 
-		assertFalse(_soundsPlaying.isPlayingSound(sound.id()));
+		assertFalse(_soundsPlaying.isPlayingSound(sound.uuid()));
     }
 
 	@Test
@@ -113,7 +113,7 @@ class SoundsPlayingImplTests {
     {
     	Sound soundMade = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
     	
-    	Sound soundPlaying = _soundsPlaying.getSound(soundMade.id());
+    	Sound soundPlaying = _soundsPlaying.getSound(soundMade.uuid());
 
 		assertSame(soundMade, soundPlaying);
     }

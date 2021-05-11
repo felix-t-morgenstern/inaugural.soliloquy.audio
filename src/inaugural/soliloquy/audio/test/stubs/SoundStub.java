@@ -9,7 +9,7 @@ import soliloquy.specs.common.valueobjects.EntityUuid;
 public class SoundStub implements Sound {
     private final static SoundType SOUND_TYPE = new FakeSoundType("SoundTypeId");
 
-    public final static EntityUuid ID = new FakeEntityUuid("839f1134-3622-493f-ba19-7d7be392cd3b");
+    public final static EntityUuid UUID = new FakeEntityUuid("839f1134-3622-493f-ba19-7d7be392cd3b");
     public final static boolean IS_PAUSED = true;
     public final static boolean IS_MUTED = true;
     public final static boolean IS_LOOPING = true;
@@ -162,8 +162,8 @@ public class SoundStub implements Sound {
     }
 
     @Override
-    public EntityUuid id() {
-        return ID;
+    public EntityUuid uuid() {
+        return UUID;
     }
 
     @Override

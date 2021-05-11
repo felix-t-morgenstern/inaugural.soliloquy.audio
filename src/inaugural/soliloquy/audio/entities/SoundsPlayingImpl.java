@@ -49,7 +49,7 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void registerSound(Sound sound) throws IllegalArgumentException {
-		_soundsPlaying.put(Check.ifNull(sound, "sound").id(),
+		_soundsPlaying.put(Check.ifNull(sound, "sound").uuid(),
 				sound);
 	}
 
@@ -57,7 +57,7 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 	@Override
 	public void removeSound(Sound sound) throws IllegalArgumentException {
 		_soundsPlaying.remove(
-				Check.ifNull(sound, "sound").id(),
+				Check.ifNull(sound, "sound").uuid(),
 				sound);
 	}
 
