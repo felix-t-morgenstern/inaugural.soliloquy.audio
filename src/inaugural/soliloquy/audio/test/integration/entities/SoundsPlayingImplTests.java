@@ -117,4 +117,10 @@ class SoundsPlayingImplTests {
 
 		assertSame(soundMade, soundPlaying);
     }
+
+	@Test
+	void testRegisterAndRemoveWithInvalidParams() {
+		assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.registerSound(null));
+		assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.removeSound(null));
+	}
 }
