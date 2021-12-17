@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.factories.SoundFactory;
 import soliloquy.specs.common.factories.EntityUuidFactory;
-import soliloquy.specs.common.persistence.PersistentValueTypeHandler;
+import soliloquy.specs.common.persistence.TypeHandler;
 
-public class FakePersistentSoundHandler implements PersistentValueTypeHandler<Sound> {
+public class FakePersistentSoundHandler implements TypeHandler<Sound> {
     private final SoundFactory SOUND_FACTORY = new FakeSoundFactory();
     private final EntityUuidFactory ENTITY_UUID_FACTORY = new FakeEntityUuidFactory();
 
@@ -14,11 +14,11 @@ public class FakePersistentSoundHandler implements PersistentValueTypeHandler<So
     public Sound read(String data) throws IllegalArgumentException {
         if (data == null) {
             throw new IllegalArgumentException(
-                    "PersistentSoundHandler.read: data cannot be null.");
+                    "SoundHandler.read: data cannot be null.");
         }
         if (data.equals("")) {
             throw new IllegalArgumentException(
-                    "PersistentSoundHandler.read: data cannot be empty.");
+                    "SoundHandler.read: data cannot be empty.");
         }
         SoundDTO soundDTO = new Gson().fromJson(data, SoundDTO.class);
         Sound readValue = SOUND_FACTORY.make(soundDTO.type,
@@ -43,7 +43,7 @@ public class FakePersistentSoundHandler implements PersistentValueTypeHandler<So
     public String write(Sound sound) {
         if (sound == null) {
             throw new IllegalArgumentException(
-                    "PersistentSoundHandler.write: sound cannot be null");
+                    "SoundHandler.write: sound cannot be null");
         }
         SoundDTO soundDTO = new SoundDTO();
         soundDTO.id = sound.uuid().toString();

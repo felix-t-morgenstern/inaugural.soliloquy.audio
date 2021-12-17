@@ -1,21 +1,21 @@
 package inaugural.soliloquy.audio.test.unit.persistence;
 
-import inaugural.soliloquy.audio.persistence.PersistentSoundsPlayingHandler;
+import inaugural.soliloquy.audio.persistence.SoundsPlayingHandler;
 import inaugural.soliloquy.audio.test.fakes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.infrastructure.List;
-import soliloquy.specs.common.persistence.PersistentValueTypeHandler;
+import soliloquy.specs.common.persistence.TypeHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PersistentSoundsPlayingHandlerTests {
-    private PersistentValueTypeHandler<SoundsPlaying> _persistentSoundsPlayingHandler;
+class SoundsPlayingHandlerTests {
+    private TypeHandler<SoundsPlaying> _soundsPlayingHandler;
     private SoundsPlaying _soundsPlaying;
 
     private final ArrayList<String> ENTITY_UUIDS = new ArrayList<>(Arrays.asList(
@@ -27,17 +27,16 @@ class PersistentSoundsPlayingHandlerTests {
     @BeforeEach
     void setUp() {
         _soundsPlaying = new FakeSoundsPlaying();
-        _persistentSoundsPlayingHandler = new PersistentSoundsPlayingHandler(
+        _soundsPlayingHandler = new SoundsPlayingHandler(
                 new FakePersistentSoundHandler(), _soundsPlaying);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Test
     void testConstructorWithInvalidParams() {
         assertThrows(IllegalArgumentException.class,
-                () -> new PersistentSoundsPlayingHandler(null, _soundsPlaying));
+                () -> new SoundsPlayingHandler(null, _soundsPlaying));
         assertThrows(IllegalArgumentException.class,
-                () -> new PersistentSoundsPlayingHandler(new FakePersistentSoundHandler(), null));
+                () -> new SoundsPlayingHandler(new FakePersistentSoundHandler(), null));
     }
 
     @Test
@@ -49,7 +48,7 @@ class PersistentSoundsPlayingHandlerTests {
             _soundsPlaying.registerSound(soundToAdd);
         }
 
-        String writtenValue = _persistentSoundsPlayingHandler.write(_soundsPlaying);
+        String writtenValue = _soundsPlayingHandler.write(_soundsPlaying);
 
         assertEquals(DATA, writtenValue);
     }
@@ -60,7 +59,7 @@ class PersistentSoundsPlayingHandlerTests {
         previouslyPlayingSound._uuid = new FakeEntityUuid("f23795c5-32fc-4df7-a936-7722311db17c");
         _soundsPlaying.registerSound(previouslyPlayingSound);
 
-        _persistentSoundsPlayingHandler.read(DATA);
+        _soundsPlayingHandler.read(DATA);
 
         List<Sound> soundsPlaying = _soundsPlaying.representation();
 
@@ -70,23 +69,21 @@ class PersistentSoundsPlayingHandlerTests {
 
     @Test
     void testReadWithInvalidParams() {
-        assertThrows(IllegalArgumentException.class,
-                () -> _persistentSoundsPlayingHandler.read(null));
-        assertThrows(IllegalArgumentException.class,
-                () -> _persistentSoundsPlayingHandler.read(""));
+        assertThrows(IllegalArgumentException.class, () -> _soundsPlayingHandler.read(null));
+        assertThrows(IllegalArgumentException.class, () -> _soundsPlayingHandler.read(""));
     }
 
     @Test
     void testArchetype() {
-        assertNotNull(_persistentSoundsPlayingHandler.getArchetype());
+        assertNotNull(_soundsPlayingHandler.getArchetype());
         assertEquals(SoundsPlaying.class.getCanonicalName(),
-                _persistentSoundsPlayingHandler.getArchetype().getInterfaceName());
+                _soundsPlayingHandler.getArchetype().getInterfaceName());
     }
 
     @Test
     void testGetInterfaceName() {
-        assertEquals(PersistentValueTypeHandler.class.getCanonicalName() + "<" +
+        assertEquals(TypeHandler.class.getCanonicalName() + "<" +
                 SoundsPlaying.class.getCanonicalName() + ">",
-                _persistentSoundsPlayingHandler.getInterfaceName());
+                _soundsPlayingHandler.getInterfaceName());
     }
 }

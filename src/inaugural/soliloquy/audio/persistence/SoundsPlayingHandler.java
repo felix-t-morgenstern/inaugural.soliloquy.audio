@@ -2,31 +2,30 @@ package inaugural.soliloquy.audio.persistence;
 
 import com.google.gson.Gson;
 import inaugural.soliloquy.audio.archetypes.SoundsPlayingArchetype;
-import inaugural.soliloquy.tools.generic.HasOneGenericParam;
+import inaugural.soliloquy.tools.persistence.AbstractTypeHandler;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
-import soliloquy.specs.common.persistence.PersistentValueTypeHandler;
+import soliloquy.specs.common.persistence.TypeHandler;
 
-public class PersistentSoundsPlayingHandler extends HasOneGenericParam<SoundsPlaying>
-        implements PersistentValueTypeHandler<SoundsPlaying> {
-    private final PersistentValueTypeHandler<Sound> PERSISTENT_SOUND_HANDLER;
+public class SoundsPlayingHandler extends AbstractTypeHandler<SoundsPlaying> {
+    private final TypeHandler<Sound> PERSISTENT_SOUND_HANDLER;
     private final SoundsPlaying SOUNDS_PLAYING;
 
     private static final SoundsPlaying ARCHETYPE = new SoundsPlayingArchetype();
 
     @SuppressWarnings("ConstantConditions")
-    public PersistentSoundsPlayingHandler(
-            PersistentValueTypeHandler<Sound> persistentSoundHandler,
+    public SoundsPlayingHandler(
+            TypeHandler<Sound> persistentSoundHandler,
             SoundsPlaying soundsPlaying) {
         super(ARCHETYPE);
         if (persistentSoundHandler == null) {
             throw new IllegalArgumentException(
-                    "PersistentSoundsPlayingHandler: persistentSoundHandler cannot be null");
+                    "SoundsPlayingHandler: persistentSoundHandler cannot be null");
         }
         PERSISTENT_SOUND_HANDLER = persistentSoundHandler;
         if (soundsPlaying == null) {
             throw new IllegalArgumentException(
-                    "PersistentSoundsPlayingHandler: soundsPlaying cannot be null");
+                    "SoundsPlayingHandler: soundsPlaying cannot be null");
         }
         SOUNDS_PLAYING = soundsPlaying;
     }
@@ -35,11 +34,11 @@ public class PersistentSoundsPlayingHandler extends HasOneGenericParam<SoundsPla
     public SoundsPlaying read(String data) throws IllegalArgumentException {
         if (data == null) {
             throw new IllegalArgumentException(
-                    "PersistentSoundsPlayingHandler.read: data cannot be null");
+                    "SoundsPlayingHandler.read: data cannot be null");
         }
         if (data.equals("")) {
             throw new IllegalArgumentException(
-                    "PersistentSoundsPlayingHandler.read: data cannot be empty");
+                    "SoundsPlayingHandler.read: data cannot be empty");
         }
 
         SOUNDS_PLAYING.forEach(SOUNDS_PLAYING::removeSound);
@@ -64,18 +63,7 @@ public class PersistentSoundsPlayingHandler extends HasOneGenericParam<SoundsPla
         return new Gson().toJson(soundsPlayingDTO);
     }
 
-    @Override
-    public SoundsPlaying getArchetype() {
-        return ARCHETYPE;
-    }
-
-    @Override
-    public String getUnparameterizedInterfaceName() {
-        return PersistentValueTypeHandler.class.getCanonicalName();
-    }
-
-    @SuppressWarnings("InnerClassMayBeStatic")
-    private class SoundsPlayingDTO {
+    private static class SoundsPlayingDTO {
         String[] soundDTOs;
     }
 }
