@@ -1,6 +1,5 @@
 package inaugural.soliloquy.audio.persistence;
 
-import com.google.gson.Gson;
 import inaugural.soliloquy.audio.archetypes.SoundArchetype;
 import inaugural.soliloquy.tools.Check;
 import inaugural.soliloquy.tools.persistence.AbstractTypeHandler;
@@ -28,7 +27,7 @@ public class SoundHandler extends AbstractTypeHandler<Sound> {
             throw new IllegalArgumentException(
                     "SoundHandler.read: data cannot be empty.");
         }
-        SoundDTO soundDTO = new Gson().fromJson(data, SoundDTO.class);
+        SoundDTO soundDTO = JSON.fromJson(data, SoundDTO.class);
         Sound readValue = SOUND_FACTORY.make(soundDTO.type, UUID.fromString(soundDTO.uuid));
         readValue.setIsLooping(soundDTO.looping);
         readValue.setVolume(soundDTO.vol);
@@ -60,7 +59,7 @@ public class SoundHandler extends AbstractTypeHandler<Sound> {
         soundDTO.vol = sound.getVolume();
         soundDTO.msPos = sound.getMillisecondPosition();
         soundDTO.looping = sound.getIsLooping();
-        return new Gson().toJson(soundDTO);
+        return JSON.toJson(soundDTO);
     }
 
     private static class SoundDTO {

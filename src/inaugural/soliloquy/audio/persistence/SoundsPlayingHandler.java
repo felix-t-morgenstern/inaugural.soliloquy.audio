@@ -1,6 +1,5 @@
 package inaugural.soliloquy.audio.persistence;
 
-import com.google.gson.Gson;
 import inaugural.soliloquy.audio.archetypes.SoundsPlayingArchetype;
 import inaugural.soliloquy.tools.persistence.AbstractTypeHandler;
 import soliloquy.specs.audio.entities.Sound;
@@ -43,7 +42,7 @@ public class SoundsPlayingHandler extends AbstractTypeHandler<SoundsPlaying> {
 
         SOUNDS_PLAYING.forEach(SOUNDS_PLAYING::removeSound);
 
-        SoundsPlayingDTO soundsPlayingDTO = new Gson().fromJson(data, SoundsPlayingDTO.class);
+        SoundsPlayingDTO soundsPlayingDTO = JSON.fromJson(data, SoundsPlayingDTO.class);
         for(String soundJson : soundsPlayingDTO.soundDTOs) {
             SOUNDS_PLAYING.registerSound(PERSISTENT_SOUND_HANDLER.read(soundJson));
         }
@@ -60,7 +59,7 @@ public class SoundsPlayingHandler extends AbstractTypeHandler<SoundsPlaying> {
             jsonObjects[index++] = PERSISTENT_SOUND_HANDLER.write(soundPlaying);
         }
         soundsPlayingDTO.soundDTOs = jsonObjects;
-        return new Gson().toJson(soundsPlayingDTO);
+        return JSON.toJson(soundsPlayingDTO);
     }
 
     private static class SoundsPlayingDTO {
