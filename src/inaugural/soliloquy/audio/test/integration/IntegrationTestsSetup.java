@@ -8,7 +8,6 @@ import inaugural.soliloquy.common.CommonModule;
 import soliloquy.specs.audio.Audio;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
-import soliloquy.specs.common.factories.EntityUuidFactory;
 import soliloquy.specs.common.factories.MapFactory;
 import soliloquy.specs.common.factories.RegistryFactory;
 
@@ -43,9 +42,7 @@ public class IntegrationTestsSetup {
 
 		Injector commonInjector = Guice.createInjector(new CommonModule());
 		
-		EntityUuidFactory entityUuidFactory = commonInjector.getInstance(EntityUuidFactory.class);
-		
-		Injector audioInjector = Guice.createInjector(new AudioModule(entityUuidFactory,
+		Injector audioInjector = Guice.createInjector(new AudioModule(
 				commonInjector.getInstance(MapFactory.class),
 				commonInjector.getInstance(RegistryFactory.class)));
 		

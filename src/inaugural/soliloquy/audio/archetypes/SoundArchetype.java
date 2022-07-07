@@ -2,12 +2,13 @@ package inaugural.soliloquy.audio.archetypes;
 
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
-import soliloquy.specs.common.valueobjects.EntityUuid;
+
+import java.util.UUID;
 
 public class SoundArchetype implements Sound {
 
     @Override
-    public EntityUuid uuid() {
+    public UUID uuid() {
         // stub method
         throw new UnsupportedOperationException();
     }

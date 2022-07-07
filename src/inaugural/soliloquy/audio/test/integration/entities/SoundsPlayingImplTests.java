@@ -1,7 +1,6 @@
 package inaugural.soliloquy.audio.test.integration.entities;
 
 import inaugural.soliloquy.audio.test.integration.IntegrationTestsSetup;
-import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import inaugural.soliloquy.audio.test.fakes.FakeSound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,9 +49,9 @@ class SoundsPlayingImplTests {
 
 	@Test
 	void testSize() {
-		Sound sound1 = new FakeSound(new EntityUuidStub());
-		Sound sound2 = new FakeSound(new EntityUuidStub());
-		Sound sound3 = new FakeSound(new EntityUuidStub());
+		Sound sound1 = new FakeSound(java.util.UUID.randomUUID());
+		Sound sound2 = new FakeSound(java.util.UUID.randomUUID());
+		Sound sound3 = new FakeSound(java.util.UUID.randomUUID());
 
 		_soundsPlaying.registerSound(sound1);
 		_soundsPlaying.registerSound(sound2);
@@ -65,9 +64,9 @@ class SoundsPlayingImplTests {
 
 	@Test
 	void testIterator() {
-		Sound sound1 = new FakeSound(new EntityUuidStub());
-		Sound sound2 = new FakeSound(new EntityUuidStub());
-		Sound sound3 = new FakeSound(new EntityUuidStub());
+		Sound sound1 = new FakeSound(java.util.UUID.randomUUID());
+		Sound sound2 = new FakeSound(java.util.UUID.randomUUID());
+		Sound sound3 = new FakeSound(java.util.UUID.randomUUID());
 
 		_soundsPlaying.registerSound(sound1);
 		_soundsPlaying.registerSound(sound2);

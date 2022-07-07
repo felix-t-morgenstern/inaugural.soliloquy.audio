@@ -1,7 +1,6 @@
 package inaugural.soliloquy.audio.test.unit.entities;
 
 import inaugural.soliloquy.audio.entities.SoundsPlayingImpl;
-import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import inaugural.soliloquy.audio.test.fakes.FakeMapFactory;
 import inaugural.soliloquy.audio.test.fakes.FakeSound;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,9 +8,9 @@ import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.common.factories.MapFactory;
 import soliloquy.specs.common.infrastructure.List;
-import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,22 +18,22 @@ class SoundsPlayingImplTests {
 	private SoundsPlayingImpl _soundsPlaying;
 	
 	private final MapFactory MAP_FACTORY = new FakeMapFactory();
-	private final EntityUuid ENTITY_UUID = new EntityUuidStub();
-	private final Sound SOUND_ARCHETYPE = new FakeSound(ENTITY_UUID);
+	private final UUID UUID = java.util.UUID.randomUUID();
+	private final Sound SOUND_ARCHETYPE = new FakeSound(UUID);
 	
     @BeforeEach
 	void setUp() {
-    	_soundsPlaying = new SoundsPlayingImpl(MAP_FACTORY, ENTITY_UUID, SOUND_ARCHETYPE);
+    	_soundsPlaying = new SoundsPlayingImpl(MAP_FACTORY, UUID, SOUND_ARCHETYPE);
     }
 
     @Test
 	void testConstructorWithInvalidParams() {
 		assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(null,
-				ENTITY_UUID, SOUND_ARCHETYPE));
+				UUID, SOUND_ARCHETYPE));
 		assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(MAP_FACTORY,
 				null, SOUND_ARCHETYPE));
 		assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(MAP_FACTORY,
-				ENTITY_UUID, null));
+				UUID, null));
 	}
     
     @Test
@@ -55,9 +54,9 @@ class SoundsPlayingImplTests {
 
     @Test
 	void testSize() {
-		Sound sound1 = new FakeSound(new EntityUuidStub());
-		Sound sound2 = new FakeSound(new EntityUuidStub());
-		Sound sound3 = new FakeSound(new EntityUuidStub());
+		Sound sound1 = new FakeSound(java.util.UUID.randomUUID());
+		Sound sound2 = new FakeSound(java.util.UUID.randomUUID());
+		Sound sound3 = new FakeSound(java.util.UUID.randomUUID());
 
 		_soundsPlaying.registerSound(sound1);
 		_soundsPlaying.registerSound(sound2);
@@ -70,9 +69,9 @@ class SoundsPlayingImplTests {
 
 	@Test
 	void testIterator() {
-		Sound sound1 = new FakeSound(new EntityUuidStub());
-		Sound sound2 = new FakeSound(new EntityUuidStub());
-		Sound sound3 = new FakeSound(new EntityUuidStub());
+		Sound sound1 = new FakeSound(java.util.UUID.randomUUID());
+		Sound sound2 = new FakeSound(java.util.UUID.randomUUID());
+		Sound sound3 = new FakeSound(java.util.UUID.randomUUID());
 
 		_soundsPlaying.registerSound(sound1);
 		_soundsPlaying.registerSound(sound2);

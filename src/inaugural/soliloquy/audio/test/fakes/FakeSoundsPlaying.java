@@ -3,15 +3,15 @@ package inaugural.soliloquy.audio.test.fakes;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.infrastructure.List;
-import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.UUID;
 
 public class FakeSoundsPlaying implements SoundsPlaying {
-    private final HashMap<EntityUuid,Sound> SOUNDS_PLAYING = new HashMap<>();
-    private ArrayList<Sound> _soundsInOrder = new ArrayList<>();
+    private final HashMap<UUID,Sound> SOUNDS_PLAYING = new HashMap<>();
+    private final ArrayList<Sound> SOUNDS_IN_ORDER = new ArrayList<>();
 
     @Override
     public int size() {
@@ -26,19 +26,19 @@ public class FakeSoundsPlaying implements SoundsPlaying {
     }
 
     @Override
-    public boolean isPlayingSound(EntityUuid entityUuid) throws IllegalArgumentException {
-        return SOUNDS_PLAYING.containsKey(entityUuid);
+    public boolean isPlayingSound(UUID uuid) throws IllegalArgumentException {
+        return SOUNDS_PLAYING.containsKey(uuid);
     }
 
     @Override
-    public Sound getSound(EntityUuid entityUuid) throws IllegalArgumentException {
-        return SOUNDS_PLAYING.get(entityUuid);
+    public Sound getSound(UUID uuid) throws IllegalArgumentException {
+        return SOUNDS_PLAYING.get(uuid);
     }
 
     @Override
     public void registerSound(Sound sound) throws IllegalArgumentException {
         SOUNDS_PLAYING.put(sound.uuid(), sound);
-        _soundsInOrder.add(sound);
+        SOUNDS_IN_ORDER.add(sound);
     }
 
     @Override
@@ -53,6 +53,6 @@ public class FakeSoundsPlaying implements SoundsPlaying {
 
     @Override
     public Iterator<Sound> iterator() {
-        return _soundsInOrder.iterator();
+        return SOUNDS_IN_ORDER.iterator();
     }
 }

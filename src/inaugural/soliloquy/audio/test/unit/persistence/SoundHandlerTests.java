@@ -2,36 +2,28 @@ package inaugural.soliloquy.audio.test.unit.persistence;
 
 import com.google.gson.JsonSyntaxException;
 import inaugural.soliloquy.audio.persistence.SoundHandler;
-import inaugural.soliloquy.audio.test.fakes.FakeEntityUuidFactory;
 import inaugural.soliloquy.audio.test.fakes.FakeSoundFactory;
 import inaugural.soliloquy.audio.test.stubs.SoundStub;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
-import soliloquy.specs.common.factories.EntityUuidFactory;
 import soliloquy.specs.common.persistence.TypeHandler;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SoundHandlerTests {
-    private final EntityUuidFactory ENTITY_UUID_FACTORY = new FakeEntityUuidFactory();
-
     private TypeHandler<Sound> _soundHandler;
 
-    private final static String DATA = "{\"id\":\"839f1134-3622-493f-ba19-7d7be392cd3b\",\"type\":\"SoundTypeStubId\",\"paused\":true,\"muted\":true,\"vol\":0.5,\"msPos\":100,\"looping\":true}";
+    private final static String DATA = "{\"uuid\":\"839f1134-3622-493f-ba19-7d7be392cd3b\",\"type\":\"SoundTypeStubId\",\"paused\":true,\"muted\":true,\"vol\":0.5,\"msPos\":100,\"looping\":true}";
 
     @BeforeEach
     void setUp() {
-        _soundHandler = new SoundHandler(new FakeSoundFactory(),
-                ENTITY_UUID_FACTORY);
+        _soundHandler = new SoundHandler(new FakeSoundFactory());
     }
 
     @Test
     void testConstructorWithInvalidParams() {
-        assertThrows(IllegalArgumentException.class, () -> new SoundHandler(null,
-                ENTITY_UUID_FACTORY));
-        assertThrows(IllegalArgumentException.class,
-                () -> new SoundHandler(new FakeSoundFactory(), null));
+        assertThrows(IllegalArgumentException.class, () -> new SoundHandler(null));
     }
 
     @Test

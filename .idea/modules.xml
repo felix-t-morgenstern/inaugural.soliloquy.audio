@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/inaugural.soliloquy.audio.iml" filepath="$PROJECT_DIR$/.idea/inaugural.soliloquy.audio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inaugural.soliloquy.audio.iml" filepath="$PROJECT_DIR$/inaugural.soliloquy.audio.iml" />
     </modules>
   </component>
 </project>

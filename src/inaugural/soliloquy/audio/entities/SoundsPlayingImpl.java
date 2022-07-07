@@ -6,18 +6,18 @@ import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.factories.MapFactory;
 import soliloquy.specs.common.infrastructure.List;
 import soliloquy.specs.common.infrastructure.Map;
-import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.util.Iterator;
+import java.util.UUID;
 
 public class SoundsPlayingImpl implements SoundsPlaying {
-	private Map<EntityUuid, Sound> _soundsPlaying;
+	private final Map<UUID, Sound> SOUNDS_PLAYING;
 	
 	@SuppressWarnings("ConstantConditions")
-	public SoundsPlayingImpl(MapFactory mapFactory, EntityUuid entityUuidArchetype,
+	public SoundsPlayingImpl(MapFactory mapFactory, UUID uuidArchetype,
 							 Sound soundArchetype) {
-		_soundsPlaying = Check.ifNull(mapFactory, "mapFactory")
-				.make(Check.ifNull(entityUuidArchetype, "entityUuidArchetype"),
+		SOUNDS_PLAYING = Check.ifNull(mapFactory, "mapFactory")
+				.make(Check.ifNull(uuidArchetype, "uuidArchetype"),
 						Check.ifNull(soundArchetype, "soundArchetype"));
 	}
 	
@@ -28,41 +28,41 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 
 	@Override
 	public int size() {
-		return _soundsPlaying.size();
+		return SOUNDS_PLAYING.size();
 	}
 
 	@Override
 	public List<Sound> representation() {
-		return _soundsPlaying.getValuesList();
+		return SOUNDS_PLAYING.getValuesList();
 	}
 
 	@Override
-	public boolean isPlayingSound(EntityUuid soundId) throws IllegalArgumentException {
-		return _soundsPlaying.containsKey(Check.ifNull(soundId, "soundId"));
+	public boolean isPlayingSound(UUID soundId) throws IllegalArgumentException {
+		return SOUNDS_PLAYING.containsKey(Check.ifNull(soundId, "soundId"));
 	}
 
 	@Override
-	public Sound getSound(EntityUuid soundId) throws IllegalArgumentException {
-		return _soundsPlaying.get(Check.ifNull(soundId, "soundId"));
+	public Sound getSound(UUID soundId) throws IllegalArgumentException {
+		return SOUNDS_PLAYING.get(Check.ifNull(soundId, "soundId"));
 	}
 
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void registerSound(Sound sound) throws IllegalArgumentException {
-		_soundsPlaying.put(Check.ifNull(sound, "sound").uuid(),
+		SOUNDS_PLAYING.put(Check.ifNull(sound, "sound").uuid(),
 				sound);
 	}
 
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public void removeSound(Sound sound) throws IllegalArgumentException {
-		_soundsPlaying.remove(
+		SOUNDS_PLAYING.remove(
 				Check.ifNull(sound, "sound").uuid(),
 				sound);
 	}
 
 	@Override
 	public Iterator<Sound> iterator() {
-		return _soundsPlaying.values().iterator();
+		return SOUNDS_PLAYING.values().iterator();
 	}
 }

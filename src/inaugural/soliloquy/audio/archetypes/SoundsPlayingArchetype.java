@@ -3,9 +3,9 @@ package inaugural.soliloquy.audio.archetypes;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.infrastructure.List;
-import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.util.Iterator;
+import java.util.UUID;
 
 public class SoundsPlayingArchetype implements SoundsPlaying {
     @Override
@@ -19,12 +19,12 @@ public class SoundsPlayingArchetype implements SoundsPlaying {
     }
 
     @Override
-    public boolean isPlayingSound(EntityUuid entityUuid) throws IllegalArgumentException {
+    public boolean isPlayingSound(UUID uuid) throws IllegalArgumentException {
         return false;
     }
 
     @Override
-    public Sound getSound(EntityUuid entityUuid) throws IllegalArgumentException {
+    public Sound getSound(UUID uuid) throws IllegalArgumentException {
         return null;
     }
 

@@ -2,7 +2,8 @@ package inaugural.soliloquy.audio.test.fakes;
 
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.factories.SoundFactory;
-import soliloquy.specs.common.valueobjects.EntityUuid;
+
+import java.util.UUID;
 
 public class FakeSoundFactory implements SoundFactory {
     @Override
@@ -11,9 +12,9 @@ public class FakeSoundFactory implements SoundFactory {
     }
 
     @Override
-    public Sound make(String soundTypeId, EntityUuid entityUuid) throws IllegalArgumentException {
+    public Sound make(String soundTypeId, UUID uuid) throws IllegalArgumentException {
         FakeSound newSound = new FakeSound(new FakeSoundType(soundTypeId));
-        newSound._uuid = entityUuid;
+        newSound._uuid = uuid;
         return newSound;
     }
 

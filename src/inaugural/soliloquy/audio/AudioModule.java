@@ -10,27 +10,30 @@ import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.audio.factories.SoundFactory;
-import soliloquy.specs.common.factories.EntityUuidFactory;
 import soliloquy.specs.common.factories.MapFactory;
 import soliloquy.specs.common.factories.RegistryFactory;
 import soliloquy.specs.common.infrastructure.Registry;
-import soliloquy.specs.common.valueobjects.EntityUuid;
+
+import java.util.UUID;
+import java.util.function.Supplier;
 
 public class AudioModule extends AbstractModule {
 	private Audio _audio;
 
-	public AudioModule(EntityUuidFactory entityUuidFactory, MapFactory mapFactory,
-                       RegistryFactory registryFactory) {
+	public AudioModule(MapFactory mapFactory, RegistryFactory registryFactory) {
+		Supplier<UUID> uuidFactory = UUID::randomUUID;
 		
-		EntityUuid entityUuidArchetype = entityUuidFactory.createRandomEntityUuid();
+		UUID uuidArchetype = uuidFactory.get();
 		
 		Sound soundArchetype = new SoundArchetype();
 
-		SoundsPlaying soundsPlaying = new SoundsPlayingImpl(mapFactory, entityUuidArchetype, soundArchetype);
+		SoundsPlaying soundsPlaying =
+				new SoundsPlayingImpl(mapFactory, uuidArchetype, soundArchetype);
 
 		Registry<SoundType> soundTypeRegistry = registryFactory.make(new SoundTypeArchetype());
 
-		SoundFactory soundFactory = new SoundFactoryImpl(soundTypeRegistry, soundsPlaying, entityUuidFactory);
+		SoundFactory soundFactory =
+				new SoundFactoryImpl(soundTypeRegistry, soundsPlaying, uuidFactory);
 		
 		_audio = new AudioImpl(soundsPlaying, soundFactory, soundTypeRegistry);
 	}

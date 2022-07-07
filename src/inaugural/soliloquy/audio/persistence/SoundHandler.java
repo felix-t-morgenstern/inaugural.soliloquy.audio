@@ -6,18 +6,16 @@ import inaugural.soliloquy.tools.Check;
 import inaugural.soliloquy.tools.persistence.AbstractTypeHandler;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.factories.SoundFactory;
-import soliloquy.specs.common.factories.EntityUuidFactory;
-import soliloquy.specs.common.persistence.TypeHandler;
+
+import java.util.UUID;
 
 public class SoundHandler extends AbstractTypeHandler<Sound> {
     private final static Sound ARCHETYPE = new SoundArchetype();
     private final SoundFactory SOUND_FACTORY;
-    private final EntityUuidFactory ENTITY_UUID_FACTORY;
 
-    public SoundHandler(SoundFactory soundFactory, EntityUuidFactory entityUuidFactory) {
+    public SoundHandler(SoundFactory soundFactory) {
         super(ARCHETYPE);
         SOUND_FACTORY = Check.ifNull(soundFactory, "soundFactory");
-        ENTITY_UUID_FACTORY = Check.ifNull(entityUuidFactory, "entityUuidFactory");
     }
 
     @Override
@@ -31,8 +29,7 @@ public class SoundHandler extends AbstractTypeHandler<Sound> {
                     "SoundHandler.read: data cannot be empty.");
         }
         SoundDTO soundDTO = new Gson().fromJson(data, SoundDTO.class);
-        Sound readValue = SOUND_FACTORY.make(soundDTO.type,
-                ENTITY_UUID_FACTORY.createFromString(soundDTO.id));
+        Sound readValue = SOUND_FACTORY.make(soundDTO.type, UUID.fromString(soundDTO.uuid));
         readValue.setIsLooping(soundDTO.looping);
         readValue.setVolume(soundDTO.vol);
         if (soundDTO.muted) {
@@ -56,7 +53,7 @@ public class SoundHandler extends AbstractTypeHandler<Sound> {
                     "SoundHandler.write: sound cannot be null");
         }
         SoundDTO soundDTO = new SoundDTO();
-        soundDTO.id = sound.uuid().toString();
+        soundDTO.uuid = sound.uuid().toString();
         soundDTO.type = sound.soundType().id();
         soundDTO.paused = sound.isPaused();
         soundDTO.muted = sound.isMuted();
@@ -67,7 +64,7 @@ public class SoundHandler extends AbstractTypeHandler<Sound> {
     }
 
     private static class SoundDTO {
-        String id;
+        String uuid;
         String type;
         boolean paused;
         boolean muted;

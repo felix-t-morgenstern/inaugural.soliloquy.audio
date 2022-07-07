@@ -1,6 +1,7 @@
 package inaugural.soliloquy.audio.entities;
 
 import inaugural.soliloquy.tools.Check;
+import inaugural.soliloquy.tools.CheckedExceptionWrapper;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -8,12 +9,12 @@ import javafx.util.Duration;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
-import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.io.File;
+import java.util.UUID;
 
 public class SoundImpl implements Sound {
-	private final EntityUuid UUID;
+	private final UUID UUID;
 	private final SoundType SOUND_TYPE;
 	
 	private final SoundsPlaying SOUNDS_PLAYING;
@@ -36,7 +37,7 @@ public class SoundImpl implements Sound {
 	private double _volume;
 	
 	@SuppressWarnings("ConstantConditions")
-	public SoundImpl(EntityUuid uuid, SoundType soundType, SoundsPlaying soundsPlaying) {
+	public SoundImpl(UUID uuid, SoundType soundType, SoundsPlaying soundsPlaying) {
 		UUID = Check.ifNull(uuid, "uuid");
 		SOUND_TYPE = Check.ifNull(soundType, "soundType");
 		SOUNDS_PLAYING = Check.ifNull(soundsPlaying, "soundsPlaying");
@@ -65,7 +66,7 @@ public class SoundImpl implements Sound {
 	}
 
 	@Override
-	public EntityUuid uuid() throws IllegalStateException {
+	public UUID uuid() throws IllegalStateException {
 		return UUID;
 	}
 
@@ -187,11 +188,7 @@ public class SoundImpl implements Sound {
 	@Override
 	public int getMillisecondLength(){
 		while (!_isReady) {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				throw new IllegalThreadStateException();
-			}
+			CheckedExceptionWrapper.sleep(10);
 		}
 		return _durationMs;
 	}
@@ -200,11 +197,7 @@ public class SoundImpl implements Sound {
 	public int getMillisecondPosition() {
 		throwWhenStopped("getMillisecondPosition");
 		while (!_isReady) {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				throw new IllegalThreadStateException();
-			}
+			CheckedExceptionWrapper.sleep(10);
 		}
 		return (int) MEDIA_PLAYER.getCurrentTime().toMillis();
 	}

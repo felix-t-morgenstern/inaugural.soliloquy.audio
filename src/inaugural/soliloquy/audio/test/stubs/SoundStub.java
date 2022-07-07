@@ -1,15 +1,16 @@
 package inaugural.soliloquy.audio.test.stubs;
 
-import inaugural.soliloquy.audio.test.fakes.FakeEntityUuid;
 import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
-import soliloquy.specs.common.valueobjects.EntityUuid;
+
+import java.util.UUID;
 
 public class SoundStub implements Sound {
     private final static SoundType SOUND_TYPE = new FakeSoundType("SoundTypeId");
 
-    public final static EntityUuid UUID = new FakeEntityUuid("839f1134-3622-493f-ba19-7d7be392cd3b");
+    public final static java.util.UUID UUID =
+            java.util.UUID.fromString("839f1134-3622-493f-ba19-7d7be392cd3b");
     public final static boolean IS_PAUSED = true;
     public final static boolean IS_MUTED = true;
     public final static boolean IS_LOOPING = true;
@@ -162,7 +163,7 @@ public class SoundStub implements Sound {
     }
 
     @Override
-    public EntityUuid uuid() {
+    public UUID uuid() {
         return UUID;
     }
 

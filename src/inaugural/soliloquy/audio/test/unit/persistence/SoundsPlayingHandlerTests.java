@@ -11,6 +11,7 @@ import soliloquy.specs.common.persistence.TypeHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,11 +19,11 @@ class SoundsPlayingHandlerTests {
     private TypeHandler<SoundsPlaying> _soundsPlayingHandler;
     private SoundsPlaying _soundsPlaying;
 
-    private final ArrayList<String> ENTITY_UUIDS = new ArrayList<>(Arrays.asList(
+    private final ArrayList<String> UUIDS = new ArrayList<>(Arrays.asList(
             "654326eb-0adf-49ef-8c43-18209574d635",
             "384d4555-1a11-481f-8e3c-dfdf059bd110",
             "5fa15321-0a5f-4d3b-9a70-9e9ae7f3ce85"));
-    private final String DATA = "{\"soundDTOs\":[\"{\\\"id\\\":\\\"654326eb-0adf-49ef-8c43-18209574d635\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\",\"{\\\"id\\\":\\\"384d4555-1a11-481f-8e3c-dfdf059bd110\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\",\"{\\\"id\\\":\\\"5fa15321-0a5f-4d3b-9a70-9e9ae7f3ce85\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\"]}";
+    private final String DATA = "{\"soundDTOs\":[\"{\\\"uuid\\\":\\\"654326eb-0adf-49ef-8c43-18209574d635\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\",\"{\\\"uuid\\\":\\\"384d4555-1a11-481f-8e3c-dfdf059bd110\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\",\"{\\\"uuid\\\":\\\"5fa15321-0a5f-4d3b-9a70-9e9ae7f3ce85\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\"]}";
 
     @BeforeEach
     void setUp() {
@@ -42,9 +43,9 @@ class SoundsPlayingHandlerTests {
     @Test
     void testWrite() {
         int id = 0;
-        for(String entityUuid : ENTITY_UUIDS) {
+        for(String uuid : UUIDS) {
             FakeSound soundToAdd = new FakeSound(new FakeSoundType("soundType" + id++ + "Id"));
-            soundToAdd._uuid = new FakeEntityUuid(entityUuid);
+            soundToAdd._uuid = UUID.fromString(uuid);
             _soundsPlaying.registerSound(soundToAdd);
         }
 
@@ -56,7 +57,7 @@ class SoundsPlayingHandlerTests {
     @Test
     void testRead() {
         FakeSound previouslyPlayingSound = new FakeSound(new FakeSoundType("soundType4Id"));
-        previouslyPlayingSound._uuid = new FakeEntityUuid("f23795c5-32fc-4df7-a936-7722311db17c");
+        previouslyPlayingSound._uuid = UUID.fromString("f23795c5-32fc-4df7-a936-7722311db17c");
         _soundsPlaying.registerSound(previouslyPlayingSound);
 
         _soundsPlayingHandler.read(DATA);
@@ -64,7 +65,7 @@ class SoundsPlayingHandlerTests {
         List<Sound> soundsPlaying = _soundsPlaying.representation();
 
         assertEquals(3, soundsPlaying.size());
-        soundsPlaying.forEach(sp -> assertTrue(ENTITY_UUIDS.contains(sp.uuid().toString())));
+        soundsPlaying.forEach(sp -> assertTrue(UUIDS.contains(sp.uuid().toString())));
     }
 
     @Test

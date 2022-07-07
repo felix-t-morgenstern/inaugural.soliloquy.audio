@@ -6,10 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.factories.SoundFactory;
-import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,13 +50,12 @@ class SoundFactoryImplTests {
 	@Test
 	void testMakeWithUuid() {
 		_setup.audio().soundTypes().add(new FakeSoundType(SoundTypeFilename));
-		final String entityUuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
-		EntityUuid entityUuid =
-				new inaugural.soliloquy.audio.test.fakes.FakeEntityUuid(entityUuidString);
+		final String uuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
+		UUID uuid = UUID.fromString(uuidString);
 
-		Sound sound = _soundFactory.make(FakeSoundType.ID, entityUuid);
+		Sound sound = _soundFactory.make(FakeSoundType.ID, uuid);
 
-		assertEquals(entityUuid, sound.uuid());
+		assertEquals(uuid, sound.uuid());
 	}
 
     @Test
@@ -74,10 +73,9 @@ class SoundFactoryImplTests {
 		_setup.audio().soundTypes().add(new FakeSoundType(SoundTypeFilename));
 		assertThrows(IllegalArgumentException.class,
 				() -> _soundFactory.make(SoundTypeFilename, null));
-		final String entityUuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
-		EntityUuid entityUuid =
-				new inaugural.soliloquy.audio.test.fakes.FakeEntityUuid(entityUuidString);
-		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null, entityUuid));
-		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make("", entityUuid));
+		final String uuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
+		UUID uuid = UUID.fromString(uuidString);
+		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null, uuid));
+		assertThrows(IllegalArgumentException.class, () -> _soundFactory.make("", uuid));
 	}
 }

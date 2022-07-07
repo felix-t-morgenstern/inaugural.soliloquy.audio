@@ -2,7 +2,8 @@ package inaugural.soliloquy.audio.test.fakes;
 
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
-import soliloquy.specs.common.valueobjects.EntityUuid;
+
+import java.util.UUID;
 
 public class FakeSound implements Sound {
     private final SoundType SOUND_TYPE;
@@ -13,9 +14,9 @@ public class FakeSound implements Sound {
     private double _volume;
     private boolean _isLooping;
 
-    public EntityUuid _uuid;
+    public UUID _uuid;
 
-    public FakeSound(EntityUuid uuid) {
+    public FakeSound(UUID uuid) {
         _uuid = uuid;
         SOUND_TYPE = null;
     }
@@ -170,7 +171,7 @@ public class FakeSound implements Sound {
     }
 
     @Override
-    public EntityUuid uuid() {
+    public UUID uuid() {
         return _uuid;
     }
 

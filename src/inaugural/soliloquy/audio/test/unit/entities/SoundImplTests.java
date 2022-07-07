@@ -1,7 +1,6 @@
 package inaugural.soliloquy.audio.test.unit.entities;
 
 import inaugural.soliloquy.audio.entities.SoundImpl;
-import inaugural.soliloquy.audio.test.stubs.EntityUuidStub;
 import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
 import inaugural.soliloquy.audio.test.spydoubles.SoundsPlayingSpyDouble;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
-import soliloquy.specs.common.valueobjects.EntityUuid;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +19,7 @@ class SoundImplTests {
 	private SoundImpl _sound;
 	private SoundType _soundType;
 
-	private final EntityUuid ENTITY_UUID = new EntityUuidStub();
+	private final UUID UUID = java.util.UUID.randomUUID();
 	private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingSpyDouble();
 
 	@SuppressWarnings("ConstantConditions")
@@ -31,27 +30,27 @@ class SoundImplTests {
 						.getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toURI())
 				.toFile())).getAbsolutePath();
 		_soundType = new FakeSoundType(_filename);
-		_sound = new SoundImpl(ENTITY_UUID, _soundType, SOUNDS_PLAYING);
+		_sound = new SoundImpl(UUID, _soundType, SOUNDS_PLAYING);
     }
 
     @Test
 	void testConstructorWithInvalidParams() {
 		assertThrows(IllegalArgumentException.class, () -> new SoundImpl(null, _soundType,
 				SOUNDS_PLAYING));
-		assertThrows(IllegalArgumentException.class, () -> new SoundImpl(ENTITY_UUID, null,
+		assertThrows(IllegalArgumentException.class, () -> new SoundImpl(UUID, null,
 				SOUNDS_PLAYING));
-		assertThrows(IllegalArgumentException.class, () -> new SoundImpl(ENTITY_UUID, _soundType,
+		assertThrows(IllegalArgumentException.class, () -> new SoundImpl(UUID, _soundType,
 				null));
 	}
     
     @Test
 	void testId() {
-		assertSame(_sound.uuid(), ENTITY_UUID);
+		assertSame(_sound.uuid(), UUID);
     }
 
     @Test
 	void testEquals() {
-		Sound sound2 = new SoundImpl(ENTITY_UUID, _soundType, SOUNDS_PLAYING);
+		Sound sound2 = new SoundImpl(UUID, _soundType, SOUNDS_PLAYING);
 		assertEquals(_sound, sound2);
 	}
 
