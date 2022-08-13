@@ -88,20 +88,10 @@ public class SoundImpl implements Sound {
 	}
 
 	@Override
-	public Runnable playTask() {
-		return this::play;
-	}
-
-	@Override
 	public void pause() {
 		throwWhenStopped("pause");
 		MEDIA_PLAYER.pause();
 		_isPaused = true;
-	}
-
-	@Override
-	public Runnable pauseTask() {
-		return this::pause;
 	}
 
 	@Override
@@ -126,31 +116,16 @@ public class SoundImpl implements Sound {
 	}
 
 	@Override
-	public Runnable stopTask() {
-		return this::stop;
-	}
-
-	@Override
 	public void mute() {
 		throwWhenStopped("mute");
 		MEDIA_PLAYER.setVolume(0.0);
 		_isMuted = true;
 	}
 
-	@Override
-	public Runnable muteTask() {
-		return this::mute;
-	}
-
 	public void unmute() throws UnsupportedOperationException {
 		throwWhenStopped("unmute");
 		MEDIA_PLAYER.setVolume(_volume);
 		_isMuted = false;
-	}
-
-	@Override
-	public Runnable unmuteTask() {
-		return this::unmute;
 	}
 
 	@Override
@@ -181,11 +156,6 @@ public class SoundImpl implements Sound {
 	}
 
 	@Override
-	public Runnable setVolumeTask(double volume) throws IllegalArgumentException {
-		return () -> setVolume(volume);
-	}
-
-	@Override
 	public int getMillisecondLength(){
 		while (!_isReady) {
 			CheckedExceptionWrapper.sleep(10);
@@ -210,11 +180,6 @@ public class SoundImpl implements Sound {
 	}
 
 	@Override
-	public Runnable setMillisecondPositionTask(int ms) throws IllegalArgumentException {
-		return () -> setMillisecondPosition(ms);
-	}
-
-	@Override
 	public boolean getIsLooping() throws UnsupportedOperationException {
 		throwWhenStopped("getIsLooping");
 		return _isLooping;
@@ -229,11 +194,6 @@ public class SoundImpl implements Sound {
 			MEDIA_PLAYER.setOnEndOfMedia(this::stop);
 		}
 		_isLooping = isLooping;
-	}
-
-	@Override
-	public Runnable setIsLoopingTask(boolean isLooping) {
-		return () -> setIsLooping(isLooping);
 	}
 
 	@Override
@@ -258,11 +218,6 @@ public class SoundImpl implements Sound {
 	}
 
 	@Override
-	public Runnable setLoopingStopMsTask(Integer stopMs) throws IllegalArgumentException {
-		return () -> setLoopingStopMs(stopMs);
-	}
-
-	@Override
 	public void setLoopingRestartMs(int restartMs) throws IllegalArgumentException {
 		throwWhenStopped("setLoopingRestartMs");
 		if (restartMs > _durationMs) {
@@ -274,11 +229,6 @@ public class SoundImpl implements Sound {
 					"SoundImpl.setLoopingStopMs: restartMs cannot exceed stopMs");
 		}
 		_loopRestartMs = Check.ifNonNegative(restartMs, "restartMs");
-	}
-
-	@Override
-	public Runnable setLoopingRestartMsTask(int restartMs) throws IllegalArgumentException {
-		return () -> setLoopingRestartMs(restartMs);
 	}
 
 	@Override

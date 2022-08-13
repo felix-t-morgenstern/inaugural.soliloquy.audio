@@ -36,18 +36,8 @@ public class FakeSound implements Sound {
     }
 
     @Override
-    public Runnable playTask() {
-        return null;
-    }
-
-    @Override
     public void pause() throws UnsupportedOperationException {
         _isPaused = true;
-    }
-
-    @Override
-    public Runnable pauseTask() {
-        return null;
     }
 
     @Override
@@ -66,28 +56,13 @@ public class FakeSound implements Sound {
     }
 
     @Override
-    public Runnable stopTask() {
-        return null;
-    }
-
-    @Override
     public void mute() throws UnsupportedOperationException {
         _isMuted = true;
     }
 
     @Override
-    public Runnable muteTask() {
-        return null;
-    }
-
-    @Override
     public void unmute() throws UnsupportedOperationException {
         _isMuted = false;
-    }
-
-    @Override
-    public Runnable unmuteTask() {
-        return null;
     }
 
     @Override
@@ -111,11 +86,6 @@ public class FakeSound implements Sound {
     }
 
     @Override
-    public Runnable setVolumeTask(double v) throws IllegalArgumentException {
-        return null;
-    }
-
-    @Override
     public int getMillisecondLength() {
         return 0;
     }
@@ -131,11 +101,6 @@ public class FakeSound implements Sound {
     }
 
     @Override
-    public Runnable setMillisecondPositionTask(int i) throws IllegalArgumentException {
-        return null;
-    }
-
-    @Override
     public boolean getIsLooping() throws UnsupportedOperationException {
         return _isLooping;
     }
@@ -146,28 +111,13 @@ public class FakeSound implements Sound {
     }
 
     @Override
-    public Runnable setIsLoopingTask(boolean b) {
-        return null;
-    }
-
-    @Override
     public void setLoopingStopMs(Integer i) throws IllegalArgumentException {
 
     }
 
     @Override
-    public Runnable setLoopingStopMsTask(Integer i) throws IllegalArgumentException {
-        return null;
-    }
-
-    @Override
     public void setLoopingRestartMs(int i) throws IllegalArgumentException {
 
-    }
-
-    @Override
-    public Runnable setLoopingRestartMsTask(int i) throws IllegalArgumentException {
-        return null;
     }
 
     @Override

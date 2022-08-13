@@ -28,18 +28,8 @@ public class SoundStub implements Sound {
     }
 
     @Override
-    public Runnable playTask() {
-        return null;
-    }
-
-    @Override
     public void pause() throws UnsupportedOperationException {
 
-    }
-
-    @Override
-    public Runnable pauseTask() {
-        return null;
     }
 
     @Override
@@ -58,28 +48,13 @@ public class SoundStub implements Sound {
     }
 
     @Override
-    public Runnable stopTask() {
-        return null;
-    }
-
-    @Override
     public void mute() throws UnsupportedOperationException {
 
     }
 
     @Override
-    public Runnable muteTask() {
-        return null;
-    }
-
-    @Override
     public void unmute() throws UnsupportedOperationException {
 
-    }
-
-    @Override
-    public Runnable unmuteTask() {
-        return null;
     }
 
     @Override
@@ -103,11 +78,6 @@ public class SoundStub implements Sound {
     }
 
     @Override
-    public Runnable setVolumeTask(double v) throws IllegalArgumentException {
-        return null;
-    }
-
-    @Override
     public int getMillisecondLength() {
         return 0;
     }
@@ -123,11 +93,6 @@ public class SoundStub implements Sound {
     }
 
     @Override
-    public Runnable setMillisecondPositionTask(int i) throws IllegalArgumentException {
-        return null;
-    }
-
-    @Override
     public boolean getIsLooping() throws UnsupportedOperationException {
         return IS_LOOPING;
     }
@@ -138,28 +103,13 @@ public class SoundStub implements Sound {
     }
 
     @Override
-    public Runnable setIsLoopingTask(boolean b) {
-        return null;
-    }
-
-    @Override
     public void setLoopingStopMs(Integer i) throws IllegalArgumentException {
 
     }
 
     @Override
-    public Runnable setLoopingStopMsTask(Integer i) throws IllegalArgumentException {
-        return null;
-    }
-
-    @Override
     public void setLoopingRestartMs(int i) throws IllegalArgumentException {
 
-    }
-
-    @Override
-    public Runnable setLoopingRestartMsTask(int i) throws IllegalArgumentException {
-        return null;
     }
 
     @Override
