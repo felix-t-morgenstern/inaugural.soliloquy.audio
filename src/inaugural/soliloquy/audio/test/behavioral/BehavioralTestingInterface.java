@@ -1,4 +1,4 @@
-package inaugural.soliloquy.audio.test.integration.behavioral;
+package inaugural.soliloquy.audio.test.behavioral;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
