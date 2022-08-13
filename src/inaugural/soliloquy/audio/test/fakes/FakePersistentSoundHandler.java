@@ -27,13 +27,15 @@ public class FakePersistentSoundHandler implements TypeHandler<Sound> {
         readValue.setVolume(soundDTO.vol);
         if (soundDTO.muted) {
             readValue.mute();
-        } else {
+        }
+        else {
             readValue.unmute();
         }
         readValue.setMillisecondPosition(soundDTO.msPos);
         if (soundDTO.paused) {
             readValue.pause();
-        } else {
+        }
+        else {
             readValue.play();
         }
         return readValue;

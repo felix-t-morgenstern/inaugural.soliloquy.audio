@@ -14,7 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class SoundHandlerTests {
     private TypeHandler<Sound> _soundHandler;
 
-    private final static String DATA = "{\"uuid\":\"839f1134-3622-493f-ba19-7d7be392cd3b\",\"type\":\"SoundTypeStubId\",\"paused\":true,\"muted\":true,\"vol\":0.5,\"msPos\":100,\"looping\":true}";
+    private final static String DATA =
+            "{\"uuid\":\"839f1134-3622-493f-ba19-7d7be392cd3b\",\"type\":\"SoundTypeStubId\"," +
+                    "\"paused\":true,\"muted\":true,\"vol\":0.5,\"msPos\":100,\"looping\":true}";
 
     @BeforeEach
     void setUp() {
@@ -29,7 +31,7 @@ class SoundHandlerTests {
     @Test
     void testGetInterfaceName() {
         assertEquals(TypeHandler.class.getCanonicalName() + "<" +
-                Sound.class.getCanonicalName() + ">",
+                        Sound.class.getCanonicalName() + ">",
                 _soundHandler.getInterfaceName());
     }
 
@@ -71,6 +73,8 @@ class SoundHandlerTests {
         assertThrows(IllegalArgumentException.class, () -> _soundHandler.read(null));
         assertThrows(IllegalArgumentException.class, () -> _soundHandler.read(""));
         assertThrows(JsonSyntaxException.class, () ->
-                _soundHandler.read("{\"soundTypeId\":\"SoundTypeId\",\"isPaused\":true,\"isMuted\":true,\"volume\":0.5,\"msPosition\":100,\"isLooping\":true"));
+                _soundHandler
+                        .read("{\"soundTypeId\":\"SoundTypeId\",\"isPaused\":true," +
+                                "\"isMuted\":true,\"volume\":0.5,\"msPosition\":100,\"isLooping\":true"));
     }
 }

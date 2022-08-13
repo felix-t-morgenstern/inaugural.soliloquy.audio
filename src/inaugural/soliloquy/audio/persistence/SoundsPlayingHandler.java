@@ -43,7 +43,7 @@ public class SoundsPlayingHandler extends AbstractTypeHandler<SoundsPlaying> {
         SOUNDS_PLAYING.forEach(SOUNDS_PLAYING::removeSound);
 
         SoundsPlayingDTO soundsPlayingDTO = JSON.fromJson(data, SoundsPlayingDTO.class);
-        for(String soundJson : soundsPlayingDTO.soundDTOs) {
+        for (String soundJson : soundsPlayingDTO.soundDTOs) {
             SOUNDS_PLAYING.registerSound(PERSISTENT_SOUND_HANDLER.read(soundJson));
         }
 
@@ -55,7 +55,7 @@ public class SoundsPlayingHandler extends AbstractTypeHandler<SoundsPlaying> {
         SoundsPlayingDTO soundsPlayingDTO = new SoundsPlayingDTO();
         String[] jsonObjects = new String[soundsPlaying.size()];
         int index = 0;
-        for(Sound soundPlaying : SOUNDS_PLAYING) {
+        for (Sound soundPlaying : SOUNDS_PLAYING) {
             jsonObjects[index++] = PERSISTENT_SOUND_HANDLER.write(soundPlaying);
         }
         soundsPlayingDTO.soundDTOs = jsonObjects;

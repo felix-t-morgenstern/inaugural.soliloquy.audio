@@ -8,24 +8,24 @@ import soliloquy.specs.common.infrastructure.Registry;
 
 // TODO: Add post hoc tests for AudioImpl
 public class AudioImpl implements Audio {
-	private final SoundsPlaying SOUNDS_PLAYING;
-	private final SoundFactory SOUND_FACTORY;
-	private final Registry<SoundType> SOUND_TYPES_REGISTRY;
-	
-	public AudioImpl(SoundsPlaying soundsPlaying, SoundFactory soundFactory,
+    private final SoundsPlaying SOUNDS_PLAYING;
+    private final SoundFactory SOUND_FACTORY;
+    private final Registry<SoundType> SOUND_TYPES_REGISTRY;
+
+    public AudioImpl(SoundsPlaying soundsPlaying, SoundFactory soundFactory,
                      Registry<SoundType> soundTypesRegistry) {
-		SOUNDS_PLAYING = soundsPlaying;
-		SOUND_FACTORY = soundFactory;
-		SOUND_TYPES_REGISTRY = soundTypesRegistry;
-	}
+        SOUNDS_PLAYING = soundsPlaying;
+        SOUND_FACTORY = soundFactory;
+        SOUND_TYPES_REGISTRY = soundTypesRegistry;
+    }
 
-	public SoundsPlaying soundsPlaying() {
-		return SOUNDS_PLAYING;
-	}
+    public SoundsPlaying soundsPlaying() {
+        return SOUNDS_PLAYING;
+    }
 
-	public SoundFactory soundFactory() {
-		return SOUND_FACTORY;
-	}
+    public SoundFactory soundFactory() {
+        return SOUND_FACTORY;
+    }
 
     @Override
     public Registry<SoundType> soundTypes() {

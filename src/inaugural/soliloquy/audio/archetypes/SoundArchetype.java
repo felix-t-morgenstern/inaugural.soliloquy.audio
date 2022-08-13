@@ -84,7 +84,8 @@ public class SoundArchetype implements Sound {
     }
 
     @Override
-    public void setVolume(double volume) throws IllegalArgumentException, UnsupportedOperationException {
+    public void setVolume(double volume)
+            throws IllegalArgumentException, UnsupportedOperationException {
         // stub method
         throw new UnsupportedOperationException();
     }
@@ -102,7 +103,8 @@ public class SoundArchetype implements Sound {
     }
 
     @Override
-    public void setMillisecondPosition(int ms) throws IllegalArgumentException, UnsupportedOperationException {
+    public void setMillisecondPosition(int ms)
+            throws IllegalArgumentException, UnsupportedOperationException {
         // stub method
         throw new UnsupportedOperationException();
     }

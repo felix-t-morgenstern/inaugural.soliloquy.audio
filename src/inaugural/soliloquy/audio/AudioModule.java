@@ -18,28 +18,28 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 public class AudioModule extends AbstractModule {
-	private Audio _audio;
+    private Audio _audio;
 
-	public AudioModule(MapFactory mapFactory, RegistryFactory registryFactory) {
-		Supplier<UUID> uuidFactory = UUID::randomUUID;
-		
-		UUID uuidArchetype = uuidFactory.get();
-		
-		Sound soundArchetype = new SoundArchetype();
+    public AudioModule(MapFactory mapFactory, RegistryFactory registryFactory) {
+        Supplier<UUID> uuidFactory = UUID::randomUUID;
 
-		SoundsPlaying soundsPlaying =
-				new SoundsPlayingImpl(mapFactory, uuidArchetype, soundArchetype);
+        UUID uuidArchetype = uuidFactory.get();
 
-		Registry<SoundType> soundTypeRegistry = registryFactory.make(new SoundTypeArchetype());
+        Sound soundArchetype = new SoundArchetype();
 
-		SoundFactory soundFactory =
-				new SoundFactoryImpl(soundTypeRegistry, soundsPlaying, uuidFactory);
-		
-		_audio = new AudioImpl(soundsPlaying, soundFactory, soundTypeRegistry);
-	}
-	
-	@Override
-	protected void configure() {
-		bind(Audio.class).toInstance(_audio);
-	}
+        SoundsPlaying soundsPlaying =
+                new SoundsPlayingImpl(mapFactory, uuidArchetype, soundArchetype);
+
+        Registry<SoundType> soundTypeRegistry = registryFactory.make(new SoundTypeArchetype());
+
+        SoundFactory soundFactory =
+                new SoundFactoryImpl(soundTypeRegistry, soundsPlaying, uuidFactory);
+
+        _audio = new AudioImpl(soundsPlaying, soundFactory, soundTypeRegistry);
+    }
+
+    @Override
+    protected void configure() {
+        bind(Audio.class).toInstance(_audio);
+    }
 }

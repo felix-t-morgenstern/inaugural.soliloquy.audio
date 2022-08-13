@@ -23,9 +23,9 @@ class AudioLoaderImplTests {
     private final Registry<SoundType> SOUND_TYPES_REGISTRY = new FakeRegistry<>();
     private final SoundTypeFactory SOUND_TYPE_FACTORY = new FakeSoundTypeFactory();
 
-    private final Map<String,String[]> IDS_FOR_FILENAMES = new HashMap<>();
-    private final Map<String,Integer> DEFAULT_LOOPING_STOP_MS_FOR_IDS = new HashMap<>();
-    private final Map<String,Integer> DEFAULT_LOOPING_RESTART_MS_FOR_IDS = new HashMap<>();
+    private final Map<String, String[]> IDS_FOR_FILENAMES = new HashMap<>();
+    private final Map<String, Integer> DEFAULT_LOOPING_STOP_MS_FOR_IDS = new HashMap<>();
+    private final Map<String, Integer> DEFAULT_LOOPING_RESTART_MS_FOR_IDS = new HashMap<>();
 
     private final String ID_1 = "ExitThePremises";
     private final String FILENAME_1 = "exit-the-premises-by-kevin-macleod-from-filmmusic-io.mp3";
@@ -44,11 +44,11 @@ class AudioLoaderImplTests {
     @SuppressWarnings("ConstantConditions")
     @BeforeEach
     void setUp() {
-        IDS_FOR_FILENAMES.put(FILENAME_1, new String[] {ID_1});
+        IDS_FOR_FILENAMES.put(FILENAME_1, new String[]{ID_1});
         DEFAULT_LOOPING_STOP_MS_FOR_IDS.put(ID_1, DEFAULT_LOOPING_STOP_MS_1);
         DEFAULT_LOOPING_RESTART_MS_FOR_IDS.put(ID_1, DEFAULT_LOOPING_RESTART_MS_1);
 
-        IDS_FOR_FILENAMES.put(FILENAME_2, new String[] {ID_2, ID_3});
+        IDS_FOR_FILENAMES.put(FILENAME_2, new String[]{ID_2, ID_3});
         DEFAULT_LOOPING_STOP_MS_FOR_IDS.put(ID_2, DEFAULT_LOOPING_STOP_MS_2);
         DEFAULT_LOOPING_RESTART_MS_FOR_IDS.put(ID_2, DEFAULT_LOOPING_RESTART_MS_2);
         DEFAULT_LOOPING_STOP_MS_FOR_IDS.put(ID_3, DEFAULT_LOOPING_STOP_MS_3);

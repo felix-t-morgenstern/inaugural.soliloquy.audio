@@ -88,7 +88,8 @@ public class SoundStub implements Sound {
     }
 
     @Override
-    public void setMillisecondPosition(int i) throws IllegalArgumentException, UnsupportedOperationException {
+    public void setMillisecondPosition(int i)
+            throws IllegalArgumentException, UnsupportedOperationException {
 
     }
 

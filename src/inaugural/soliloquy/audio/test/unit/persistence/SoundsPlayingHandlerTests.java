@@ -1,7 +1,10 @@
 package inaugural.soliloquy.audio.test.unit.persistence;
 
 import inaugural.soliloquy.audio.persistence.SoundsPlayingHandler;
-import inaugural.soliloquy.audio.test.fakes.*;
+import inaugural.soliloquy.audio.test.fakes.FakePersistentSoundHandler;
+import inaugural.soliloquy.audio.test.fakes.FakeSound;
+import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
+import inaugural.soliloquy.audio.test.fakes.FakeSoundsPlaying;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
@@ -23,7 +26,17 @@ class SoundsPlayingHandlerTests {
             "654326eb-0adf-49ef-8c43-18209574d635",
             "384d4555-1a11-481f-8e3c-dfdf059bd110",
             "5fa15321-0a5f-4d3b-9a70-9e9ae7f3ce85"));
-    private final String DATA = "{\"soundDTOs\":[\"{\\\"uuid\\\":\\\"654326eb-0adf-49ef-8c43-18209574d635\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\",\"{\\\"uuid\\\":\\\"384d4555-1a11-481f-8e3c-dfdf059bd110\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\",\"{\\\"uuid\\\":\\\"5fa15321-0a5f-4d3b-9a70-9e9ae7f3ce85\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false,\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0,\\\"looping\\\":false}\"]}";
+    private final String DATA =
+            "{\"soundDTOs\":[\"{\\\"uuid\\\":\\\"654326eb-0adf-49ef-8c43-18209574d635\\\"," +
+                    "\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false," +
+                    "\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0," +
+                    "\\\"looping\\\":false}\",\"{\\\"uuid\\\":\\\"384d4555-1a11-481f-8e3c" +
+                    "-dfdf059bd110\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false," +
+                    "\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0," +
+                    "\\\"looping\\\":false}\",\"{\\\"uuid\\\":\\\"5fa15321-0a5f-4d3b-9a70" +
+                    "-9e9ae7f3ce85\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false," +
+                    "\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0," +
+                    "\\\"looping\\\":false}\"]}";
 
     @BeforeEach
     void setUp() {
@@ -43,7 +56,7 @@ class SoundsPlayingHandlerTests {
     @Test
     void testWrite() {
         int id = 0;
-        for(String uuid : UUIDS) {
+        for (String uuid : UUIDS) {
             FakeSound soundToAdd = new FakeSound(new FakeSoundType("soundType" + id++ + "Id"));
             soundToAdd._uuid = UUID.fromString(uuid);
             _soundsPlaying.registerSound(soundToAdd);
@@ -84,7 +97,7 @@ class SoundsPlayingHandlerTests {
     @Test
     void testGetInterfaceName() {
         assertEquals(TypeHandler.class.getCanonicalName() + "<" +
-                SoundsPlaying.class.getCanonicalName() + ">",
+                        SoundsPlaying.class.getCanonicalName() + ">",
                 _soundsPlayingHandler.getInterfaceName());
     }
 }

@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.UUID;
 
 public class FakeSoundsPlaying implements SoundsPlaying {
-    private final HashMap<UUID,Sound> SOUNDS_PLAYING = new HashMap<>();
+    private final HashMap<UUID, Sound> SOUNDS_PLAYING = new HashMap<>();
     private final ArrayList<Sound> SOUNDS_IN_ORDER = new ArrayList<>();
 
     @Override

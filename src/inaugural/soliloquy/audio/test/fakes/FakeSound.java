@@ -96,7 +96,8 @@ public class FakeSound implements Sound {
     }
 
     @Override
-    public void setMillisecondPosition(int i) throws IllegalArgumentException, UnsupportedOperationException {
+    public void setMillisecondPosition(int i)
+            throws IllegalArgumentException, UnsupportedOperationException {
         _msPosition = i;
     }
 
