@@ -23,7 +23,7 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 
     @Override
     public String getInterfaceName() {
-        return "soliloquy.audio.specs.ISoundsPlaying";
+        return SoundsPlaying.class.getCanonicalName();
     }
 
     @Override
