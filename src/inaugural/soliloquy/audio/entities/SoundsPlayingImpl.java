@@ -4,10 +4,11 @@ import inaugural.soliloquy.tools.Check;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.factories.MapFactory;
-import soliloquy.specs.common.infrastructure.List;
 import soliloquy.specs.common.infrastructure.Map;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 public class SoundsPlayingImpl implements SoundsPlaying {
@@ -33,14 +34,16 @@ public class SoundsPlayingImpl implements SoundsPlaying {
 
     @Override
     public List<Sound> representation() {
-        return SOUNDS_PLAYING.getValuesList();
+        return new ArrayList<>(SOUNDS_PLAYING.values());
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public boolean isPlayingSound(UUID soundId) throws IllegalArgumentException {
         return SOUNDS_PLAYING.containsKey(Check.ifNull(soundId, "soundId"));
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public Sound getSound(UUID soundId) throws IllegalArgumentException {
         return SOUNDS_PLAYING.get(Check.ifNull(soundId, "soundId"));

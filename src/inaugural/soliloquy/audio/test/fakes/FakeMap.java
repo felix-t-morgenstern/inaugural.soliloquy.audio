@@ -1,6 +1,5 @@
 package inaugural.soliloquy.audio.test.fakes;
 
-import soliloquy.specs.common.infrastructure.List;
 import soliloquy.specs.common.infrastructure.Map;
 
 import java.util.HashMap;
@@ -22,11 +21,6 @@ public class FakeMap<K, V> extends HashMap<K, V> implements Map<K, V> {
         super(map);
         KeyArchetype = keyArchetype;
         ValueArchetype = valueArchetype;
-    }
-
-    @Override
-    public List<V> getValuesList() {
-        return new FakeList<>(values(), ValueArchetype);
     }
 
     @Override

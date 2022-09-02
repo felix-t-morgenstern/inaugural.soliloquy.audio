@@ -6,10 +6,11 @@ import inaugural.soliloquy.audio.test.fakes.FakeSound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
+import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.factories.MapFactory;
-import soliloquy.specs.common.infrastructure.List;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +39,7 @@ class SoundsPlayingImplTests {
 
     @Test
     void testGetInterfaceName() {
-        assertEquals("soliloquy.audio.specs.ISoundsPlaying", _soundsPlaying.getInterfaceName());
+        assertEquals(SoundsPlaying.class.getCanonicalName(), _soundsPlaying.getInterfaceName());
     }
 
     @Test

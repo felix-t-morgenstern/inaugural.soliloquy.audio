@@ -144,8 +144,7 @@ class SoundImplTests {
     void testGetMillisecondLength() {
         int millisecondLength = _sound.getMillisecondLength();
 
-        // TODO: Determine whether an intermittent test failure occurs here
-        assertTrue(millisecondLength == 208219 || millisecondLength == 208174);
+        assertEquals(208587, millisecondLength);
     }
 
     @Test
