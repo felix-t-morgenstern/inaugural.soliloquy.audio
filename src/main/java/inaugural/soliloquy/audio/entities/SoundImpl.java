@@ -36,7 +36,6 @@ public class SoundImpl implements Sound {
 
     private double _volume;
 
-    @SuppressWarnings("ConstantConditions")
     public SoundImpl(UUID uuid, SoundType soundType, SoundsPlaying soundsPlaying) {
         UUID = Check.ifNull(uuid, "uuid");
         SOUND_TYPE = Check.ifNull(soundType, "soundType");

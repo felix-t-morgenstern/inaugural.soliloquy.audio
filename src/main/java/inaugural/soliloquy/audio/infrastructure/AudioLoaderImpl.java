@@ -37,13 +37,11 @@ public class AudioLoaderImpl implements AudioLoader {
         return FILETYPES;
     }
 
-    @SuppressWarnings("ConstantConditions")
     public void setDefaultLoopingStopMsForIds(Map<String, Integer> defaultLoopingStopMsForIds) {
         DEFAULT_LOOPING_STOP_MS_FOR_IDS.putAll(
                 Check.ifNull(defaultLoopingStopMsForIds, "defaultLoopingStopMsForIds"));
     }
 
-    @SuppressWarnings("ConstantConditions")
     public void setDefaultLoopingRestartMsForIds(
             Map<String, Integer> defaultLoopingRestartMsForIds) {
         DEFAULT_LOOPING_RESTART_MS_FOR_IDS.putAll(

@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="inaugural.soliloquy.audio" target="9" />
+      <module name="inaugural.soliloquy.audio" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
