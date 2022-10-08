@@ -1,6 +1,5 @@
 package inaugural.soliloquy.audio.persistence;
 
-import inaugural.soliloquy.audio.archetypes.SoundArchetype;
 import inaugural.soliloquy.tools.Check;
 import inaugural.soliloquy.tools.persistence.AbstractTypeHandler;
 import soliloquy.specs.audio.entities.Sound;
@@ -8,12 +7,13 @@ import soliloquy.specs.audio.factories.SoundFactory;
 
 import java.util.UUID;
 
+import static inaugural.soliloquy.tools.generic.Archetypes.generateSimpleArchetype;
+
 public class SoundHandler extends AbstractTypeHandler<Sound> {
-    private final static Sound ARCHETYPE = new SoundArchetype();
     private final SoundFactory SOUND_FACTORY;
 
     public SoundHandler(SoundFactory soundFactory) {
-        super(ARCHETYPE);
+        super(generateSimpleArchetype(Sound.class));
         SOUND_FACTORY = Check.ifNull(soundFactory, "soundFactory");
     }
 

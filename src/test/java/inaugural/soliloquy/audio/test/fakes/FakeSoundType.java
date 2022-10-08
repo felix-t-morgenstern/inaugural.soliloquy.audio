@@ -7,28 +7,28 @@ public class FakeSoundType implements SoundType {
     public final static Integer DEFAULT_LOOPING_STOP_MS = 456;
     public final static Integer DEFAULT_LOOPING_RESTART_MS = 123;
 
-    public final String ABSOLUTE_PATH;
+    public final String RELATIVE_PATH;
     private String _id;
     private boolean _defaultLoopingAssigned;
     private Integer _defaultLoopingStopMs;
     private Integer _defaultLoopingRestartMs;
 
     public FakeSoundType(String absolutePath) {
-        ABSOLUTE_PATH = absolutePath;
+        RELATIVE_PATH = absolutePath;
     }
 
-    public FakeSoundType(String id, String absolutePath, Integer defaultLoopingStopMs,
+    public FakeSoundType(String id, String relativePath, Integer defaultLoopingStopMs,
                          Integer defaultLoopingRestartMs) {
         _id = id;
-        ABSOLUTE_PATH = absolutePath;
+        RELATIVE_PATH = relativePath;
         _defaultLoopingAssigned = true;
         _defaultLoopingStopMs = defaultLoopingStopMs;
         _defaultLoopingRestartMs = defaultLoopingRestartMs;
     }
 
     @Override
-    public String absolutePath() {
-        return ABSOLUTE_PATH;
+    public String relativePath() {
+        return RELATIVE_PATH;
     }
 
     @Override

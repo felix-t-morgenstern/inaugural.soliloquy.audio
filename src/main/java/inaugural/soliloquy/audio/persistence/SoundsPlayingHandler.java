@@ -1,22 +1,20 @@
 package inaugural.soliloquy.audio.persistence;
 
-import inaugural.soliloquy.audio.archetypes.SoundsPlayingArchetype;
 import inaugural.soliloquy.tools.persistence.AbstractTypeHandler;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.persistence.TypeHandler;
 
+import static inaugural.soliloquy.tools.generic.Archetypes.generateSimpleArchetype;
+
 public class SoundsPlayingHandler extends AbstractTypeHandler<SoundsPlaying> {
     private final TypeHandler<Sound> PERSISTENT_SOUND_HANDLER;
     private final SoundsPlaying SOUNDS_PLAYING;
 
-    private static final SoundsPlaying ARCHETYPE = new SoundsPlayingArchetype();
-
-    @SuppressWarnings("ConstantConditions")
     public SoundsPlayingHandler(
             TypeHandler<Sound> persistentSoundHandler,
             SoundsPlaying soundsPlaying) {
-        super(ARCHETYPE);
+        super(generateSimpleArchetype(SoundsPlaying.class));
         if (persistentSoundHandler == null) {
             throw new IllegalArgumentException(
                     "SoundsPlayingHandler: persistentSoundHandler cannot be null");

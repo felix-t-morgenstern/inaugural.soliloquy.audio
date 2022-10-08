@@ -11,9 +11,7 @@ import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.common.factories.MapFactory;
 import soliloquy.specs.common.factories.RegistryFactory;
 
-import java.io.File;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
 
 public class IntegrationTestsSetup {
 
@@ -25,22 +23,12 @@ public class IntegrationTestsSetup {
     public final Integer SOUND_TYPE_DEFAULT_LOOPING_STOP_MS = 14850;
     public final Integer SOUND_TYPE_DEFAULT_LOOPING_RESTART_MS = 7520;
 
+    private final static String RESOURCES_PATH = "\\src\\test\\resources\\";
     private final static String RESOURCE = "Kevin_MacLeod_-_Living_Voyage.mp3";
     private final static String RESOURCE_LOOPING =
             "exit-the-premises-by-kevin-macleod-from-filmmusic-io.mp3";
 
-    private String _soundType1Filename;
-    private String _soundType2Filename;
-
-    @SuppressWarnings("ConstantConditions")
     public IntegrationTestsSetup() throws URISyntaxException {
-        _soundType1Filename = new File(String.valueOf(
-                Paths.get(getClass().getClassLoader().getResource(RESOURCE).toURI())))
-                .getAbsolutePath();
-        _soundType2Filename = new File(String.valueOf(
-                Paths.get(getClass().getClassLoader().getResource(RESOURCE_LOOPING).toURI())))
-                .getAbsolutePath();
-
         Injector commonInjector = Guice.createInjector(new CommonModule());
 
         Injector audioInjector = Guice.createInjector(new AudioModule(
@@ -55,12 +43,11 @@ public class IntegrationTestsSetup {
     }
 
     public SoundType sampleSoundType() {
-        return new SoundTypeImpl(SOUND_TYPE_1_ID, _soundType1Filename,
-                null, null);
+        return new SoundTypeImpl(SOUND_TYPE_1_ID, RESOURCES_PATH + RESOURCE, null, null);
     }
 
     public SoundType sampleLoopingSoundType() {
-        return new SoundTypeImpl(SOUND_TYPE_2_ID, _soundType2Filename,
+        return new SoundTypeImpl(SOUND_TYPE_2_ID, RESOURCES_PATH + RESOURCE_LOOPING,
                 SOUND_TYPE_DEFAULT_LOOPING_STOP_MS, SOUND_TYPE_DEFAULT_LOOPING_RESTART_MS);
     }
 

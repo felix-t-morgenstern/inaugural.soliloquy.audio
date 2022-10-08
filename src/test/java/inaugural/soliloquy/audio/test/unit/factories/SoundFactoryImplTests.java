@@ -12,9 +12,6 @@ import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.audio.factories.SoundFactory;
 import soliloquy.specs.common.infrastructure.Registry;
 
-import java.io.File;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -27,16 +24,10 @@ class SoundFactoryImplTests {
     private final Supplier<UUID> UUID_FACTORY = () -> UUID;
     private final Registry<SoundType> SOUND_TYPE_REGISTRY = new FakeRegistry<>();
     private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingSpyDouble();
+    private final String RELATIVE_PATH = "\\src\\test\\resources\\Kevin_MacLeod_-_Living_Voyage.mp3";
 
-    private static String SoundTypeFilename;
-
-    @SuppressWarnings("ConstantConditions")
     @BeforeEach
-    void setUp() throws URISyntaxException {
-        SoundTypeFilename = new File(String.valueOf(Paths.get(
-                getClass().getClassLoader()
-                        .getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toURI())
-                .toFile())).getAbsolutePath();
+    void setUp() {
         _soundFactory = new SoundFactoryImpl(SOUND_TYPE_REGISTRY, SOUNDS_PLAYING, UUID_FACTORY);
     }
 
@@ -60,7 +51,7 @@ class SoundFactoryImplTests {
 
     @Test
     void testMake() {
-        SOUND_TYPE_REGISTRY.add(new FakeSoundType(SoundTypeFilename));
+        SOUND_TYPE_REGISTRY.add(new FakeSoundType(RELATIVE_PATH));
 
         Sound sound = _soundFactory.make(FakeSoundType.ID);
 
@@ -70,7 +61,7 @@ class SoundFactoryImplTests {
         //     Testing this functionality is reserved for behavioral integration testing.
 
         assertEquals(FakeSoundType.ID, sound.soundType().id());
-        assertEquals(SoundTypeFilename, sound.soundType().absolutePath());
+        assertEquals(RELATIVE_PATH, sound.soundType().relativePath());
         assertEquals(sound.uuid(), UUID);
         assertTrue(sound.getIsLooping());
         assertThrows(IllegalArgumentException.class,
@@ -81,7 +72,7 @@ class SoundFactoryImplTests {
 
     @Test
     void testMakeWithUuid() {
-        SOUND_TYPE_REGISTRY.add(new FakeSoundType(SoundTypeFilename));
+        SOUND_TYPE_REGISTRY.add(new FakeSoundType(RELATIVE_PATH));
         UUID uuid = java.util.UUID.randomUUID();
 
         Sound sound = _soundFactory.make(FakeSoundType.ID, uuid);
@@ -98,13 +89,12 @@ class SoundFactoryImplTests {
 
     @Test
     void testMakeWithInvalidParams() {
+        SOUND_TYPE_REGISTRY.add(new FakeSoundType(RELATIVE_PATH));
+
         assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null));
         assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(""));
-        SOUND_TYPE_REGISTRY.add(new FakeSoundType(SoundTypeFilename));
-        assertThrows(IllegalArgumentException.class,
-                () -> _soundFactory.make(SoundTypeFilename, null));
-        UUID uuid = java.util.UUID.randomUUID();
-        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null, uuid));
-        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make("", uuid));
+        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(RELATIVE_PATH, null));
+        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null, java.util.UUID.randomUUID()));
+        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make("", java.util.UUID.randomUUID()));
     }
 }

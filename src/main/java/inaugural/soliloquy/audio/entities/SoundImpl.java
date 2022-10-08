@@ -10,8 +10,9 @@ import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 
-import java.io.File;
 import java.util.UUID;
+
+import static inaugural.soliloquy.tools.files.Files.getLocalFile;
 
 public class SoundImpl implements Sound {
     private final UUID UUID;
@@ -42,7 +43,7 @@ public class SoundImpl implements Sound {
         SOUNDS_PLAYING = Check.ifNull(soundsPlaying, "soundsPlaying");
 
         new JFXPanel();
-        MEDIA = new Media(new File(soundType.absolutePath()).toURI().toString());
+        MEDIA = new Media(getLocalFile(soundType.relativePath()).toURI().toString());
         MEDIA_PLAYER = new MediaPlayer(MEDIA);
 
         _isPaused = true;

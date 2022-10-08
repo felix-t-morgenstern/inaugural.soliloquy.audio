@@ -5,14 +5,14 @@ import soliloquy.specs.audio.entities.SoundType;
 
 public class SoundTypeImpl implements SoundType {
     private final String ID;
-    private final String ABSOLUTE_PATH;
+    private final String RELATIVE_PATH;
     private final Integer DEFAULT_LOOPING_STOP_MS;
     private final Integer DEFAULT_LOOPING_RESTART_MS;
 
-    public SoundTypeImpl(String id, String absolutePath, Integer defaultLoopingStopMs,
+    public SoundTypeImpl(String id, String relativePath, Integer defaultLoopingStopMs,
                          Integer defaultLoopingRestartMs) {
         ID = Check.ifNullOrEmpty(id, "id");
-        ABSOLUTE_PATH = Check.ifNullOrEmpty(absolutePath, "absolutePath");
+        RELATIVE_PATH = Check.ifNullOrEmpty(relativePath, "relativePath");
         DEFAULT_LOOPING_STOP_MS = Check.ifNonNegative(defaultLoopingStopMs,
                 "defaultLoopingStopMs");
         DEFAULT_LOOPING_RESTART_MS = Check.ifNonNegative(defaultLoopingRestartMs,
@@ -26,8 +26,8 @@ public class SoundTypeImpl implements SoundType {
     }
 
     @Override
-    public String absolutePath() {
-        return ABSOLUTE_PATH;
+    public String relativePath() {
+        return RELATIVE_PATH;
     }
 
     @Override

@@ -6,9 +6,16 @@ import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.factories.SoundTypeFactory;
 
+import static inaugural.soliloquy.tools.random.Random.randomIntWithInclusiveFloor;
+import static inaugural.soliloquy.tools.random.Random.randomString;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SoundTypeFactoryImplTests {
+    private final String ID = randomString();
+    private final String RELATIVE_PATH = randomString();
+    private final int RESTART_MS = randomIntWithInclusiveFloor(1);
+    private final int STOP_MS = randomIntWithInclusiveFloor(1);
+
     private SoundTypeFactory _soundTypeFactory;
 
     @BeforeEach
@@ -18,41 +25,31 @@ class SoundTypeFactoryImplTests {
 
     @Test
     void testMake() {
-        final String id = "id";
-        final String path = "path";
-        final Integer restartMs = 123;
-        final Integer stopMs = 456;
-
-        SoundType result = _soundTypeFactory.make(id, path, stopMs, restartMs);
+        SoundType result = _soundTypeFactory.make(ID, RELATIVE_PATH, STOP_MS, RESTART_MS);
 
         assertNotNull(result);
-        assertEquals(id, result.id());
-        assertEquals(path, result.absolutePath());
-        assertEquals(stopMs, result.defaultLoopingStopMs());
-        assertEquals(restartMs, result.defaultLoopingRestartMs());
+        assertEquals(ID, result.id());
+        assertEquals(RELATIVE_PATH, result.relativePath());
+        assertEquals(STOP_MS, result.defaultLoopingStopMs());
+        assertEquals(RESTART_MS, result.defaultLoopingRestartMs());
     }
 
     @Test
     void testMakeWithInvalidParams() {
-        final String id = "id";
-        final String path = "path";
-        final Integer stopMs = 123;
-        final Integer restartMs = 456;
-
         assertThrows(IllegalArgumentException.class,
-                () -> _soundTypeFactory.make(null, path, stopMs, restartMs));
+                () -> _soundTypeFactory.make(null, RELATIVE_PATH, STOP_MS, RESTART_MS));
         assertThrows(IllegalArgumentException.class,
-                () -> _soundTypeFactory.make("", path, stopMs, restartMs));
+                () -> _soundTypeFactory.make("", RELATIVE_PATH, STOP_MS, RESTART_MS));
         assertThrows(IllegalArgumentException.class,
-                () -> _soundTypeFactory.make(id, null, stopMs, restartMs));
+                () -> _soundTypeFactory.make(ID, null, STOP_MS, RESTART_MS));
         assertThrows(IllegalArgumentException.class,
-                () -> _soundTypeFactory.make(id, "", stopMs, restartMs));
+                () -> _soundTypeFactory.make(ID, "", STOP_MS, RESTART_MS));
         assertThrows(IllegalArgumentException.class,
-                () -> _soundTypeFactory.make(id, path, restartMs, restartMs));
+                () -> _soundTypeFactory.make(ID, RELATIVE_PATH, RESTART_MS, RESTART_MS));
         assertThrows(IllegalArgumentException.class,
-                () -> _soundTypeFactory.make(id, path, -stopMs, restartMs));
+                () -> _soundTypeFactory.make(ID, RELATIVE_PATH, -STOP_MS, RESTART_MS));
         assertThrows(IllegalArgumentException.class,
-                () -> _soundTypeFactory.make(id, path, stopMs, -restartMs));
+                () -> _soundTypeFactory.make(ID, RELATIVE_PATH, STOP_MS, -RESTART_MS));
     }
 
     @Test

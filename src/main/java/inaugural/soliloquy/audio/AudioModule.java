@@ -1,8 +1,6 @@
 package inaugural.soliloquy.audio;
 
 import com.google.inject.AbstractModule;
-import inaugural.soliloquy.audio.archetypes.SoundArchetype;
-import inaugural.soliloquy.audio.archetypes.SoundTypeArchetype;
 import inaugural.soliloquy.audio.entities.SoundsPlayingImpl;
 import inaugural.soliloquy.audio.factories.SoundFactoryImpl;
 import soliloquy.specs.audio.Audio;
@@ -17,6 +15,8 @@ import soliloquy.specs.common.infrastructure.Registry;
 import java.util.UUID;
 import java.util.function.Supplier;
 
+import static inaugural.soliloquy.tools.generic.Archetypes.generateSimpleArchetype;
+
 public class AudioModule extends AbstractModule {
     private Audio _audio;
 
@@ -25,12 +25,12 @@ public class AudioModule extends AbstractModule {
 
         UUID uuidArchetype = uuidFactory.get();
 
-        Sound soundArchetype = new SoundArchetype();
+        Sound soundArchetype = generateSimpleArchetype(Sound.class);
 
         SoundsPlaying soundsPlaying =
                 new SoundsPlayingImpl(mapFactory, uuidArchetype, soundArchetype);
 
-        Registry<SoundType> soundTypeRegistry = registryFactory.make(new SoundTypeArchetype());
+        Registry<SoundType> soundTypeRegistry = registryFactory.make(generateSimpleArchetype(SoundType.class));
 
         SoundFactory soundFactory =
                 new SoundFactoryImpl(soundTypeRegistry, soundsPlaying, uuidFactory);

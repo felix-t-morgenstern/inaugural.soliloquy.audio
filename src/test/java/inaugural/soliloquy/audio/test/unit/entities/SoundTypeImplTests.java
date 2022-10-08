@@ -55,8 +55,8 @@ class SoundTypeImplTests {
     }
 
     @Test
-    void testAbsolutePath() {
-        assertEquals(FILENAME, _soundType.absolutePath());
+    void testRelativePath() {
+        assertEquals(FILENAME, _soundType.relativePath());
     }
 
     @Test

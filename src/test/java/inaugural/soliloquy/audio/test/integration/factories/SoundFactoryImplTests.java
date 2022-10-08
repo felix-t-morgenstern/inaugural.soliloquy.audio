@@ -7,18 +7,16 @@ import org.junit.jupiter.api.Test;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.factories.SoundFactory;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SoundFactoryImplTests {
+    private final String RELATIVE_PATH = "\\src\\test\\resources\\Kevin_MacLeod_-_Living_Voyage.mp3";
+
     private IntegrationTestsSetup _setup;
     private SoundFactory _soundFactory;
-
-    private static String SoundTypeFilename;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -26,11 +24,6 @@ class SoundFactoryImplTests {
 
         _soundFactory = _setup.audio().soundFactory();
         _setup.audio().soundTypes().add(_setup.sampleSoundType());
-
-        SoundTypeFilename = new File(String.valueOf(Paths.get(
-                getClass().getClassLoader()
-                        .getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toURI())
-                .toFile())).getAbsolutePath();
     }
 
     @Test
@@ -47,9 +40,8 @@ class SoundFactoryImplTests {
 
     @Test
     void testMakeWithUuid() {
-        _setup.audio().soundTypes().add(new FakeSoundType(SoundTypeFilename));
-        final String uuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
-        UUID uuid = UUID.fromString(uuidString);
+        _setup.audio().soundTypes().add(new FakeSoundType(RELATIVE_PATH));
+        UUID uuid = UUID.randomUUID();
 
         Sound sound = _soundFactory.make(FakeSoundType.ID, uuid);
 
@@ -65,14 +57,12 @@ class SoundFactoryImplTests {
 
     @Test
     void testMakeWithInvalidParams() {
+        _setup.audio().soundTypes().add(new FakeSoundType(RELATIVE_PATH));
+
         assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null));
         assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(""));
-        _setup.audio().soundTypes().add(new FakeSoundType(SoundTypeFilename));
-        assertThrows(IllegalArgumentException.class,
-                () -> _soundFactory.make(SoundTypeFilename, null));
-        final String uuidString = "7272d87f-1443-4ed2-a17f-7ce1120eae19";
-        UUID uuid = UUID.fromString(uuidString);
-        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null, uuid));
-        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make("", uuid));
+        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(RELATIVE_PATH, null));
+        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null, UUID.randomUUID()));
+        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make("", UUID.randomUUID()));
     }
 }

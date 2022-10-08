@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static inaugural.soliloquy.tools.files.Files.executionDirectory;
+
 public class AudioLoaderImpl implements AudioLoader {
     private final Registry<SoundType> SOUND_TYPES_REGISTRY;
     private final SoundTypeFactory SOUND_TYPE_FACTORY;
@@ -49,7 +51,7 @@ public class AudioLoaderImpl implements AudioLoader {
     }
 
     public void loadFromDirectory(String relativePath, Map<String, String[]> idsForFilenames) {
-        String absolutePath = getLocalDirectory() + "\\" + relativePath.replace("\\", "/");
+        String absolutePath = executionDirectory() + relativePath;
         File[] filesWithProperExtension =
                 new File(absolutePath).listFiles(new SoundsLoaderFilenameFilter());
         assert filesWithProperExtension != null;
@@ -64,16 +66,6 @@ public class AudioLoaderImpl implements AudioLoader {
                             DEFAULT_LOOPING_RESTART_MS_FOR_IDS.get(idForFilename)));
                 }
             }
-        }
-    }
-
-    private String getLocalDirectory() {
-        try {
-            return new File(AudioLoaderImpl.class.getProtectionDomain().getCodeSource().getLocation()
-                    .toURI()).getPath();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            throw new IllegalStateException(e.getMessage());
         }
     }
 

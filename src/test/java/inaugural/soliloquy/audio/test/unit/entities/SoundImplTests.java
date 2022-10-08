@@ -9,38 +9,29 @@ import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SoundImplTests {
-    private SoundImpl _sound;
-    private SoundType _soundType;
-
     private final UUID UUID = java.util.UUID.randomUUID();
     private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingSpyDouble();
 
-    @SuppressWarnings("ConstantConditions")
+    private SoundImpl _sound;
+    private SoundType _soundType;
+
     @BeforeEach
-    void setUp() throws Exception {
-        String _filename = new File(String.valueOf(Paths.get(
-                getClass().getClassLoader()
-                        .getResource("Kevin_MacLeod_-_Living_Voyage.mp3").toURI())
-                .toFile())).getAbsolutePath();
-        _soundType = new FakeSoundType(_filename);
+    void setUp() {
+        String relativePath = "\\src\\test\\resources\\Kevin_MacLeod_-_Living_Voyage.mp3";
+        _soundType = new FakeSoundType(relativePath);
         _sound = new SoundImpl(UUID, _soundType, SOUNDS_PLAYING);
     }
 
     @Test
     void testConstructorWithInvalidParams() {
-        assertThrows(IllegalArgumentException.class, () -> new SoundImpl(null, _soundType,
-                SOUNDS_PLAYING));
-        assertThrows(IllegalArgumentException.class, () -> new SoundImpl(UUID, null,
-                SOUNDS_PLAYING));
-        assertThrows(IllegalArgumentException.class, () -> new SoundImpl(UUID, _soundType,
-                null));
+        assertThrows(IllegalArgumentException.class, () -> new SoundImpl(null, _soundType, SOUNDS_PLAYING));
+        assertThrows(IllegalArgumentException.class, () -> new SoundImpl(UUID, null, SOUNDS_PLAYING));
+        assertThrows(IllegalArgumentException.class, () -> new SoundImpl(UUID, _soundType, null));
     }
 
     @Test
