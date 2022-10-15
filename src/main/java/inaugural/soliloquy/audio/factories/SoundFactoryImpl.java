@@ -9,22 +9,18 @@ import soliloquy.specs.audio.factories.SoundFactory;
 import soliloquy.specs.common.infrastructure.Registry;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
 public class SoundFactoryImpl implements SoundFactory {
     private final Registry<SoundType> SOUND_TYPES_REGISTRY;
     private final SoundsPlaying SOUNDS_PLAYING;
-    private final Supplier<UUID> UUID_FACTORY;
 
-    public SoundFactoryImpl(Registry<SoundType> soundTypesRegistry, SoundsPlaying soundsPlaying,
-                            Supplier<UUID> uuidFactory) {
+    public SoundFactoryImpl(Registry<SoundType> soundTypesRegistry, SoundsPlaying soundsPlaying) {
         SOUND_TYPES_REGISTRY = Check.ifNull(soundTypesRegistry, "soundTypesRegistry");
         SOUNDS_PLAYING = Check.ifNull(soundsPlaying, "soundsPlaying");
-        UUID_FACTORY = Check.ifNull(uuidFactory, "uuidFactory");
     }
 
     public Sound make(String soundTypeId) throws IllegalArgumentException {
-        return make(soundTypeId, UUID_FACTORY.get());
+        return make(soundTypeId, UUID.randomUUID());
     }
 
     @Override
@@ -41,7 +37,7 @@ public class SoundFactoryImpl implements SoundFactory {
                     "SoundFactoryImpl.make: soundTypeId must correspond to a valid (i.e. " +
                             "registered) sound type id");
         }
-        Sound sound = new SoundImpl(uuid, soundType, SOUNDS_PLAYING);
+        Sound sound = new SoundImpl(uuid, soundType, SOUNDS_PLAYING::removeSound);
         if (soundType.defaultLoopingStopMs() != null) {
             sound.setIsLooping(true);
             sound.setLoopingStopMs(soundType.defaultLoopingStopMs());

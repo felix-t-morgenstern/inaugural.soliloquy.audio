@@ -19,32 +19,26 @@ public class SoundHandler extends AbstractTypeHandler<Sound> {
 
     @Override
     public Sound read(String data) throws IllegalArgumentException {
-        if (data == null) {
-            throw new IllegalArgumentException(
-                    "SoundHandler.read: data cannot be null.");
-        }
-        if (data.equals("")) {
-            throw new IllegalArgumentException(
-                    "SoundHandler.read: data cannot be empty.");
-        }
+        Check.ifNullOrEmpty(data, "data");
+
         SoundDTO soundDTO = JSON.fromJson(data, SoundDTO.class);
-        Sound readValue = SOUND_FACTORY.make(soundDTO.type, UUID.fromString(soundDTO.uuid));
-        readValue.setIsLooping(soundDTO.looping);
-        readValue.setVolume(soundDTO.vol);
+        Sound sound = SOUND_FACTORY.make(soundDTO.type, UUID.fromString(soundDTO.uuid));
+        sound.setIsLooping(soundDTO.looping);
+        sound.setVolume(soundDTO.vol);
         if (soundDTO.muted) {
-            readValue.mute();
+            sound.mute();
         }
         else {
-            readValue.unmute();
+            sound.unmute();
         }
-        readValue.setMillisecondPosition(soundDTO.msPos);
+        sound.setMillisecondPosition(soundDTO.msPos);
         if (soundDTO.paused) {
-            readValue.pause();
+            sound.pause();
         }
         else {
-            readValue.play();
+            sound.play();
         }
-        return readValue;
+        return sound;
     }
 
     @Override
@@ -61,6 +55,8 @@ public class SoundHandler extends AbstractTypeHandler<Sound> {
         soundDTO.vol = sound.getVolume();
         soundDTO.msPos = sound.getMillisecondPosition();
         soundDTO.looping = sound.getIsLooping();
+        soundDTO.loopingRestartMs = sound.getLoopingRestartMs();
+        soundDTO.loopingStopMs = sound.getLoopingStopMs();
         return JSON.toJson(soundDTO);
     }
 
@@ -72,5 +68,7 @@ public class SoundHandler extends AbstractTypeHandler<Sound> {
         double vol;
         int msPos;
         boolean looping;
+        Integer loopingStopMs;
+        Integer loopingRestartMs;
     }
 }

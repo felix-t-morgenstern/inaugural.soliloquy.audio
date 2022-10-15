@@ -8,7 +8,6 @@ import inaugural.soliloquy.common.CommonModule;
 import soliloquy.specs.audio.Audio;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
-import soliloquy.specs.common.factories.MapFactory;
 import soliloquy.specs.common.factories.RegistryFactory;
 
 import java.net.URISyntaxException;
@@ -31,9 +30,8 @@ public class IntegrationTestsSetup {
     public IntegrationTestsSetup() throws URISyntaxException {
         Injector commonInjector = Guice.createInjector(new CommonModule());
 
-        Injector audioInjector = Guice.createInjector(new AudioModule(
-                commonInjector.getInstance(MapFactory.class),
-                commonInjector.getInstance(RegistryFactory.class)));
+        Injector audioInjector = Guice.createInjector(
+                new AudioModule(commonInjector.getInstance(RegistryFactory.class)));
 
         AUDIO = audioInjector.getInstance(Audio.class);
     }
@@ -55,11 +53,5 @@ public class IntegrationTestsSetup {
         AUDIO.soundTypes().add(sampleSoundType());
 
         return AUDIO.soundFactory().make(SOUND_TYPE_1_ID);
-    }
-
-    Sound sampleLoopingSound() {
-        AUDIO.soundTypes().add(sampleLoopingSoundType());
-
-        return AUDIO.soundFactory().make(SOUND_TYPE_2_ID);
     }
 }

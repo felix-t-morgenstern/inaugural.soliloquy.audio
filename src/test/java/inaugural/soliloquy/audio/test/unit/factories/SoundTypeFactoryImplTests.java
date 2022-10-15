@@ -14,7 +14,7 @@ class SoundTypeFactoryImplTests {
     private final String ID = randomString();
     private final String RELATIVE_PATH = randomString();
     private final int RESTART_MS = randomIntWithInclusiveFloor(1);
-    private final int STOP_MS = randomIntWithInclusiveFloor(1);
+    private final int STOP_MS = randomIntWithInclusiveFloor(RESTART_MS);
 
     private SoundTypeFactory _soundTypeFactory;
 

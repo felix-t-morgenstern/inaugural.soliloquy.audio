@@ -1,127 +1,107 @@
 package inaugural.soliloquy.audio.test.unit.entities;
 
 import inaugural.soliloquy.audio.entities.SoundsPlayingImpl;
-import inaugural.soliloquy.audio.test.fakes.FakeMapFactory;
-import inaugural.soliloquy.audio.test.fakes.FakeSound;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
-import soliloquy.specs.common.factories.MapFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class SoundsPlayingImplTests {
-    private SoundsPlayingImpl _soundsPlaying;
+    private final UUID MOCK_SOUND_1_UUID = java.util.UUID.randomUUID();
+    private final UUID MOCK_SOUND_2_UUID = java.util.UUID.randomUUID();
+    private final UUID MOCK_SOUND_3_UUID = java.util.UUID.randomUUID();
 
-    private final MapFactory MAP_FACTORY = new FakeMapFactory();
-    private final UUID UUID = java.util.UUID.randomUUID();
-    private final Sound SOUND_ARCHETYPE = new FakeSound(UUID);
+    @Mock private Sound mockSound1;
+    @Mock private Sound mockSound2;
+    @Mock private Sound mockSound3;
+
+    private SoundsPlayingImpl soundsPlaying;
 
     @BeforeEach
     void setUp() {
-        _soundsPlaying = new SoundsPlayingImpl(MAP_FACTORY, UUID, SOUND_ARCHETYPE);
-    }
+        mockSound1 = mock(Sound.class);
+        when(mockSound1.uuid()).thenReturn(MOCK_SOUND_1_UUID);
+        mockSound2 = mock(Sound.class);
+        when(mockSound2.uuid()).thenReturn(MOCK_SOUND_2_UUID);
+        mockSound3 = mock(Sound.class);
+        when(mockSound3.uuid()).thenReturn(MOCK_SOUND_3_UUID);
 
-    @Test
-    void testConstructorWithInvalidParams() {
-        assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(null,
-                UUID, SOUND_ARCHETYPE));
-        assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(MAP_FACTORY,
-                null, SOUND_ARCHETYPE));
-        assertThrows(IllegalArgumentException.class, () -> new SoundsPlayingImpl(MAP_FACTORY,
-                UUID, null));
+        soundsPlaying = new SoundsPlayingImpl();
     }
 
     @Test
     void testGetInterfaceName() {
-        assertEquals(SoundsPlaying.class.getCanonicalName(), _soundsPlaying.getInterfaceName());
+        assertEquals(SoundsPlaying.class.getCanonicalName(), soundsPlaying.getInterfaceName());
     }
 
     @Test
     void testRegisterAndRemoveSound() {
-        _soundsPlaying.registerSound(SOUND_ARCHETYPE);
+        soundsPlaying.registerSound(mockSound1);
 
-        assertTrue(_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.uuid()));
+        assertTrue(soundsPlaying.isPlayingSound(MOCK_SOUND_1_UUID));
 
-        _soundsPlaying.removeSound(SOUND_ARCHETYPE);
+        soundsPlaying.removeSound(mockSound1);
 
-        assertFalse(_soundsPlaying.isPlayingSound(SOUND_ARCHETYPE.uuid()));
-    }
-
-    @Test
-    void testSize() {
-        Sound sound1 = new FakeSound(java.util.UUID.randomUUID());
-        Sound sound2 = new FakeSound(java.util.UUID.randomUUID());
-        Sound sound3 = new FakeSound(java.util.UUID.randomUUID());
-
-        _soundsPlaying.registerSound(sound1);
-        _soundsPlaying.registerSound(sound2);
-        _soundsPlaying.registerSound(sound3);
-
-        int size = _soundsPlaying.size();
-
-        assertEquals(3, size);
+        assertFalse(soundsPlaying.isPlayingSound(MOCK_SOUND_1_UUID));
     }
 
     @Test
     void testIterator() {
-        Sound sound1 = new FakeSound(java.util.UUID.randomUUID());
-        Sound sound2 = new FakeSound(java.util.UUID.randomUUID());
-        Sound sound3 = new FakeSound(java.util.UUID.randomUUID());
+        soundsPlaying.registerSound(mockSound1);
+        soundsPlaying.registerSound(mockSound2);
+        soundsPlaying.registerSound(mockSound3);
 
-        _soundsPlaying.registerSound(sound1);
-        _soundsPlaying.registerSound(sound2);
-        _soundsPlaying.registerSound(sound3);
-
-        ArrayList<Sound> fromIterator = new ArrayList<>();
-
-        _soundsPlaying.forEach(fromIterator::add);
+        ArrayList<Sound> fromIterator = new ArrayList<>(soundsPlaying.representation());
 
         assertEquals(3, fromIterator.size());
-        assertTrue(fromIterator.contains(sound1));
-        assertTrue(fromIterator.contains(sound2));
-        assertTrue(fromIterator.contains(sound3));
+        assertTrue(fromIterator.contains(mockSound1));
+        assertTrue(fromIterator.contains(mockSound2));
+        assertTrue(fromIterator.contains(mockSound3));
     }
 
     @Test
     void testRepresentation() {
-        _soundsPlaying.registerSound(SOUND_ARCHETYPE);
+        soundsPlaying.registerSound(mockSound1);
 
-        List<Sound> allSoundsPlaying1 = _soundsPlaying.representation();
-        List<Sound> allSoundsPlaying2 = _soundsPlaying.representation();
+        List<Sound> allSoundsPlaying1 = soundsPlaying.representation();
+        List<Sound> allSoundsPlaying2 = soundsPlaying.representation();
 
         assertNotSame(allSoundsPlaying1, allSoundsPlaying2);
         assertEquals(1, allSoundsPlaying1.size());
-        assertTrue(allSoundsPlaying1.contains(SOUND_ARCHETYPE));
+        assertTrue(allSoundsPlaying1.contains(mockSound1));
     }
 
     @Test
     void testGetSoundWithNullId() {
-        assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.getSound(null));
+        assertThrows(IllegalArgumentException.class, () -> soundsPlaying.getSound(null));
     }
 
     @Test
     void testIsPlayingSoundWithNullId() {
-        assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.isPlayingSound(null));
+        assertThrows(IllegalArgumentException.class, () -> soundsPlaying.isPlayingSound(null));
     }
 
     @Test
     void testGetSound() {
-        _soundsPlaying.registerSound(SOUND_ARCHETYPE);
+        soundsPlaying.registerSound(mockSound1);
 
-        Sound sound = _soundsPlaying.getSound(SOUND_ARCHETYPE.uuid());
+        Sound sound = soundsPlaying.getSound(MOCK_SOUND_1_UUID);
 
-        assertSame(sound, SOUND_ARCHETYPE);
+        assertSame(sound, mockSound1);
     }
 
     @Test
     void testRegisterAndRemoveWithInvalidParams() {
-        assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.registerSound(null));
-        assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.removeSound(null));
+        assertThrows(IllegalArgumentException.class, () -> soundsPlaying.registerSound(null));
+        assertThrows(IllegalArgumentException.class, () -> soundsPlaying.removeSound(null));
     }
 }

@@ -1,90 +1,67 @@
 package inaugural.soliloquy.audio.test.integration.entities;
 
-import inaugural.soliloquy.audio.test.fakes.FakeSound;
 import inaugural.soliloquy.audio.test.integration.IntegrationTestsSetup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.audio.factories.SoundFactory;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class SoundsPlayingImplTests {
-    private SoundsPlaying _soundsPlaying;
-    private SoundFactory _soundFactory;
+    @Mock private Sound sound1;
+    @Mock private Sound sound2;
+    @Mock private Sound sound3;
+    private SoundsPlaying soundsPlaying;
+    private SoundFactory soundFactory;
 
     @BeforeEach
     void setUp() throws Exception {
-        IntegrationTestsSetup setup = new IntegrationTestsSetup();
-        _soundsPlaying = setup.audio().soundsPlaying();
+        sound1 = mock(Sound.class);
+        sound2 = mock(Sound.class);
+        sound3 = mock(Sound.class);
+        when(sound1.uuid()).thenReturn(UUID.randomUUID());
+        when(sound2.uuid()).thenReturn(UUID.randomUUID());
+        when(sound3.uuid()).thenReturn(UUID.randomUUID());
 
-        _soundFactory = setup.audio().soundFactory();
+        IntegrationTestsSetup setup = new IntegrationTestsSetup();
+        soundsPlaying = setup.audio().soundsPlaying();
+
+        soundFactory = setup.audio().soundFactory();
         setup.audio().soundTypes().add(setup.sampleSoundType());
     }
 
     @Test
     void testGetInterfaceName() {
-        assertEquals(SoundsPlaying.class.getCanonicalName(), _soundsPlaying.getInterfaceName());
+        assertEquals(SoundsPlaying.class.getCanonicalName(), soundsPlaying.getInterfaceName());
     }
 
     @Test
     void testRegisterAndRemoveSound() {
-        Sound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
+        Sound sound = soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
 
-        _soundsPlaying.registerSound(sound);
+        soundsPlaying.registerSound(sound);
 
-        assertTrue(_soundsPlaying.isPlayingSound(sound.uuid()));
+        assertTrue(soundsPlaying.isPlayingSound(sound.uuid()));
 
-        _soundsPlaying.removeSound(sound);
+        soundsPlaying.removeSound(sound);
 
-        assertFalse(_soundsPlaying.isPlayingSound(sound.uuid()));
-    }
-
-    @Test
-    void testSize() {
-        Sound sound1 = new FakeSound(java.util.UUID.randomUUID());
-        Sound sound2 = new FakeSound(java.util.UUID.randomUUID());
-        Sound sound3 = new FakeSound(java.util.UUID.randomUUID());
-
-        _soundsPlaying.registerSound(sound1);
-        _soundsPlaying.registerSound(sound2);
-        _soundsPlaying.registerSound(sound3);
-
-        int size = _soundsPlaying.size();
-
-        assertEquals(3, size);
-    }
-
-    @Test
-    void testIterator() {
-        Sound sound1 = new FakeSound(java.util.UUID.randomUUID());
-        Sound sound2 = new FakeSound(java.util.UUID.randomUUID());
-        Sound sound3 = new FakeSound(java.util.UUID.randomUUID());
-
-        _soundsPlaying.registerSound(sound1);
-        _soundsPlaying.registerSound(sound2);
-        _soundsPlaying.registerSound(sound3);
-
-        ArrayList<Sound> fromIterator = new ArrayList<>();
-
-        _soundsPlaying.forEach(fromIterator::add);
-
-        assertEquals(3, fromIterator.size());
-        assertTrue(fromIterator.contains(sound1));
-        assertTrue(fromIterator.contains(sound2));
-        assertTrue(fromIterator.contains(sound3));
+        assertFalse(soundsPlaying.isPlayingSound(sound.uuid()));
     }
 
     @Test
     void testRepresentation() {
-        Sound sound = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
+        Sound sound = soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
 
-        List<Sound> allSoundsPlaying1 = _soundsPlaying.representation();
-        List<Sound> allSoundsPlaying2 = _soundsPlaying.representation();
+        List<Sound> allSoundsPlaying1 = soundsPlaying.representation();
+        List<Sound> allSoundsPlaying2 = soundsPlaying.representation();
 
         assertNotSame(allSoundsPlaying1, allSoundsPlaying2);
         assertEquals(1, allSoundsPlaying1.size());
@@ -93,26 +70,26 @@ class SoundsPlayingImplTests {
 
     @Test
     void testGetSoundWithNullId() {
-        assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.getSound(null));
+        assertThrows(IllegalArgumentException.class, () -> soundsPlaying.getSound(null));
     }
 
     @Test
     void testIsPlayingSoundWithNullId() {
-        assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.isPlayingSound(null));
+        assertThrows(IllegalArgumentException.class, () -> soundsPlaying.isPlayingSound(null));
     }
 
     @Test
     void testGetSound() {
-        Sound soundMade = _soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
+        Sound soundMade = soundFactory.make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
 
-        Sound soundPlaying = _soundsPlaying.getSound(soundMade.uuid());
+        Sound soundPlaying = soundsPlaying.getSound(soundMade.uuid());
 
         assertSame(soundMade, soundPlaying);
     }
 
     @Test
     void testRegisterAndRemoveWithInvalidParams() {
-        assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.registerSound(null));
-        assertThrows(IllegalArgumentException.class, () -> _soundsPlaying.removeSound(null));
+        assertThrows(IllegalArgumentException.class, () -> soundsPlaying.registerSound(null));
+        assertThrows(IllegalArgumentException.class, () -> soundsPlaying.removeSound(null));
     }
 }

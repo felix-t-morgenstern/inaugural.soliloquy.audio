@@ -1,11 +1,10 @@
 package inaugural.soliloquy.audio.test.unit.factories;
 
+import inaugural.soliloquy.audio.entities.SoundImpl;
 import inaugural.soliloquy.audio.factories.SoundFactoryImpl;
-import inaugural.soliloquy.audio.test.fakes.FakeRegistry;
-import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
-import inaugural.soliloquy.audio.test.spydoubles.SoundsPlayingSpyDouble;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
 import soliloquy.specs.audio.entities.SoundsPlaying;
@@ -13,88 +12,95 @@ import soliloquy.specs.audio.factories.SoundFactory;
 import soliloquy.specs.common.infrastructure.Registry;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
+import static inaugural.soliloquy.tools.random.Random.randomString;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 class SoundFactoryImplTests {
-    private SoundFactoryImpl _soundFactory;
+    private final int DEFAULT_LOOPING_RESTART_MS = 123;
+    private final int DEFAULT_LOOPING_STOP_MS = 456;
+    private final String RELATIVE_PATH =
+            "\\src\\test\\resources\\Kevin_MacLeod_-_Living_Voyage.mp3";
 
-    private final UUID UUID = java.util.UUID.randomUUID();
-    private final Supplier<UUID> UUID_FACTORY = () -> UUID;
-    private final Registry<SoundType> SOUND_TYPE_REGISTRY = new FakeRegistry<>();
-    private final SoundsPlaying SOUNDS_PLAYING = new SoundsPlayingSpyDouble();
-    private final String RELATIVE_PATH = "\\src\\test\\resources\\Kevin_MacLeod_-_Living_Voyage.mp3";
+    @Mock private Registry<SoundType> mockSoundTypeRegistry;
+    @Mock private SoundType mockSoundType;
+    @Mock private SoundsPlaying mockSoundsPlaying;
+
+    private SoundFactoryImpl soundFactory;
 
     @BeforeEach
     void setUp() {
-        _soundFactory = new SoundFactoryImpl(SOUND_TYPE_REGISTRY, SOUNDS_PLAYING, UUID_FACTORY);
+        mockSoundType = mock(SoundType.class);
+        when(mockSoundType.relativePath()).thenReturn(RELATIVE_PATH);
+        when(mockSoundType.defaultLoopingStopMs()).thenReturn(DEFAULT_LOOPING_STOP_MS);
+        when(mockSoundType.defaultLoopingRestartMs()).thenReturn(DEFAULT_LOOPING_RESTART_MS);
+
+        //noinspection unchecked
+        mockSoundTypeRegistry = mock(Registry.class);
+        when(mockSoundTypeRegistry.get(anyString())).thenReturn(mockSoundType);
+
+        mockSoundsPlaying = mock(SoundsPlaying.class);
+
+        soundFactory = new SoundFactoryImpl(mockSoundTypeRegistry, mockSoundsPlaying);
     }
 
     @Test
     void testConstructorWithInvalidParams() {
         assertThrows(IllegalArgumentException.class,
-                () -> new SoundFactoryImpl(null, SOUNDS_PLAYING,
-                        UUID_FACTORY));
+                () -> new SoundFactoryImpl(null, mockSoundsPlaying));
         assertThrows(IllegalArgumentException.class,
-                () -> new SoundFactoryImpl(SOUND_TYPE_REGISTRY, null,
-                        UUID_FACTORY));
-        assertThrows(IllegalArgumentException.class,
-                () -> new SoundFactoryImpl(SOUND_TYPE_REGISTRY, SOUNDS_PLAYING,
-                        null));
+                () -> new SoundFactoryImpl(mockSoundTypeRegistry, null));
     }
 
     @Test
     void testGetInterfaceName() {
-        assertEquals(SoundFactory.class.getCanonicalName(), _soundFactory.getInterfaceName());
+        assertEquals(SoundFactory.class.getCanonicalName(), soundFactory.getInterfaceName());
     }
 
     @Test
     void testMake() {
-        SOUND_TYPE_REGISTRY.add(new FakeSoundType(RELATIVE_PATH));
+        String soundTypeId = randomString();
+        when(mockSoundTypeRegistry.contains(soundTypeId)).thenReturn(true);
 
-        Sound sound = _soundFactory.make(FakeSoundType.ID);
+        Sound sound = soundFactory.make(soundTypeId);
 
-        // NB: The filename provided to Sound cannot be exposed by Sound without editing its
-        // functionality;
-        //     it is not responsible in any way for reporting its filename.
-        //     Testing this functionality is reserved for behavioral integration testing.
-
-        assertEquals(FakeSoundType.ID, sound.soundType().id());
-        assertEquals(RELATIVE_PATH, sound.soundType().relativePath());
-        assertEquals(sound.uuid(), UUID);
-        assertTrue(sound.getIsLooping());
-        assertThrows(IllegalArgumentException.class,
-                () -> sound.setLoopingStopMs(FakeSoundType.DEFAULT_LOOPING_RESTART_MS));
-        assertThrows(IllegalArgumentException.class,
-                () -> sound.setLoopingRestartMs(FakeSoundType.DEFAULT_LOOPING_STOP_MS));
+        assertNotNull(sound);
+        assertTrue(sound instanceof SoundImpl);
+        assertSame(mockSoundType, sound.soundType());
+        assertEquals(DEFAULT_LOOPING_RESTART_MS, sound.getLoopingRestartMs());
+        assertEquals(DEFAULT_LOOPING_STOP_MS, sound.getLoopingStopMs());
+        verify(mockSoundTypeRegistry, times(1)).get(soundTypeId);
+        verify(mockSoundsPlaying, times(1)).registerSound(sound);
     }
 
     @Test
     void testMakeWithUuid() {
-        SOUND_TYPE_REGISTRY.add(new FakeSoundType(RELATIVE_PATH));
-        UUID uuid = java.util.UUID.randomUUID();
+        UUID uuid = UUID.randomUUID();
+        String soundTypeId = randomString();
+        when(mockSoundTypeRegistry.contains(soundTypeId)).thenReturn(true);
 
-        Sound sound = _soundFactory.make(FakeSoundType.ID, uuid);
+        Sound sound = soundFactory.make(soundTypeId, uuid);
 
         assertEquals(uuid, sound.uuid());
     }
 
     @Test
     void testMakeWithInvalidSoundTypeId() {
-        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null));
+        assertThrows(IllegalArgumentException.class, () -> soundFactory.make(null));
         assertThrows(IllegalArgumentException.class,
-                () -> _soundFactory.make("InvalidSoundTypeId!"));
+                () -> soundFactory.make("InvalidSoundTypeId!"));
     }
 
     @Test
     void testMakeWithInvalidParams() {
-        SOUND_TYPE_REGISTRY.add(new FakeSoundType(RELATIVE_PATH));
-
-        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null));
-        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(""));
-        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(RELATIVE_PATH, null));
-        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make(null, java.util.UUID.randomUUID()));
-        assertThrows(IllegalArgumentException.class, () -> _soundFactory.make("", java.util.UUID.randomUUID()));
+        assertThrows(IllegalArgumentException.class, () -> soundFactory.make(null));
+        assertThrows(IllegalArgumentException.class, () -> soundFactory.make(""));
+        assertThrows(IllegalArgumentException.class, () -> soundFactory.make(RELATIVE_PATH, null));
+        assertThrows(IllegalArgumentException.class,
+                () -> soundFactory.make(null, java.util.UUID.randomUUID()));
+        assertThrows(IllegalArgumentException.class,
+                () -> soundFactory.make("", java.util.UUID.randomUUID()));
     }
 }

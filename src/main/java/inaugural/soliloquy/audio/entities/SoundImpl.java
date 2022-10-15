@@ -8,60 +8,59 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundType;
-import soliloquy.specs.audio.entities.SoundsPlaying;
 
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import static inaugural.soliloquy.tools.files.Files.getLocalFile;
 
 public class SoundImpl implements Sound {
     private final UUID UUID;
     private final SoundType SOUND_TYPE;
-
-    private final SoundsPlaying SOUNDS_PLAYING;
+    private final Consumer<Sound> PUBLISH_SOUND_STOPPED;
 
     private final Media MEDIA;
     private final MediaPlayer MEDIA_PLAYER;
 
-    private boolean _isPaused;
-    private boolean _isStopped;
-    private boolean _isMuted;
-    private boolean _isLooping;
+    private boolean isPaused;
+    private boolean isStopped;
+    private boolean isMuted;
+    private boolean isLooping;
 
-    private int _loopStopMs;
-    private int _loopRestartMs;
+    private int loopStopMs;
+    private int loopRestartMs;
 
-    private volatile boolean _isReady;
+    private volatile boolean isReady;
 
-    private int _durationMs;
+    private int durationMs;
 
-    private double _volume;
+    private double volume;
 
-    public SoundImpl(UUID uuid, SoundType soundType, SoundsPlaying soundsPlaying) {
+    public SoundImpl(UUID uuid, SoundType soundType, Consumer<Sound> publishSoundStopped) {
         UUID = Check.ifNull(uuid, "uuid");
         SOUND_TYPE = Check.ifNull(soundType, "soundType");
-        SOUNDS_PLAYING = Check.ifNull(soundsPlaying, "soundsPlaying");
+        PUBLISH_SOUND_STOPPED = Check.ifNull(publishSoundStopped, "publishSoundStopped");
 
         new JFXPanel();
         MEDIA = new Media(getLocalFile(soundType.relativePath()).toURI().toString());
         MEDIA_PLAYER = new MediaPlayer(MEDIA);
 
-        _isPaused = true;
-        _isStopped = false;
-        _isMuted = false;
-        _isLooping = false;
-        _isReady = false;
-        _volume = 1.0;
+        isPaused = true;
+        isStopped = false;
+        isMuted = false;
+        isLooping = false;
+        isReady = false;
+        volume = 1.0;
 
         MEDIA_PLAYER.setOnReady(() ->
         {
-            _loopStopMs = _durationMs = (int) MEDIA_PLAYER.getTotalDuration().toMillis();
-            _isReady = true;
+            loopStopMs = durationMs = (int) MEDIA_PLAYER.getTotalDuration().toMillis();
+            isReady = true;
             MEDIA_PLAYER
-                    .setOnMarker(mediaMarkerEvent -> setMillisecondPosition(_loopRestartMs + 1));
+                    .setOnMarker(mediaMarkerEvent -> setMillisecondPosition(loopRestartMs + 1));
             MEDIA_PLAYER.setOnEndOfMedia(this::stop);
         });
-        while (!_isReady) {
+        while (!isReady) {
             Thread.onSpinWait();
         }
     }
@@ -85,89 +84,89 @@ public class SoundImpl implements Sound {
     public void play() throws UnsupportedOperationException {
         throwWhenStopped("play");
         MEDIA_PLAYER.play();
-        _isPaused = false;
+        isPaused = false;
     }
 
     @Override
     public void pause() {
         throwWhenStopped("pause");
         MEDIA_PLAYER.pause();
-        _isPaused = true;
+        isPaused = true;
     }
 
     @Override
     public boolean isPaused() {
-        return _isPaused;
+        return isPaused;
     }
 
     @Override
     public boolean isPlaying() {
-        return !_isPaused && !_isStopped;
+        return !isPaused && !isStopped;
     }
 
     @Override
     public void stop() throws UnsupportedOperationException {
         MEDIA_PLAYER.stop();
         MEDIA_PLAYER.dispose();
-        _isPaused = false;
-        _isStopped = true;
-        _isMuted = true;
+        isPaused = false;
+        isStopped = true;
+        isMuted = true;
 
-        SOUNDS_PLAYING.removeSound(this);
+        PUBLISH_SOUND_STOPPED.accept(this);
     }
 
     @Override
     public void mute() {
         throwWhenStopped("mute");
         MEDIA_PLAYER.setVolume(0.0);
-        _isMuted = true;
+        isMuted = true;
     }
 
     public void unmute() throws UnsupportedOperationException {
         throwWhenStopped("unmute");
-        MEDIA_PLAYER.setVolume(_volume);
-        _isMuted = false;
+        MEDIA_PLAYER.setVolume(volume);
+        isMuted = false;
     }
 
     @Override
     public boolean isMuted() throws UnsupportedOperationException {
         throwWhenStopped("isMuted");
-        return _isMuted;
+        return isMuted;
     }
 
     @Override
     public boolean isStopped() {
-        return _isStopped;
+        return isStopped;
     }
 
     @Override
     public double getVolume() throws UnsupportedOperationException {
         throwWhenStopped("getVolume");
-        return _volume;
+        return volume;
     }
 
     @Override
     public void setVolume(double volume)
             throws IllegalArgumentException, UnsupportedOperationException {
         throwWhenStopped("setVolume");
-        if (!_isMuted) {
+        if (!isMuted) {
             MEDIA_PLAYER.setVolume(volume);
         }
-        _volume = volume;
+        this.volume = volume;
     }
 
     @Override
     public int getMillisecondLength() {
-        while (!_isReady) {
+        while (!isReady) {
             CheckedExceptionWrapper.sleep(10);
         }
-        return _durationMs;
+        return durationMs;
     }
 
     @Override
     public int getMillisecondPosition() {
         throwWhenStopped("getMillisecondPosition");
-        while (!_isReady) {
+        while (!isReady) {
             CheckedExceptionWrapper.sleep(10);
         }
         return (int) MEDIA_PLAYER.getCurrentTime().toMillis();
@@ -183,54 +182,64 @@ public class SoundImpl implements Sound {
     @Override
     public boolean getIsLooping() throws UnsupportedOperationException {
         throwWhenStopped("getIsLooping");
-        return _isLooping;
+        return isLooping;
     }
 
     @Override
     public void setIsLooping(boolean isLooping) throws UnsupportedOperationException {
         throwWhenStopped("setIsLooping");
         if (isLooping) {
-            MEDIA.getMarkers().put("", new Duration(_loopStopMs));
+            MEDIA.getMarkers().put("", new Duration(loopStopMs));
         }
         else {
             MEDIA_PLAYER.setOnEndOfMedia(this::stop);
         }
-        _isLooping = isLooping;
+        this.isLooping = isLooping;
+    }
+
+    @Override
+    public int getLoopingStopMs() throws UnsupportedOperationException {
+        return loopStopMs;
     }
 
     @Override
     public void setLoopingStopMs(Integer stopMs) throws IllegalArgumentException {
         throwWhenStopped("setLoopingStopMs");
         if (stopMs == null) {
-            stopMs = _durationMs;
+            stopMs = durationMs;
         }
-        else if (stopMs > _durationMs) {
+        else if (stopMs > durationMs) {
             throw new IllegalArgumentException(
                     "SoundImpl.setLoopingStopMs: stopMs cannot exceed Sound duration");
         }
-        else if (stopMs <= _loopRestartMs) {
+        else if (stopMs <= loopRestartMs) {
             throw new IllegalArgumentException(
                     "SoundImpl.setLoopingStopMs: stopMs cannot exceed restartMs");
         }
-        _loopStopMs = Check.ifNonNegative(stopMs, "stopMs");
-        if (_isLooping) {
+        loopStopMs = Check.ifNonNegative(stopMs, "stopMs");
+        if (isLooping) {
             MEDIA.getMarkers().clear();
-            MEDIA.getMarkers().put("", new Duration(_loopStopMs));
+            MEDIA.getMarkers().put("", new Duration(loopStopMs));
         }
+    }
+
+    @Override
+    public int getLoopingRestartMs() throws UnsupportedOperationException {
+        return loopRestartMs;
     }
 
     @Override
     public void setLoopingRestartMs(int restartMs) throws IllegalArgumentException {
         throwWhenStopped("setLoopingRestartMs");
-        if (restartMs > _durationMs) {
+        if (restartMs > durationMs) {
             throw new IllegalArgumentException(
                     "SoundImpl.setLoopingRestartMs: restartMs cannot exceed Sound duration");
         }
-        else if (restartMs >= _loopStopMs) {
+        else if (restartMs >= loopStopMs) {
             throw new IllegalArgumentException(
                     "SoundImpl.setLoopingStopMs: restartMs cannot exceed stopMs");
         }
-        _loopRestartMs = Check.ifNonNegative(restartMs, "restartMs");
+        loopRestartMs = Check.ifNonNegative(restartMs, "restartMs");
     }
 
     @Override
@@ -246,7 +255,7 @@ public class SoundImpl implements Sound {
     }
 
     private void throwWhenStopped(String methodName) {
-        if (_isStopped) {
+        if (isStopped) {
             throw new UnsupportedOperationException("Sound." + methodName +
                     ": Sound has already been stopped");
         }

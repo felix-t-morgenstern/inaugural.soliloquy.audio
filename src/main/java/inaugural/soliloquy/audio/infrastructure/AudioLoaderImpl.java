@@ -9,7 +9,6 @@ import soliloquy.specs.common.infrastructure.Registry;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -50,7 +49,10 @@ public class AudioLoaderImpl implements AudioLoader {
                 Check.ifNull(defaultLoopingRestartMsForIds, "defaultLoopingRestartMsForIds"));
     }
 
-    public void loadFromDirectory(String relativePath, Map<String, String[]> idsForFilenames) {
+    public void loadFromDirectory(String relativePath, Map<String, String> idsForFilenames) {
+        Check.ifNullOrEmpty(relativePath, "relativePath");
+        Check.ifNull(idsForFilenames, "idsForFilenames");
+
         String absolutePath = executionDirectory() + relativePath;
         File[] filesWithProperExtension =
                 new File(absolutePath).listFiles(new SoundsLoaderFilenameFilter());
@@ -58,13 +60,13 @@ public class AudioLoaderImpl implements AudioLoader {
         for (File fileWithProperExtension : filesWithProperExtension) {
             String fileWithProperExtensionName = fileWithProperExtension.getName();
             if (idsForFilenames.containsKey(fileWithProperExtensionName)) {
-                String[] idsForFilename = idsForFilenames.get(fileWithProperExtensionName);
-                for (String idForFilename : idsForFilename) {
-                    SOUND_TYPES_REGISTRY.add(SOUND_TYPE_FACTORY.make(idForFilename,
-                            fileWithProperExtension.getAbsolutePath(),
-                            DEFAULT_LOOPING_STOP_MS_FOR_IDS.get(idForFilename),
-                            DEFAULT_LOOPING_RESTART_MS_FOR_IDS.get(idForFilename)));
-                }
+                String idForFilename = idsForFilenames.get(fileWithProperExtensionName);
+                SOUND_TYPES_REGISTRY.add(
+                        SOUND_TYPE_FACTORY.make(idForFilename,
+                                fileWithProperExtension.getAbsolutePath(),
+                                DEFAULT_LOOPING_STOP_MS_FOR_IDS.get(idForFilename),
+                                DEFAULT_LOOPING_RESTART_MS_FOR_IDS.get(idForFilename))
+                );
             }
         }
     }

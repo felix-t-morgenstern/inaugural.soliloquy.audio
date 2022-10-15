@@ -1,6 +1,7 @@
 package inaugural.soliloquy.audio.test.behavioral;
 
 import inaugural.soliloquy.audio.test.integration.IntegrationTestsSetup;
+import inaugural.soliloquy.tools.CheckedExceptionWrapper;
 import soliloquy.specs.audio.Audio;
 import soliloquy.specs.audio.entities.Sound;
 
@@ -22,7 +23,7 @@ public class BehavioralTestingInterface implements ActionListener {
     private final static String BUTTON_PLAY_LOOP = "Play Loop";
     private final static String BUTTON_STOP_LOOP = "Stop Loop";
 
-    private static BehavioralTestingInterface INTERFACE = new BehavioralTestingInterface();
+    private static final BehavioralTestingInterface INTERFACE = new BehavioralTestingInterface();
     private static IntegrationTestsSetup SETUP;
 
     static {
@@ -34,7 +35,7 @@ public class BehavioralTestingInterface implements ActionListener {
         }
     }
 
-    private static Audio AUDIO = SETUP.audio();
+    private static final Audio AUDIO = SETUP.audio();
     private static Sound SOUND;
     private static Sound SOUND_LOOPING;
 
@@ -150,14 +151,9 @@ public class BehavioralTestingInterface implements ActionListener {
 
     private void recurringPositionCheck() {
         while (RUN_RECURRING_POSITION_CHECK) {
-            try {
-                LABEL_POSITION.setText("Position, ms: " + (SOUND == null || SOUND.isStopped() ? "" :
-                        "" + SOUND.getMillisecondPosition()));
-                Thread.sleep(100);
-            }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            LABEL_POSITION.setText("Position, ms: " + (SOUND == null || SOUND.isStopped() ? "" :
+                    "" + SOUND.getMillisecondPosition()));
+            CheckedExceptionWrapper.sleep(100);
         }
     }
 
@@ -218,9 +214,7 @@ public class BehavioralTestingInterface implements ActionListener {
     private void initialize() {
         AUDIO.soundTypes().add(SETUP.sampleSoundType());
         AUDIO.soundTypes().add(SETUP.sampleLoopingSoundType());
-        for (Sound sound : AUDIO.soundsPlaying()) {
-            sound.stop();
-        }
+        AUDIO.soundsPlaying().representation().forEach(Sound::stop);
         SOUND = AUDIO.soundFactory().make(IntegrationTestsSetup.SOUND_TYPE_1_ID);
         SOUND_LOOPING = AUDIO.soundFactory().make(IntegrationTestsSetup.SOUND_TYPE_2_ID);
         RUN_RECURRING_POSITION_CHECK = true;

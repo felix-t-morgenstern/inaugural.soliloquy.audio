@@ -1,9 +1,12 @@
 package inaugural.soliloquy.audio.persistence;
 
+import inaugural.soliloquy.tools.Check;
 import inaugural.soliloquy.tools.persistence.AbstractTypeHandler;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.persistence.TypeHandler;
+
+import java.util.List;
 
 import static inaugural.soliloquy.tools.generic.Archetypes.generateSimpleArchetype;
 
@@ -29,16 +32,9 @@ public class SoundsPlayingHandler extends AbstractTypeHandler<SoundsPlaying> {
 
     @Override
     public SoundsPlaying read(String data) throws IllegalArgumentException {
-        if (data == null) {
-            throw new IllegalArgumentException(
-                    "SoundsPlayingHandler.read: data cannot be null");
-        }
-        if (data.equals("")) {
-            throw new IllegalArgumentException(
-                    "SoundsPlayingHandler.read: data cannot be empty");
-        }
+        Check.ifNullOrEmpty(data, "data");
 
-        SOUNDS_PLAYING.forEach(SOUNDS_PLAYING::removeSound);
+        SOUNDS_PLAYING.representation().forEach(SOUNDS_PLAYING::removeSound);
 
         SoundsPlayingDTO soundsPlayingDTO = JSON.fromJson(data, SoundsPlayingDTO.class);
         for (String soundJson : soundsPlayingDTO.soundDTOs) {
@@ -51,9 +47,10 @@ public class SoundsPlayingHandler extends AbstractTypeHandler<SoundsPlaying> {
     @Override
     public String write(SoundsPlaying soundsPlaying) {
         SoundsPlayingDTO soundsPlayingDTO = new SoundsPlayingDTO();
-        String[] jsonObjects = new String[soundsPlaying.size()];
+        List<Sound> listOfSoundsPlaying = SOUNDS_PLAYING.representation();
+        String[] jsonObjects = new String[listOfSoundsPlaying.size()];
         int index = 0;
-        for (Sound soundPlaying : SOUNDS_PLAYING) {
+        for (Sound soundPlaying : listOfSoundsPlaying) {
             jsonObjects[index++] = PERSISTENT_SOUND_HANDLER.write(soundPlaying);
         }
         soundsPlayingDTO.soundDTOs = jsonObjects;

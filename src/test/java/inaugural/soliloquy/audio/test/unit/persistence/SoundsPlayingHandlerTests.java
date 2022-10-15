@@ -1,103 +1,109 @@
 package inaugural.soliloquy.audio.test.unit.persistence;
 
 import inaugural.soliloquy.audio.persistence.SoundsPlayingHandler;
-import inaugural.soliloquy.audio.test.fakes.FakePersistentSoundHandler;
-import inaugural.soliloquy.audio.test.fakes.FakeSound;
-import inaugural.soliloquy.audio.test.fakes.FakeSoundType;
-import inaugural.soliloquy.audio.test.fakes.FakeSoundsPlaying;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import soliloquy.specs.audio.entities.Sound;
 import soliloquy.specs.audio.entities.SoundsPlaying;
 import soliloquy.specs.common.persistence.TypeHandler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class SoundsPlayingHandlerTests {
-    private TypeHandler<SoundsPlaying> _soundsPlayingHandler;
-    private SoundsPlaying _soundsPlaying;
+    private final String SOUND_1 = "sound1";
+    private final String SOUND_2 = "sound2";
+    private final String SOUND_3 = "sound3";
 
-    private final ArrayList<String> UUIDS = new ArrayList<>(Arrays.asList(
-            "654326eb-0adf-49ef-8c43-18209574d635",
-            "384d4555-1a11-481f-8e3c-dfdf059bd110",
-            "5fa15321-0a5f-4d3b-9a70-9e9ae7f3ce85"));
-    private final String DATA =
-            "{\"soundDTOs\":[\"{\\\"uuid\\\":\\\"654326eb-0adf-49ef-8c43-18209574d635\\\"," +
-                    "\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false," +
-                    "\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0," +
-                    "\\\"looping\\\":false}\",\"{\\\"uuid\\\":\\\"384d4555-1a11-481f-8e3c" +
-                    "-dfdf059bd110\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false," +
-                    "\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0," +
-                    "\\\"looping\\\":false}\",\"{\\\"uuid\\\":\\\"5fa15321-0a5f-4d3b-9a70" +
-                    "-9e9ae7f3ce85\\\",\\\"type\\\":\\\"SoundTypeStubId\\\",\\\"paused\\\":false," +
-                    "\\\"muted\\\":false,\\\"vol\\\":0.0,\\\"msPos\\\":0," +
-                    "\\\"looping\\\":false}\"]}";
+    private final String WRITTEN_VALUE = "{\"soundDTOs\":[\"sound1\",\"sound2\",\"sound3\"]}";
+
+    @Mock private SoundsPlaying mockSoundsPlaying;
+    @Mock private Sound mockSound1;
+    @Mock private Sound mockSound2;
+    @Mock private Sound mockSound3;
+    @Mock private TypeHandler<Sound> mockSoundHandler;
+
+    private TypeHandler<SoundsPlaying> soundsPlayingHandler;
 
     @BeforeEach
     void setUp() {
-        _soundsPlaying = new FakeSoundsPlaying();
-        _soundsPlayingHandler = new SoundsPlayingHandler(
-                new FakePersistentSoundHandler(), _soundsPlaying);
+        mockSound1 = mock(Sound.class);
+        mockSound2 = mock(Sound.class);
+        mockSound3 = mock(Sound.class);
+
+        mockSoundsPlaying = mock(SoundsPlaying.class);
+
+        when(mockSoundsPlaying.representation()).thenReturn(new ArrayList<>() {{
+            add(mockSound1);
+            add(mockSound2);
+            add(mockSound3);
+        }});
+
+        //noinspection unchecked
+        mockSoundHandler = mock(TypeHandler.class);
+        when(mockSoundHandler.write(mockSound1)).thenReturn(SOUND_1);
+        when(mockSoundHandler.write(mockSound2)).thenReturn(SOUND_2);
+        when(mockSoundHandler.write(mockSound3)).thenReturn(SOUND_3);
+        when(mockSoundHandler.read(SOUND_1)).thenReturn(mockSound1);
+        when(mockSoundHandler.read(SOUND_2)).thenReturn(mockSound2);
+        when(mockSoundHandler.read(SOUND_3)).thenReturn(mockSound3);
+
+        soundsPlayingHandler = new SoundsPlayingHandler(mockSoundHandler, mockSoundsPlaying);
     }
 
     @Test
     void testConstructorWithInvalidParams() {
         assertThrows(IllegalArgumentException.class,
-                () -> new SoundsPlayingHandler(null, _soundsPlaying));
+                () -> new SoundsPlayingHandler(null, mockSoundsPlaying));
         assertThrows(IllegalArgumentException.class,
-                () -> new SoundsPlayingHandler(new FakePersistentSoundHandler(), null));
+                () -> new SoundsPlayingHandler(mockSoundHandler, null));
     }
 
     @Test
     void testWrite() {
-        int id = 0;
-        for (String uuid : UUIDS) {
-            FakeSound soundToAdd = new FakeSound(new FakeSoundType("soundType" + id++ + "Id"));
-            soundToAdd._uuid = UUID.fromString(uuid);
-            _soundsPlaying.registerSound(soundToAdd);
-        }
+        String writtenValue = soundsPlayingHandler.write(mockSoundsPlaying);
 
-        String writtenValue = _soundsPlayingHandler.write(_soundsPlaying);
-
-        assertEquals(DATA, writtenValue);
+        assertEquals(WRITTEN_VALUE, writtenValue);
     }
 
     @Test
     void testRead() {
-        FakeSound previouslyPlayingSound = new FakeSound(new FakeSoundType("soundType4Id"));
-        previouslyPlayingSound._uuid = UUID.fromString("f23795c5-32fc-4df7-a936-7722311db17c");
-        _soundsPlaying.registerSound(previouslyPlayingSound);
+        SoundsPlaying soundsPlaying = soundsPlayingHandler.read(WRITTEN_VALUE);
 
-        _soundsPlayingHandler.read(DATA);
+        assertNull(soundsPlaying);
+        verify(mockSoundsPlaying, times(1)).removeSound(mockSound1);
+        verify(mockSoundsPlaying, times(1)).removeSound(mockSound2);
+        verify(mockSoundsPlaying, times(1)).removeSound(mockSound3);
 
-        List<Sound> soundsPlaying = _soundsPlaying.representation();
+        verify(mockSoundHandler, times(1)).read(SOUND_1);
+        verify(mockSoundHandler, times(1)).read(SOUND_2);
+        verify(mockSoundHandler, times(1)).read(SOUND_3);
 
-        assertEquals(3, soundsPlaying.size());
-        soundsPlaying.forEach(sp -> assertTrue(UUIDS.contains(sp.uuid().toString())));
+        verify(mockSoundsPlaying, times(1)).registerSound(mockSound1);
+        verify(mockSoundsPlaying, times(1)).registerSound(mockSound2);
+        verify(mockSoundsPlaying, times(1)).registerSound(mockSound3);
     }
 
     @Test
     void testReadWithInvalidParams() {
-        assertThrows(IllegalArgumentException.class, () -> _soundsPlayingHandler.read(null));
-        assertThrows(IllegalArgumentException.class, () -> _soundsPlayingHandler.read(""));
+        assertThrows(IllegalArgumentException.class, () -> soundsPlayingHandler.read(null));
+        assertThrows(IllegalArgumentException.class, () -> soundsPlayingHandler.read(""));
     }
 
     @Test
     void testArchetype() {
-        assertNotNull(_soundsPlayingHandler.getArchetype());
+        assertNotNull(soundsPlayingHandler.getArchetype());
         assertEquals(SoundsPlaying.class.getCanonicalName(),
-                _soundsPlayingHandler.getArchetype().getInterfaceName());
+                soundsPlayingHandler.getArchetype().getInterfaceName());
     }
 
     @Test
     void testGetInterfaceName() {
         assertEquals(TypeHandler.class.getCanonicalName() + "<" +
                         SoundsPlaying.class.getCanonicalName() + ">",
-                _soundsPlayingHandler.getInterfaceName());
+                soundsPlayingHandler.getInterfaceName());
     }
 }
