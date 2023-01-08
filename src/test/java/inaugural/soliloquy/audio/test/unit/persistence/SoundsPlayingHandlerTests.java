@@ -10,15 +10,17 @@ import soliloquy.specs.common.persistence.TypeHandler;
 
 import java.util.ArrayList;
 
+import static inaugural.soliloquy.tools.random.Random.randomString;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class SoundsPlayingHandlerTests {
-    private final String SOUND_1 = "sound1";
-    private final String SOUND_2 = "sound2";
-    private final String SOUND_3 = "sound3";
+    private final String SOUND_1 = randomString();
+    private final String SOUND_2 = randomString();
+    private final String SOUND_3 = randomString();
 
-    private final String WRITTEN_VALUE = "{\"soundDTOs\":[\"sound1\",\"sound2\",\"sound3\"]}";
+    private final String WRITTEN_VALUE =
+            String.format("{\"soundDTOs\":[\"%s\",\"%s\",\"%s\"]}", SOUND_1, SOUND_2, SOUND_3);
 
     @Mock private SoundsPlaying mockSoundsPlaying;
     @Mock private Sound mockSound1;
@@ -94,7 +96,7 @@ class SoundsPlayingHandlerTests {
     }
 
     @Test
-    void testArchetype() {
+    void testGetArchetype() {
         assertNotNull(soundsPlayingHandler.getArchetype());
         assertEquals(SoundsPlaying.class.getCanonicalName(),
                 soundsPlayingHandler.getArchetype().getInterfaceName());
