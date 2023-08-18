@@ -96,10 +96,10 @@ class SoundsPlayingHandlerTests {
     }
 
     @Test
-    void testGetArchetype() {
-        assertNotNull(soundsPlayingHandler.getArchetype());
+    void testArchetype() {
+        assertNotNull(soundsPlayingHandler.archetype());
         assertEquals(SoundsPlaying.class.getCanonicalName(),
-                soundsPlayingHandler.getArchetype().getInterfaceName());
+                soundsPlayingHandler.archetype().getInterfaceName());
     }
 
     @Test

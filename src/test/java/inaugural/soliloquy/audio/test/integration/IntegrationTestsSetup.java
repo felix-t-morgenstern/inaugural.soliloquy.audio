@@ -1,7 +1,6 @@
 package inaugural.soliloquy.audio.test.integration;
 
 import com.google.inject.Guice;
-import com.google.inject.Injector;
 import inaugural.soliloquy.audio.AudioModule;
 import inaugural.soliloquy.audio.entities.SoundTypeImpl;
 import inaugural.soliloquy.common.CommonModule;
@@ -13,7 +12,6 @@ import soliloquy.specs.common.factories.RegistryFactory;
 import java.net.URISyntaxException;
 
 public class IntegrationTestsSetup {
-
     private final Audio AUDIO;
 
     public final static String SOUND_TYPE_1_ID = "SoundType1Id";
@@ -28,9 +26,9 @@ public class IntegrationTestsSetup {
             "exit-the-premises-by-kevin-macleod-from-filmmusic-io.mp3";
 
     public IntegrationTestsSetup() throws URISyntaxException {
-        Injector commonInjector = Guice.createInjector(new CommonModule());
+        var commonInjector = Guice.createInjector(new CommonModule());
 
-        Injector audioInjector = Guice.createInjector(
+        var audioInjector = Guice.createInjector(
                 new AudioModule(commonInjector.getInstance(RegistryFactory.class)));
 
         AUDIO = audioInjector.getInstance(Audio.class);

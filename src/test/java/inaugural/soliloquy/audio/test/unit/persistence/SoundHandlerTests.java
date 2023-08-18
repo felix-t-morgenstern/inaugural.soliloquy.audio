@@ -74,8 +74,8 @@ class SoundHandlerTests {
     }
 
     @Test
-    void testGetArchetype() {
-        Sound archetype = soundHandler.getArchetype();
+    void testArchetype() {
+        var archetype = soundHandler.archetype();
 
         assertNotNull(archetype);
         assertEquals(Sound.class.getCanonicalName(), archetype.getInterfaceName());
@@ -83,7 +83,7 @@ class SoundHandlerTests {
 
     @Test
     void testWrite() {
-        String writtenValue = soundHandler.write(mockSound);
+        var writtenValue = soundHandler.write(mockSound);
 
         assertEquals(DATA, writtenValue);
     }
@@ -95,7 +95,7 @@ class SoundHandlerTests {
 
     @Test
     void testRead() {
-        Sound readValue = soundHandler.read(DATA);
+        var readValue = soundHandler.read(DATA);
 
         assertNotNull(readValue);
         assertSame(mockSound, readValue);
